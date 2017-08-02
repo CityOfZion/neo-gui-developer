@@ -436,6 +436,31 @@ namespace Neo.UI
             }
         }
 
+        private void StateReader_Log(object sender, LogEventArgs e)
+        {
+            MessageBox.Show(e.Message);
+            DateTime localDateTime = DateTime.Now;
+            listView4.Items.Add(new ListViewItem(new[]
+                {
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Time",
+                        Text = localDateTime.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Script Hash",
+                        Text = e.ScriptHash.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Message",
+                        Text = e.Message
+                    }
+                }, -1));
+            //throw new NotImplementedException();
+        }
+
         private void 创建钱包数据库NToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (CreateWalletDialog dialog = new CreateWalletDialog())
@@ -869,6 +894,13 @@ namespace Neo.UI
             Clipboard.SetDataObject(listView3.SelectedItems[0].SubItems[1].Text);
         }
 
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (listView4.SelectedItems.Count == 0) return;
+            Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[1].Text);
+        }
+
+
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             if (listView1.SelectedIndices.Count == 0) return;
@@ -896,31 +928,6 @@ namespace Neo.UI
             {
                 dialog.ShowDialog();
             }
-        }
-
-        private void StateReader_Log(object sender, LogEventArgs e)
-        {
-            MessageBox.Show(e.Message);
-            DateTime localDateTime = DateTime.Now;
-            listView4.Items.Add(new ListViewItem(new[]
-                {
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Time",
-                        Text = localDateTime.ToString()
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Script Hash",
-                        Text = e.ScriptHash.ToString()
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Message",
-                        Text = e.Message
-                    }
-                }, -1));
-            //throw new NotImplementedException();
         }
     }
 }
