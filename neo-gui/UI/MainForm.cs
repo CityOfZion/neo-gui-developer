@@ -211,13 +211,8 @@ namespace Neo.UI
                             {
                                 Name = "txtype",
                                 Text = info.Transaction.Type.ToString()
-                            }/*,
+                            }
                             //end
-                            new ListViewItem.ListViewSubItem
-                            {
-                                Name = "remarks",
-                                Text = info.Transaction.Attributes[240].ToString()
-                            }*/
 
                         }, -1)
                         {
@@ -441,31 +436,6 @@ namespace Neo.UI
             }
         }
 
-        private void StateReader_Log(object sender, LogEventArgs e)
-        {
-            MessageBox.Show(e.Message);
-            DateTime localDateTime = DateTime.Now;
-            listView4.Items.Add(new ListViewItem(new[]
-                {
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Time",
-                        Text = localDateTime.ToString()
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Script Hash",
-                        Text = e.ScriptHash.ToString()
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Message",
-                        Text = e.Message
-                    }
-                }, -1));
-            //throw new NotImplementedException();
-        }
-
         private void 创建钱包数据库NToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (CreateWalletDialog dialog = new CreateWalletDialog())
@@ -552,7 +522,7 @@ namespace Neo.UI
             using (TransferDialog dialog = new TransferDialog())
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
-                Helper.SignAndShowInformation(dialog.GetTransaction(null));
+                Helper.SignAndShowInformation(dialog.GetTransaction());
             }
         }
 
@@ -928,33 +898,29 @@ namespace Neo.UI
             }
         }
 
-        private void transferFromToolStripMenuItem_Click(object sender, EventArgs e)
+        private void StateReader_Log(object sender, LogEventArgs e)
         {
-            using (SelectAccountsDialog dialog = new SelectAccountsDialog())
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                foreach (Contract contract in dialog.GetContracts())
+            MessageBox.Show(e.Message);
+            DateTime localDateTime = DateTime.Now;
+            listView4.Items.Add(new ListViewItem(new[]
                 {
-                    //Program.CurrentWallet.AddContract(contract);
-                    //AddContractToListView(contract, true);
-                }
-            }
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        /*private void handleReceivedLog(object sender, LogEventArgs args)
-        {
-            MessageBox.Show(args.Message);
-            listView4.Items.Add(args.Message);
-        }*/
-
-        private void listView4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Time",
+                        Text = localDateTime.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Script Hash",
+                        Text = e.ScriptHash.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Message",
+                        Text = e.Message
+                    }
+                }, -1));
+            //throw new NotImplementedException();
         }
     }
 }
