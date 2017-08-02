@@ -6,6 +6,7 @@ using Neo.IO;
 using Neo.Properties;
 using Neo.VM;
 using Neo.Wallets;
+using Neo.SmartContract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,8 @@ namespace Neo.UI
         public MainForm(XDocument xdoc = null)
         {
             InitializeComponent();
+            StateReader.Log += StateReader_Log;
+
             if (xdoc != null)
             {
                 Version version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -893,6 +896,31 @@ namespace Neo.UI
             {
                 dialog.ShowDialog();
             }
+        }
+
+        private void StateReader_Log(object sender, LogEventArgs e)
+        {
+            MessageBox.Show(e.Message);
+         /*   DateTime localDateTime = DateTime.Now;
+            listView4.Items.Add(new ListViewItem(new[]
+                {
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Time",
+                        Text = localDateTime.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Script Hash",
+                        Text = e.ScriptHash.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Message",
+                        Text = e.Message
+                    }
+                }, -1));
+            //throw new NotImplementedException();*/
         }
     }
 }
