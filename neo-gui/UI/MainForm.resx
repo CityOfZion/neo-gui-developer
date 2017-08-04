@@ -880,24 +880,30 @@
     <value>Time</value>
   </data>
   <data name="columnHeader12.Width" type="System.Int32, mscorlib">
-    <value>165</value>
+    <value>82</value>
   </data>
   <data name="columnHeader13.Text" xml:space="preserve">
     <value>Block</value>
   </data>
   <data name="columnHeader13.Width" type="System.Int32, mscorlib">
-    <value>79</value>
+    <value>75</value>
   </data>
   <data name="columnHeader14.Text" xml:space="preserve">
     <value>Script Hash</value>
   </data>
   <data name="columnHeader14.Width" type="System.Int32, mscorlib">
-    <value>258</value>
+    <value>128</value>
   </data>
   <data name="columnHeader15.Text" xml:space="preserve">
-    <value>Message</value>
+    <value>Name</value>
   </data>
   <data name="columnHeader15.Width" type="System.Int32, mscorlib">
+    <value>123</value>
+  </data>
+  <data name="columnHeader16.Text" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="columnHeader16.Width" type="System.Int32, mscorlib">
     <value>510</value>
   </data>
   <metadata name="contextMenuStrip4.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -1749,6 +1755,12 @@
     <value>columnHeader15</value>
   </data>
   <data name="&gt;&gt;columnHeader15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnHeader16.Name" xml:space="preserve">
+    <value>columnHeader16</value>
+  </data>
+  <data name="&gt;&gt;columnHeader16.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">

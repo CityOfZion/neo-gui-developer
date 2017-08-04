@@ -439,6 +439,8 @@ namespace Neo.UI
         private void StateReader_Log(object sender, LogEventArgs e)
         {
             //MessageBox.Show(e.Message);
+            ContractState contract = Blockchain.Default.GetContract(e.ScriptHash);
+            if (contract == null) return;
             DateTime localDateTime = DateTime.Now;
             listView4.Items.Add(new ListViewItem(new[]
                 {
@@ -456,6 +458,11 @@ namespace Neo.UI
                     {
                         Name = "Script Hash",
                         Text = e.ScriptHash.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Name",
+                        Text = contract.Name.ToString()
                     },
                     new ListViewItem.ListViewSubItem
                     {
