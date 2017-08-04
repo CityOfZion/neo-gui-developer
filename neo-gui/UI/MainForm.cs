@@ -438,7 +438,7 @@ namespace Neo.UI
 
         private void StateReader_Log(object sender, LogEventArgs e)
         {
-            MessageBox.Show(e.Message);
+            //MessageBox.Show(e.Message);
             DateTime localDateTime = DateTime.Now;
             listView4.Items.Add(new ListViewItem(new[]
                 {
@@ -446,6 +446,11 @@ namespace Neo.UI
                     {
                         Name = "Time",
                         Text = localDateTime.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Block",
+                        Text = Blockchain.Default.Height.ToString()
                     },
                     new ListViewItem.ListViewSubItem
                     {
@@ -897,7 +902,7 @@ namespace Neo.UI
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             if (listView4.SelectedItems.Count == 0) return;
-            Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[1].Text);
+            Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[2].Text);
         }
 
 
