@@ -121,7 +121,8 @@
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.CopySHtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CopyMessagetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -761,15 +762,22 @@
             // contextMenuStrip4
             // 
             this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2});
+            this.CopySHtoolStripMenuItem,
+            this.CopyMessagetoolStripMenuItem});
             this.contextMenuStrip4.Name = "contextMenuStrip4";
             resources.ApplyResources(this.contextMenuStrip4, "contextMenuStrip4");
             // 
-            // toolStripMenuItem2
+            // CopySHtoolStripMenuItem
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            this.CopySHtoolStripMenuItem.Name = "CopySHtoolStripMenuItem";
+            resources.ApplyResources(this.CopySHtoolStripMenuItem, "CopySHtoolStripMenuItem");
+            this.CopySHtoolStripMenuItem.Click += new System.EventHandler(this.CopySHtoolStripMenuItem_Click);
+            // 
+            // CopyMessagetoolStripMenuItem
+            // 
+            this.CopyMessagetoolStripMenuItem.Name = "CopyMessagetoolStripMenuItem";
+            resources.ApplyResources(this.CopyMessagetoolStripMenuItem, "CopyMessagetoolStripMenuItem");
+            this.CopyMessagetoolStripMenuItem.Click += new System.EventHandler(this.CopyMessagetoolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -893,8 +901,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader15;
         private System.Windows.Forms.ColumnHeader columnHeader16;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-
+        private System.Windows.Forms.ToolStripMenuItem CopySHtoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CopyMessagetoolStripMenuItem;
     }
 }
 

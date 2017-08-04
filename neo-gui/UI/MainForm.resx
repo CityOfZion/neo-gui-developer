@@ -909,11 +909,17 @@
   <metadata name="contextMenuStrip4.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>678, 17</value>
   </metadata>
-  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="CopySHtoolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>162, 22</value>
   </data>
-  <data name="toolStripMenuItem2.Text" xml:space="preserve">
+  <data name="CopySHtoolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Copy ScriptHash</value>
+  </data>
+  <data name="CopyMessagetoolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>162, 22</value>
+  </data>
+  <data name="CopyMessagetoolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Copy Message</value>
   </data>
   <data name="contextMenuStrip4.Size" type="System.Drawing.Size, System.Drawing">
     <value>163, 26</value>
@@ -1763,10 +1769,16 @@
   <data name="&gt;&gt;columnHeader16.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">
-    <value>toolStripMenuItem2</value>
+  <data name="&gt;&gt;CopySHtoolStripMenuItem.Name" xml:space="preserve">
+    <value>CopySHtoolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem2.Type" xml:space="preserve">
+  <data name="&gt;&gt;CopySHtoolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CopyMessagetoolStripMenuItem.Name" xml:space="preserve">
+    <value>CopyMessagetoolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;CopyMessagetoolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

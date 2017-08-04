@@ -913,12 +913,17 @@ namespace Neo.UI
             Clipboard.SetDataObject(listView3.SelectedItems[0].SubItems[1].Text);
         }
 
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        private void CopySHtoolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listView4.SelectedItems.Count == 0) return;
             Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[2].Text);
         }
 
+        private void CopyMessagetoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView4.SelectedItems.Count == 0) return;
+            Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[4].Text);
+        }
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
