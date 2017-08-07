@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
+using Neo.Wallets;
 
 namespace Neo.UI
 {
@@ -140,8 +141,34 @@ namespace Neo.UI
             DataCache<StorageKey, StorageItem> storages = blockchain.GetTable<StorageKey, StorageItem>();
             CachedScriptTable script_table = new CachedScriptTable(contracts);
             StateMachine service = new StateMachine(accounts, validators, assets, contracts, storages);
+
+            ////////////////////////////////////////////////////////////
+            ////////////////////WARNING!!!!!!!!!!!!!////////////////////
+            //////////THIS MIGHT MAKE TEST INVOCATION LESS SECURE///////
+            //////////STRICTLY FOR TESTING PURPOSES ONLY////////////////
+            ////////////////////////////////////////////////////////////
+            tx = GetTransaction();
+            SignatureContext context;
+            try
+            {
+                context = new SignatureContext(tx);
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show(Strings.UnsynchronizedBlock);
+                return;
+            }
+            Program.CurrentWallet.Sign(context);
+            context.Verifiable.Scripts = context.GetScripts();
+            tx.Scripts = context.Verifiable.Scripts;
+            ////////////////////////////////////////////////////////////
+            ////////////////////WARNING!!!!!!!!!!!!!////////////////////
+            ////////////////////////////////////////////////////////////
+
+
             ApplicationEngine engine = new ApplicationEngine(tx, script_table, service, Fixed8.Zero, true);
             engine.LoadScript(tx.Script, false);
+            
             if (engine.Execute())
             {
                 tx.Gas = engine.GasConsumed - Fixed8.FromDecimal(10);
@@ -155,7 +182,7 @@ namespace Neo.UI
                     {
                         MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString());
                     }
-                }                
+                }
             }
             else
             {
