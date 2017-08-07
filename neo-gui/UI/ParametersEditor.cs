@@ -132,9 +132,9 @@ namespace Neo.UI
             switch (parameter.Type)
             {
                 case ContractParameterType.ByteArray:
-
                     string inputString = System.Text.Encoding.UTF8.GetBytes(textBox2.Text).ToHexString();
                     textBox2.Text = inputString;
+                    button2.Enabled = false;
                     break;
             }
         }
