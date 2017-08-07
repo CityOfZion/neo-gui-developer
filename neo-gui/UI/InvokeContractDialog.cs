@@ -17,6 +17,7 @@ namespace Neo.UI
     internal partial class InvokeContractDialog : Form
     {
         private InvocationTransaction tx;
+        private InvocationTransaction testTx;
         private UInt160 script_hash;
         private ContractParameter[] parameters;
 
@@ -147,11 +148,13 @@ namespace Neo.UI
             //////////THIS MIGHT MAKE TEST INVOCATION LESS SECURE///////
             //////////STRICTLY FOR TESTING PURPOSES ONLY////////////////
             ////////////////////////////////////////////////////////////
-            tx = GetTransaction();
+            testTx = tx;
+            testTx.Gas = Fixed8.One;
+            testTx = GetTransaction();
             SignatureContext context;
             try
             {
-                context = new SignatureContext(tx);
+                context = new SignatureContext(testTx);
             }
             catch (InvalidOperationException)
             {
@@ -160,14 +163,14 @@ namespace Neo.UI
             }
             Program.CurrentWallet.Sign(context);
             context.Verifiable.Scripts = context.GetScripts();
-            tx.Scripts = context.Verifiable.Scripts;
+            testTx.Scripts = context.Verifiable.Scripts;
             ////////////////////////////////////////////////////////////
             ////////////////////WARNING!!!!!!!!!!!!!////////////////////
             ////////////////////////////////////////////////////////////
 
 
-            ApplicationEngine engine = new ApplicationEngine(tx, script_table, service, Fixed8.Zero, true);
-            engine.LoadScript(tx.Script, false);
+            ApplicationEngine engine = new ApplicationEngine(testTx, script_table, service, Fixed8.Zero, true);
+            engine.LoadScript(testTx.Script, false);
             
             if (engine.Execute())
             {
