@@ -149,6 +149,13 @@ namespace Neo.UI
                 tx.Gas = tx.Gas.Ceiling();
                 label7.Text = tx.Gas + " gas";
                 button3.Enabled = true;
+                if (radioButton1.Checked)
+                {
+                    if(engine.EvaluationStack.Peek().GetByteArray().ToHexString() != "")
+                    {
+                        MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString());
+                    }
+                }                
             }
             else
             {
