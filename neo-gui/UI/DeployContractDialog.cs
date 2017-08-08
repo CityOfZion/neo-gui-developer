@@ -26,6 +26,9 @@ namespace Neo.UI
             string author = textBox3.Text;
             string email = textBox4.Text;
             string description = textBox5.Text;
+
+            InformationBox.Show(script.ToScriptHash().ToString(), "This is the Script Hash for your Smart Contract:", "Script Hash");
+
             using (ScriptBuilder sb = new ScriptBuilder())
             {
                 sb.EmitPush(Encoding.UTF8.GetBytes(description));
