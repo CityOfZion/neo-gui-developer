@@ -63,5 +63,11 @@ namespace Neo.UI
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             textBox8.Text = File.ReadAllBytes(openFileDialog1.FileName).ToHexString();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MainForm parent = (MainForm)this.Owner;
+            parent.scListAdd("Deployed ScriptHash", textBox1.Text, textBox8.Text.HexToBytes().ToScriptHash().ToString(), true);
+        }
     }
 }

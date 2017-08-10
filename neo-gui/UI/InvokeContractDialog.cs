@@ -102,6 +102,8 @@ namespace Neo.UI
             textBox4.Text = contract.Author;
             textBox5.Text = string.Join(", ", contract.Code.ParameterList);
             button2.Enabled = parameters.Length > 0;
+            MainForm parent = (MainForm)this.Owner;
+            parent.scListAdd("Deployed ScriptHash", contract.Name, script_hash.ToString(), true);
             UpdateScript();
         }
 
@@ -180,9 +182,9 @@ namespace Neo.UI
                 label7.Text = tx.Gas + " gas";
                 button3.Enabled = true;
                 if (engine.EvaluationStack.Peek().ToString()!="Neo.VM.Types.InteropInterface")
-                    {
-                        MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString());
-                    }
+                {
+                    MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString() + "\n" + System.Text.Encoding.UTF8.GetString(engine.EvaluationStack.Peek().GetByteArray()));
+                }
             }
             else
             {
