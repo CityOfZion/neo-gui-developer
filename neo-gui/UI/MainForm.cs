@@ -277,6 +277,17 @@ namespace Neo.UI
                 Blockchain.PersistCompleted += Blockchain_PersistCompleted;
                 Program.LocalNode.Start(Settings.Default.NodePort, Settings.Default.WsPort);
             });
+            if (File.Exists(Application.StartupPath + "\\smartcontracts.txt"))
+            {
+                UInt160 ignore;
+                String[] smartContracts = File.ReadAllLines(Application.StartupPath + "\\smartcontracts.txt");
+                foreach (var smartContract in smartContracts)
+                {
+                    string[] parameters = smartContract.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (UInt160.TryParse(parameters[2], out ignore)) scListAdd(parameters[0], parameters[1], parameters[2], false);
+                }
+                scList.Hide();
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -434,6 +445,7 @@ namespace Neo.UI
                     }
                 }
             }
+            scList.updateStatus();
         }
 
         private void StateReader_Log(object sender, LogEventArgs e)
@@ -622,7 +634,7 @@ namespace Neo.UI
             InvocationTransaction tx;
             using (DeployContractDialog dialog = new DeployContractDialog())
             {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
             }
             using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
@@ -637,7 +649,7 @@ namespace Neo.UI
         {
             using (InvokeContractDialog dialog = new InvokeContractDialog())
             {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 Helper.SignAndShowInformation(dialog.GetTransaction());
             }
         }
@@ -952,6 +964,13 @@ namespace Neo.UI
             {
                 dialog.ShowDialog();
             }
+        }
+
+        private SmartContractList scList = new SmartContractList();
+        public void scListAdd(string scType, string scName, string scMessage, bool newContract)
+        {
+            scList.Show();
+            scList.AddSmartContract(scType, scName, scMessage, newContract);
         }
     }
 }
