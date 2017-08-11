@@ -973,8 +973,8 @@ namespace Neo.UI
                     string[] parameters = smartContract.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                     if (UInt160.TryParse(parameters[2], out ignore)) scListAdd(parameters[0], parameters[1], parameters[2], false);
                 }
-                scList.Show();
             }
+            scList.Show();
         }
 
         private void smartContractWatchlistToolStripMenuItem_Click(object sender, EventArgs e)
