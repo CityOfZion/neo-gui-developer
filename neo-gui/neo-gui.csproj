@@ -380,6 +380,12 @@
     <Compile Include="UI\RestoreAccountsDialog.Designer.cs">
       <DependentUpon>RestoreAccountsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\SmartContractList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SmartContractList.Designer.cs">
+      <DependentUpon>SmartContractList.cs</DependentUpon>
+    </Compile>    
     <Compile Include="UI\TradeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -643,6 +649,9 @@
     <EmbeddedResource Include="UI\SigningDialog.zh-Hans.resx">
       <DependentUpon>SigningDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\SmartContractList.resx">
+      <DependentUpon>SmartContractList.cs</DependentUpon>
+    </EmbeddedResource>    
     <EmbeddedResource Include="UI\TradeForm.resx">
       <DependentUpon>TradeForm.cs</DependentUpon>
     </EmbeddedResource>
