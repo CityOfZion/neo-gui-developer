@@ -95,11 +95,11 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CopySHtoolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Text = "Copy Script Hash";
             // 
             // CopySHtoolStripMenuItem
             // 
             this.CopySHtoolStripMenuItem.Name = "CopySHtoolStripMenuItem";
+            this.CopySHtoolStripMenuItem.Text = "Copy Script Hash";
             this.CopySHtoolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             this.CopySHtoolStripMenuItem.Click += new System.EventHandler(this.CopySHtoolStripMenuItem_Click);
             // 

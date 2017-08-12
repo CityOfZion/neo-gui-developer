@@ -123,6 +123,7 @@
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CopySHtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyMessagetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smartContractWatchlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -253,7 +254,8 @@
             this.toolStripSeparator11,
             this.选举EToolStripMenuItem,
             this.toolStripSeparator9,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.smartContractWatchlistToolStripMenuItem});
             this.高级AToolStripMenuItem.Name = "高级AToolStripMenuItem";
             resources.ApplyResources(this.高级AToolStripMenuItem, "高级AToolStripMenuItem");
             // 
@@ -779,6 +781,12 @@
             resources.ApplyResources(this.CopyMessagetoolStripMenuItem, "CopyMessagetoolStripMenuItem");
             this.CopyMessagetoolStripMenuItem.Click += new System.EventHandler(this.CopyMessagetoolStripMenuItem_Click);
             // 
+            // smartContractWatchlistToolStripMenuItem
+            // 
+            resources.ApplyResources(this.smartContractWatchlistToolStripMenuItem, "smartContractWatchlistToolStripMenuItem");
+            this.smartContractWatchlistToolStripMenuItem.Name = "smartContractWatchlistToolStripMenuItem";
+            this.smartContractWatchlistToolStripMenuItem.Click += new System.EventHandler(this.smartContractWatchlistToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -903,6 +911,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
         private System.Windows.Forms.ToolStripMenuItem CopySHtoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CopyMessagetoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smartContractWatchlistToolStripMenuItem;
     }
 }
 
