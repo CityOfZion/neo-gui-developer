@@ -24,3 +24,5 @@ Features:
   - Optional smart contract monitor feature added to menu Advanced -> SC watchlist...
   - Smart contract watchlist shows the script info, Script hash, and status of the Neo smart contract on the blockchain
   - The watchlist automatically refreshes with the timer1 to check if the Neo Smart contract script hash can be found on the blockchain. Green "Found!" indicates the Neo Smart contract has been deployed successfully, red "Unavailable" indicates that it has not been deployed successfully.
+  - Neo Smart contract Script hash is automatically added to the watchlist when it is deployed on DeployDialog or looked up on InvokeDialog
+  - The script hash on the watchlist are saved/loaded on a smartcontract.txt in the Neo main folder. Script hash can be removed/added on this txt file.
