@@ -113,6 +113,7 @@ namespace Neo.UI
                 dialog.ShowDialog();
             }
             UpdateScript();
+            buttonParams.Enabled = true;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -162,9 +163,12 @@ namespace Neo.UI
                 tx.Gas = tx.Gas.Ceiling();
                 label7.Text = tx.Gas + " gas";
                 button3.Enabled = true;
-                if (engine.EvaluationStack.Peek().ToString()!="Neo.VM.Types.InteropInterface")
+                if (engine.EvaluationStack.Count != 0)
                 {
-                    MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString() + "\n" + System.Text.Encoding.UTF8.GetString(engine.EvaluationStack.Peek().GetByteArray()));
+                    if (engine.EvaluationStack.Peek().ToString() != "Neo.VM.Types.InteropInterface")
+                    {
+                        MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString() + "\n" + System.Text.Encoding.UTF8.GetString(engine.EvaluationStack.Peek().GetByteArray()));
+                    }
                 }
             }
             else
@@ -177,6 +181,15 @@ namespace Neo.UI
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             textBox6.Text = File.ReadAllBytes(openFileDialog1.FileName).ToHexString();
+        }
+
+        private void buttonParams_Click(object sender, EventArgs e)
+        {
+            using (ParamsObjectDialog dialog = new ParamsObjectDialog())
+            {
+                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.getParams() != null) textBox6.Text = dialog.getParams() + textBox6.Text;
+            }
         }
     }
 }
