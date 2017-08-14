@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
-using Neo.Wallets;
 
 namespace Neo.UI
 {
@@ -146,30 +145,12 @@ namespace Neo.UI
             StateMachine service = new StateMachine(accounts, validators, assets, contracts, storages);
 
             ////////////////////////////////////////////////////////////
-            ////////////////////WARNING!!!!!!!!!!!!!////////////////////
-            //////////THIS MIGHT MAKE TEST INVOCATION LESS SECURE///////
-            //////////STRICTLY FOR TESTING PURPOSES ONLY////////////////
-            ////////////////////////////////////////////////////////////
+            ////////////////////////EXPERIMENTAL////////////////////////
             testTx = tx;
             testTx.Gas = Fixed8.One;
             testTx = GetTransaction();
-            SignatureContext context;
-            try
-            {
-                context = new SignatureContext(testTx);
-            }
-            catch (InvalidOperationException)
-            {
-                MessageBox.Show(Strings.UnsynchronizedBlock);
-                return;
-            }
-            Program.CurrentWallet.Sign(context);
-            context.Verifiable.Scripts = context.GetScripts();
-            testTx.Scripts = context.Verifiable.Scripts;
+            ////////////////////////EXPERIMENTAL////////////////////////            
             ////////////////////////////////////////////////////////////
-            ////////////////////WARNING!!!!!!!!!!!!!////////////////////
-            ////////////////////////////////////////////////////////////
-
 
             ApplicationEngine engine = new ApplicationEngine(testTx, script_table, service, Fixed8.Zero, true);
             engine.LoadScript(testTx.Script, false);
