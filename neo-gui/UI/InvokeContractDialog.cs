@@ -72,6 +72,12 @@ namespace Neo.UI
                         case ContractParameterType.PublicKey:
                             sb.EmitPush(((ECPoint)parameter.Value).EncodePoint(true));
                             break;
+                        case ContractParameterType.Array:
+                            foreach(var item in ((object[])parameter.Value).Reverse())
+                                sb.EmitPush(((string)item).HexToBytes());
+                            sb.EmitPush(((object[])parameter.Value).Length);
+                            sb.Emit(OpCode.PACK);
+                            break;
                     }
                 }
                 sb.EmitAppCall(script_hash.ToArray(), true);
@@ -165,7 +171,7 @@ namespace Neo.UI
                 button3.Enabled = true;
                 if (engine.EvaluationStack.Count != 0)
                 {
-                    if (engine.EvaluationStack.Peek().ToString() != "Neo.VM.Types.InteropInterface")
+                    if (engine.EvaluationStack.Peek().ToString() != "Neo.VM.Types.InteropInterface" && engine.EvaluationStack.Peek().ToString() != "Neo.VM.Types.Array")
                     {
                         MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString() + "\n" + System.Text.Encoding.UTF8.GetString(engine.EvaluationStack.Peek().GetByteArray()));
                     }

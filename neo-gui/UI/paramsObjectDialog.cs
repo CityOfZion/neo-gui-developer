@@ -20,7 +20,7 @@ namespace Neo.UI
         
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            if (listViewParams.Items.Count > 10)
+            if (listViewParams.Items.Count > 255)
             {
                 MessageBox.Show("Too many arguments not supported!");
                 return;
