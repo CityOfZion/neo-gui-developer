@@ -113,7 +113,6 @@ namespace Neo.UI
                 dialog.ShowDialog();
             }
             UpdateScript();
-            buttonParams.Enabled = true;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -125,6 +124,7 @@ namespace Neo.UI
         {
             button3.Enabled = false;
             button5.Enabled = textBox6.TextLength > 0;
+            buttonParams.Enabled = true;
         }
 
         private void button5_Click(object sender, EventArgs e)
