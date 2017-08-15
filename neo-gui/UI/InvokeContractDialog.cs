@@ -189,6 +189,7 @@ namespace Neo.UI
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 if (dialog.getParams() != null) textBox6.Text = dialog.getParams() + textBox6.Text;
+                else textBox6.Text = "00" + textBox6.Text;
             }
         }
     }

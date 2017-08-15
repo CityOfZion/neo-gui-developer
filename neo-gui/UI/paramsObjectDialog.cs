@@ -58,26 +58,25 @@ namespace Neo.UI
 
         public string getParams()
         {
-            //53c5760003313131c4765103323232c4765203333333c4
             using (ScriptBuilder sb = new ScriptBuilder())
             {
-                sb.EmitPush(listViewParams.Items.Count);
-                sb.Emit(OpCode.NEWARRAY);
-                foreach (ListViewItem item in listViewParams.Items)
+                //sb.EmitPush(listViewParams.Items.Count);
+                //sb.Emit(OpCode.NEWARRAY);
+                int listIndex = listViewParams.Items.Count - 1;
+                while (listIndex >= 0)
                 {
-                    sb.Emit(OpCode.DUP);
-                    if (item.Index == 0) sb.Emit(OpCode.PUSH0);
-                    else sb.EmitPush(item.Index);
+                    ListViewItem item = listViewParams.Items[listIndex];
                     switch (item.SubItems["Type"].Text)
                     {
                         case "byte[]":
                             sb.EmitPush(item.SubItems["Data"].Text.HexToBytes());
                             break;
                     }
-                    sb.Emit(OpCode.SETITEM);
+                    listIndex--;
                 }
-                string returnParams = sb.ToArray().ToHexString();
-                return returnParams;
+                sb.EmitPush(listViewParams.Items.Count);
+                sb.Emit(OpCode.PACK);
+                return sb.ToArray().ToHexString();
             }
         }
     }
