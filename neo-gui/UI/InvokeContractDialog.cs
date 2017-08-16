@@ -154,7 +154,7 @@ namespace Neo.UI
             ////////////////////////////////////////////////////////////
             ////////////////////////EXPERIMENTAL////////////////////////
             testTx = tx;
-            testTx.Gas = Fixed8.One;
+            testTx.Gas = Fixed8.Satoshi;
             testTx = GetTransaction();
             ////////////////////////EXPERIMENTAL////////////////////////            
             ////////////////////////////////////////////////////////////
@@ -173,7 +173,10 @@ namespace Neo.UI
                 {
                     if (engine.EvaluationStack.Peek().ToString() != "Neo.VM.Types.InteropInterface" && engine.EvaluationStack.Peek().ToString() != "Neo.VM.Types.Array")
                     {
-                        MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString() + "\n" + System.Text.Encoding.UTF8.GetString(engine.EvaluationStack.Peek().GetByteArray()));
+                        MessageBox.Show(
+                            "Hex: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString() + "\n" 
+                            + "String: " + System.Text.Encoding.UTF8.GetString(engine.EvaluationStack.Peek().GetByteArray()) + "\n"
+                            + "BigInt: " + new BigInteger(engine.EvaluationStack.Peek().GetByteArray()), "Return");
                     }
                 }
             }

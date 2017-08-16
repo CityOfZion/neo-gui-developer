@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Neo.VM;
+using System.Numerics;
 
 namespace Neo.UI
 {
@@ -17,7 +12,7 @@ namespace Neo.UI
         {
             InitializeComponent();
         }
-        
+
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             if (listViewParams.Items.Count > 255)
@@ -25,29 +20,65 @@ namespace Neo.UI
                 MessageBox.Show("Too many arguments not supported!");
                 return;
             }
-            string input = InputBox.Show("Params", "Params");
-            if (string.IsNullOrEmpty(input)) return;
-            try
+            string[] input = InputBox.ShowParams("Params", "Params");
+            if (input==null) return;
+            switch (input[0])
             {
-                byte[] arg = input.HexToBytes();
+                case ("byte[]"):
+                    try
+                    {
+                        byte[] arg = input[1].HexToBytes();
+                    }
+                    catch (FormatException)
+                    {
+                        return;
+                    }
+                    listViewParams.Items.Add(new ListViewItem(new[]
+                    {
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Type",
+                        Text = "byte[]"
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Data",
+                        Text = input[1]
+                    }
+                    }, -1));
+                    break;
+                case ("BigInteger"):
+                    BigInteger.TryParse(input[1], out BigInteger intResult);
+                    listViewParams.Items.Add(new ListViewItem(new[]
+                    {
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Type",
+                        Text = "BigInteger"
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Data",
+                        Text = intResult.ToString()
+                    }
+                    }, -1));
+                    break;
+                case ("string"):
+                    listViewParams.Items.Add(new ListViewItem(new[]
+{
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Type",
+                        Text = "string"
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Data",
+                        Text = input[1]
+                    }
+                    }, -1));
+                    break;
             }
-            catch (FormatException)
-            {
-                return;
-            }
-            listViewParams.Items.Add(new ListViewItem(new[]
-            {
-                new ListViewItem.ListViewSubItem
-                {
-                    Name = "Type",
-                    Text = "byte[]"
-                },
-                new ListViewItem.ListViewSubItem
-                {
-                    Name = "Data",
-                    Text = input
-                }
-            }, -1));
         }
 
         private void buttonRemove_Click(object sender, EventArgs e)
@@ -70,6 +101,12 @@ namespace Neo.UI
                     {
                         case "byte[]":
                             sb.EmitPush(item.SubItems["Data"].Text.HexToBytes());
+                            break;
+                        case "BigInteger":
+                            sb.EmitPush(BigInteger.Parse(item.SubItems["Data"].Text));
+                            break;
+                        case "string":
+                            sb.EmitPush(Encoding.UTF8.GetBytes(item.SubItems["Data"].Text));
                             break;
                     }
                     listIndex--;
