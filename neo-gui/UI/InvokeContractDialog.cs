@@ -159,7 +159,7 @@ namespace Neo.UI
             ////////////////////////EXPERIMENTAL////////////////////////            
             ////////////////////////////////////////////////////////////
 
-            ApplicationEngine engine = new ApplicationEngine(testTx, script_table, service, Fixed8.Zero, true);
+            ApplicationEngine engine = new ApplicationEngine(TriggerType.Application, testTx, script_table, service, Fixed8.Zero, true);
             engine.LoadScript(testTx.Script, false);
             
             if (engine.Execute())
