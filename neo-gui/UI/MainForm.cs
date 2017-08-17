@@ -278,6 +278,7 @@ namespace Neo.UI
                 Blockchain.PersistCompleted += Blockchain_PersistCompleted;
                 Program.LocalNode.Start(Settings.Default.NodePort, Settings.Default.WsPort);
             });
+            scListLoad();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -974,12 +975,11 @@ namespace Neo.UI
                     if (UInt160.TryParse(parameters[2], out ignore)) scListAdd(parameters[0], parameters[1], parameters[2], false);
                 }
             }
-            scList.Show();
         }
 
         private void smartContractWatchlistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            scListLoad();
+            scList.Show();
         }
     }
 }
