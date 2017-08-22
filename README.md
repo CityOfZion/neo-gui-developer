@@ -1,4 +1,18 @@
-# Custom development Neo-gui
+<p align="center">
+  <img 
+    src="http://res.cloudinary.com/vidsy/image/upload/v1503160820/CoZ_Icon_DARKBLUE_200x178px_oq0gxm.png" 
+    width="125px"
+  >
+</p>
+
+<h1 align="center">neo-gui-developer</h1>
+
+<p align="center">
+  Custom development GUI for <b>NEO</b> Blockchain
+</p>
+
+
+
 !!! EXPERIMENTAL DEVELOPMENT GUI
 
 !!! ONLY USE ON TESTNET. __neo-gui-developer runs on testnet in default__
