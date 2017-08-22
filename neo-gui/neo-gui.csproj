@@ -164,8 +164,8 @@
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="Neo, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Neo.2.0.1\lib\net461\Neo.dll</HintPath>
+    <Reference Include="Neo, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Neo.2.1.0\lib\net461\Neo.dll</HintPath>
     </Reference>
     <Reference Include="Neo.VM, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Neo.VM.2.0.0\lib\net461\Neo.VM.dll</HintPath>
@@ -337,6 +337,12 @@
     </Compile>
     <Compile Include="UI\ElectionDialog.Designer.cs">
       <DependentUpon>ElectionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ParamsObjectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ParamsObjectDialog.Designer.cs">
+      <DependentUpon>ParamsObjectDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ImportCustomContractDialog.cs">
       <SubType>Form</SubType>
@@ -633,6 +639,9 @@
     <EmbeddedResource Include="UI\ParametersEditor.zh-Hans.resx">
       <DependentUpon>ParametersEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\paramsObjectDialog.resx">
+      <DependentUpon>ParamsObjectDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\PayToDialog.zh-Hans.resx">
       <DependentUpon>PayToDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -772,6 +781,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <Content Include="x64\libleveldb.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\libleveldb.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\search.png" />
     <None Include="Resources\add2.png" />
     <None Include="Resources\remove.png" />

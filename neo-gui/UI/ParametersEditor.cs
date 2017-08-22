@@ -40,8 +40,16 @@ namespace Neo.UI
         {
             if (value == null) return "(null)";
             byte[] array = value as byte[];
-            if (array == null)
+            string[] array2 = value as string[];
+            if (array == null && array2 == null)
                 return value.ToString();
+            else if (array2 != null)
+            {
+                string arrayString = "";
+                foreach (string stringItem in array2)
+                    arrayString += stringItem + ", ";
+                return arrayString.Remove(arrayString.Length - 2);
+            }
             else
                 return array.ToHexString();
         }
@@ -113,6 +121,19 @@ namespace Neo.UI
                     try
                     {
                         parameter.Value = ECPoint.Parse(textBox2.Text, ECCurve.Secp256r1);
+                    }
+                    catch (FormatException)
+                    {
+                        return;
+                    }
+                    break;
+                case ContractParameterType.Array:
+                    try
+                    {
+                        string[] testString = textBox2.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (string stringItem in testString)
+                            stringItem.HexToBytes();
+                        parameter.Value = testString;
                     }
                     catch (FormatException)
                     {

@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
-using Neo.Wallets;
 
 namespace Neo.UI
 {
@@ -73,6 +72,12 @@ namespace Neo.UI
                         case ContractParameterType.PublicKey:
                             sb.EmitPush(((ECPoint)parameter.Value).EncodePoint(true));
                             break;
+                        case ContractParameterType.Array:
+                            foreach(var item in ((object[])parameter.Value).Reverse())
+                                sb.EmitPush(((string)item).HexToBytes());
+                            sb.EmitPush(((object[])parameter.Value).Length);
+                            sb.Emit(OpCode.PACK);
+                            break;
                     }
                 }
                 sb.EmitAppCall(script_hash.ToArray(), true);
@@ -125,6 +130,7 @@ namespace Neo.UI
         {
             button3.Enabled = false;
             button5.Enabled = textBox6.TextLength > 0;
+            buttonParams.Enabled = true;
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -146,32 +152,14 @@ namespace Neo.UI
             StateMachine service = new StateMachine(accounts, validators, assets, contracts, storages);
 
             ////////////////////////////////////////////////////////////
-            ////////////////////WARNING!!!!!!!!!!!!!////////////////////
-            //////////THIS MIGHT MAKE TEST INVOCATION LESS SECURE///////
-            //////////STRICTLY FOR TESTING PURPOSES ONLY////////////////
-            ////////////////////////////////////////////////////////////
+            ////////////////////////EXPERIMENTAL////////////////////////
             testTx = tx;
-            testTx.Gas = Fixed8.One;
+            testTx.Gas = Fixed8.Satoshi;
             testTx = GetTransaction();
-            SignatureContext context;
-            try
-            {
-                context = new SignatureContext(testTx);
-            }
-            catch (InvalidOperationException)
-            {
-                MessageBox.Show(Strings.UnsynchronizedBlock);
-                return;
-            }
-            Program.CurrentWallet.Sign(context);
-            context.Verifiable.Scripts = context.GetScripts();
-            testTx.Scripts = context.Verifiable.Scripts;
-            ////////////////////////////////////////////////////////////
-            ////////////////////WARNING!!!!!!!!!!!!!////////////////////
+            ////////////////////////EXPERIMENTAL////////////////////////            
             ////////////////////////////////////////////////////////////
 
-
-            ApplicationEngine engine = new ApplicationEngine(testTx, script_table, service, Fixed8.Zero, true);
+            ApplicationEngine engine = new ApplicationEngine(TriggerType.Application, testTx, script_table, service, Fixed8.Zero, true);
             engine.LoadScript(testTx.Script, false);
             
             if (engine.Execute())
@@ -181,9 +169,15 @@ namespace Neo.UI
                 tx.Gas = tx.Gas.Ceiling();
                 label7.Text = tx.Gas + " gas";
                 button3.Enabled = true;
-                if (engine.EvaluationStack.Peek().ToString()!="Neo.VM.Types.InteropInterface")
+                if (engine.EvaluationStack.Count != 0)
                 {
-                    MessageBox.Show("Return: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString() + "\n" + System.Text.Encoding.UTF8.GetString(engine.EvaluationStack.Peek().GetByteArray()));
+                    if (engine.EvaluationStack.Peek().ToString() != "Neo.VM.Types.InteropInterface" && engine.EvaluationStack.Peek().ToString() != "Neo.VM.Types.Array")
+                    {
+                        MessageBox.Show(
+                            "Hex: " + engine.EvaluationStack.Peek().GetByteArray().ToHexString() + "\n" 
+                            + "String: " + System.Text.Encoding.UTF8.GetString(engine.EvaluationStack.Peek().GetByteArray()) + "\n"
+                            + "BigInt: " + new BigInteger(engine.EvaluationStack.Peek().GetByteArray()), "Return");
+                    }
                 }
             }
             else
@@ -196,6 +190,16 @@ namespace Neo.UI
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             textBox6.Text = File.ReadAllBytes(openFileDialog1.FileName).ToHexString();
+        }
+
+        private void buttonParams_Click(object sender, EventArgs e)
+        {
+            using (ParamsObjectDialog dialog = new ParamsObjectDialog())
+            {
+                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.getParams() != null) textBox6.Text = dialog.getParams() + textBox6.Text;
+                else textBox6.Text = "00" + textBox6.Text;
+            }
         }
     }
 }
