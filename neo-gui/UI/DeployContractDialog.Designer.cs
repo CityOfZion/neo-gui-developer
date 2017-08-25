@@ -80,6 +80,7 @@
             resources.ApplyResources(this.textBox5, "textBox5");
             this.textBox5.Name = "textBox5";
             this.textBox5.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.textBox5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox5_KeyDown);
             // 
             // label5
             // 
