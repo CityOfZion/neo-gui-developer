@@ -293,27 +293,6 @@ namespace Neo.UI
         {
             lbl_height.Text = $"{Blockchain.Default.Height}/{Blockchain.Default.HeaderHeight}";
             lbl_count_node.Text = Program.LocalNode.RemoteNodeCount.ToString();
-            Network.RemoteNode[] nodeList = Program.LocalNode.GetRemoteNodes();
-            Console.WriteLine("remote node list length is: {0}", nodeList.Length);
-            for (int i = 0; i < nodeList.Length; i++)
-            {
-                //Console.WriteLine("node info {0}", i, nodeList[i].ToString());
-                if (nodeList[i].Version != null)
-                {
-                    Console.WriteLine("node info {0} {1} {2} {3} {4} {5} {6} {7}", i,
-                        nodeList[i].RemoteEndpoint.Address.MapToIPv4(),
-                        nodeList[i].Version.Port,
-                        nodeList[i].Version.Relay,
-                        nodeList[i].Version.Version,
-                        nodeList[i].Version.StartHeight,
-                        nodeList[i].Version.Timestamp,
-                        nodeList[i].Version.UserAgent
-                        );
-                } else
-                {
-                    Console.WriteLine("node {0} version is null", i);
-                }
-            }
             TimeSpan persistence_span = DateTime.Now - persistence_time;
             if (persistence_span > Blockchain.TimePerBlock)
             {
