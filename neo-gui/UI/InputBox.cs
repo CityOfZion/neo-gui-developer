@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Numerics;
 using System;
+using Neo.Cryptography.ECC;
 
 namespace Neo.UI
 {
@@ -30,9 +31,16 @@ namespace Neo.UI
                 dialog.comboBox1.Enabled = true;
                 dialog.comboBox1.Visible = true;
                 if (dialog.ShowDialog() != DialogResult.OK) return null;
-                switch (dialog.comboBox1.GetItemText(dialog.comboBox1.SelectedItem))
+
+                string selectedItem = dialog.comboBox1.GetItemText(dialog.comboBox1.SelectedItem);
+                switch (selectedItem)
                 {
-                    case "byte[]":
+                    case "Array":
+                        MessageBox.Show("not yet implemented array");
+                        return null;
+                        break;
+                    case "Signature":
+                    case "ByteArray":
                         try
                         {
                             byte[] byteResult = dialog.textBox1.Text.HexToBytes();
@@ -42,17 +50,49 @@ namespace Neo.UI
                             return null;
                         }
                         break;
-                    case "BigInteger":
-                        if(!BigInteger.TryParse(dialog.textBox1.Text, out BigInteger intResult)) return null;
+                    case "Boolean":
+                        if (!Boolean.TryParse(dialog.textBox1.Text, out bool boolResult)) {
+                            return null;
+                        }
                         break;
-                    case "string":
+                    case "Integer":
+                        if (!BigInteger.TryParse(dialog.textBox1.Text, out BigInteger intResult)) {
+                            return null;
+                        }
+                        break;
+                    case "Hash160":
+                        if (!UInt160.TryParse(dialog.textBox1.Text, out UInt160 hash160Result)) {
+                            return null;
+                        }
+                        break;
+                    case "Hash256":
+                        if (!UInt256.TryParse(dialog.textBox1.Text, out UInt256 hash256Result)) {
+                            return null;
+                        }
+                        break;
+                    case "PublicKey":
+                        try {
+                            byte[] ecPoint = ECPoint.Parse(dialog.textBox1.Text, ECCurve.Secp256r1).EncodePoint(true);
+                        } catch (Exception) {
+                            return null;
+                        }
+                        break;
+                    case "String":
                         break;
                     default:
                         return null;
                 }
-                string[] returnString = new string[] { dialog.comboBox1.GetItemText(dialog.comboBox1.SelectedItem), dialog.textBox1.Text };
+                string[] returnString = new string[] { selectedItem, dialog.textBox1.Text };
                 return returnString;
             }
+        }
+
+        private void comboBox_Enter(object sender, EventArgs e) {
+            comboBox1.DroppedDown = true;
+        }
+
+        private void comboBox_Leave(object sender, EventArgs e) {
+            comboBox1.DroppedDown = false;
         }
     }
 }
