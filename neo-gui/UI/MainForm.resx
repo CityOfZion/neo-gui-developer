@@ -1044,6 +1044,12 @@
   <data name="columnHeader15.Width" type="System.Int32, mscorlib">
     <value>123</value>
   </data>
+  <data name="eventLogMessageType.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="eventLogMessageType.Width" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
   <data name="columnHeader16.Text" xml:space="preserve">
     <value>Message</value>
   </data>
@@ -1876,9 +1882,13 @@
   </data>
   <data name="&gt;&gt;smartContractWatchlistToolStripMenuItem.Name" xml:space="preserve">
     <value>smartContractWatchlistToolStripMenuItem</value>
+  <data name="&gt;&gt;eventLogMessageType.Name" xml:space="preserve">
+    <value>eventLogMessageType</value>
   </data>
   <data name="&gt;&gt;smartContractWatchlistToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;eventLogMessageType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>
