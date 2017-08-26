@@ -109,7 +109,7 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // ParamsObjectDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -119,7 +119,7 @@
             this.Controls.Add(this.buttonRemove);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.listViewParams);
-            this.Name = "Form1";
+            this.Name = "ParamsObjectDialog";
             this.Text = "Set params object";
             this.ResumeLayout(false);
 

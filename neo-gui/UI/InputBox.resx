@@ -222,6 +222,33 @@
   <data name="comboBox1.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="comboBox1.Items" xml:space="preserve">
+    <value>Array</value>
+  </data>
+  <data name="comboBox1.Items1" xml:space="preserve">
+    <value>Boolean</value>
+  </data>
+  <data name="comboBox1.Items2" xml:space="preserve">
+    <value>ByteArray</value>
+  </data>
+  <data name="comboBox1.Items3" xml:space="preserve">
+    <value>Integer</value>
+  </data>
+  <data name="comboBox1.Items4" xml:space="preserve">
+    <value>Hash160</value>
+  </data>
+  <data name="comboBox1.Items5" xml:space="preserve">
+    <value>Hash256</value>
+  </data>
+  <data name="comboBox1.Items6" xml:space="preserve">
+    <value>PublicKey</value>
+  </data>
+  <data name="comboBox1.Items7" xml:space="preserve">
+    <value>Signature</value>
+  </data>
+  <data name="comboBox1.Items8" xml:space="preserve">
+    <value>String</value>
+  </data>
   <data name="comboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 138</value>
   </data>
