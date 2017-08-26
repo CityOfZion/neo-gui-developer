@@ -112,7 +112,6 @@ namespace Neo.UI {
                             sb.EmitPush(UInt160.Parse(item.SubItems["Data"].Text.ToString()).ToArray());
                             break;
                         case "Hash256":
-                            byte[] h256 = UInt256.Parse(item.SubItems["Data"].Text.ToString().Trim()).ToArray();
                             sb.EmitPush(UInt256.Parse(item.SubItems["Data"].Text.ToString().Trim()).ToArray());
                             break;
                         case "PublicKey":
