@@ -41,6 +41,9 @@
             // 
             // listView1
             // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -64,31 +67,31 @@
             // 
             this.columnHeader1.Name = "columnHeader1";
             this.columnHeader1.Text = "Time";
-            this.columnHeader1.Width = 67;
+            this.columnHeader1.Width = 80;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Name = "columnHeader2";
             this.columnHeader2.Text = "Type";
-            this.columnHeader2.Width = 90;
+            this.columnHeader2.Width = 130;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Name = "columnHeader3";
             this.columnHeader3.Text = "Name";
-            this.columnHeader3.Width = 96;
+            this.columnHeader3.Width = 180;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Name = "columnHeader4";
             this.columnHeader4.Text = "Message";
-            this.columnHeader4.Width = 396;
+            this.columnHeader4.Width = 270;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Name = "columnHeader5";
             this.columnHeader5.Text = "Status";
-            this.columnHeader5.Width = 110;
+            this.columnHeader5.Width = 90;
             // 
             // contextMenuStrip1
             // 
