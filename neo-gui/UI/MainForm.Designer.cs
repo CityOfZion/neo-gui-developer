@@ -58,6 +58,7 @@
             this.选举EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smartContractWatchlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查看帮助VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.官网WToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +124,7 @@
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CopySHtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyMessagetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.smartContractWatchlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eventLogMessageType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -139,6 +140,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.钱包WToolStripMenuItem,
             this.交易TToolStripMenuItem,
@@ -327,6 +329,12 @@
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
+            // smartContractWatchlistToolStripMenuItem
+            // 
+            resources.ApplyResources(this.smartContractWatchlistToolStripMenuItem, "smartContractWatchlistToolStripMenuItem");
+            this.smartContractWatchlistToolStripMenuItem.Name = "smartContractWatchlistToolStripMenuItem";
+            this.smartContractWatchlistToolStripMenuItem.Click += new System.EventHandler(this.smartContractWatchlistToolStripMenuItem_Click);
+            // 
             // 帮助HToolStripMenuItem
             // 
             this.帮助HToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -407,6 +415,7 @@
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.创建新地址NToolStripMenuItem,
             this.导入私钥IToolStripMenuItem,
@@ -517,6 +526,7 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lbl_height,
@@ -641,6 +651,7 @@
             // 
             // contextMenuStrip2
             // 
+            this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewCertificateToolStripMenuItem,
             this.删除DToolStripMenuItem1});
@@ -704,6 +715,7 @@
             // 
             // contextMenuStrip3
             // 
+            this.contextMenuStrip3.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.contextMenuStrip3.Name = "contextMenuStrip3";
@@ -729,6 +741,7 @@
             this.columnHeader13,
             this.columnHeader14,
             this.columnHeader15,
+            this.eventLogMessageType,
             this.columnHeader16});
             this.listView4.ContextMenuStrip = this.contextMenuStrip4;
             resources.ApplyResources(this.listView4, "listView4");
@@ -763,6 +776,7 @@
             // 
             // contextMenuStrip4
             // 
+            this.contextMenuStrip4.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CopySHtoolStripMenuItem,
             this.CopyMessagetoolStripMenuItem});
@@ -781,11 +795,9 @@
             resources.ApplyResources(this.CopyMessagetoolStripMenuItem, "CopyMessagetoolStripMenuItem");
             this.CopyMessagetoolStripMenuItem.Click += new System.EventHandler(this.CopyMessagetoolStripMenuItem_Click);
             // 
-            // smartContractWatchlistToolStripMenuItem
+            // eventLogMessageType
             // 
-            resources.ApplyResources(this.smartContractWatchlistToolStripMenuItem, "smartContractWatchlistToolStripMenuItem");
-            this.smartContractWatchlistToolStripMenuItem.Name = "smartContractWatchlistToolStripMenuItem";
-            this.smartContractWatchlistToolStripMenuItem.Click += new System.EventHandler(this.smartContractWatchlistToolStripMenuItem_Click);
+            resources.ApplyResources(this.eventLogMessageType, "eventLogMessageType");
             // 
             // MainForm
             // 
@@ -912,6 +924,7 @@
         private System.Windows.Forms.ToolStripMenuItem CopySHtoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CopyMessagetoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem smartContractWatchlistToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader eventLogMessageType;
     }
 }
 

@@ -46,11 +46,12 @@
             this.listViewParams.GridLines = true;
             this.listViewParams.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewParams.HideSelection = false;
-            this.listViewParams.Location = new System.Drawing.Point(12, 12);
+            this.listViewParams.Location = new System.Drawing.Point(18, 18);
+            this.listViewParams.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.listViewParams.MultiSelect = false;
             this.listViewParams.Name = "listViewParams";
             this.listViewParams.ShowGroups = false;
-            this.listViewParams.Size = new System.Drawing.Size(321, 232);
+            this.listViewParams.Size = new System.Drawing.Size(480, 355);
             this.listViewParams.TabIndex = 0;
             this.listViewParams.UseCompatibleStateImageBehavior = false;
             this.listViewParams.View = System.Windows.Forms.View.Details;
@@ -70,9 +71,10 @@
             // buttonAdd
             // 
             this.buttonAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAdd.Location = new System.Drawing.Point(12, 250);
+            this.buttonAdd.Location = new System.Drawing.Point(18, 385);
+            this.buttonAdd.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(30, 30);
+            this.buttonAdd.Size = new System.Drawing.Size(45, 46);
             this.buttonAdd.TabIndex = 1;
             this.buttonAdd.Text = "+";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -81,9 +83,10 @@
             // buttonRemove
             // 
             this.buttonRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonRemove.Location = new System.Drawing.Point(48, 250);
+            this.buttonRemove.Location = new System.Drawing.Point(72, 385);
+            this.buttonRemove.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonRemove.Name = "buttonRemove";
-            this.buttonRemove.Size = new System.Drawing.Size(30, 30);
+            this.buttonRemove.Size = new System.Drawing.Size(45, 46);
             this.buttonRemove.TabIndex = 2;
             this.buttonRemove.Text = "-";
             this.buttonRemove.UseVisualStyleBackColor = true;
@@ -92,9 +95,10 @@
             // buttonAccept
             // 
             this.buttonAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonAccept.Location = new System.Drawing.Point(177, 250);
+            this.buttonAccept.Location = new System.Drawing.Point(266, 385);
+            this.buttonAccept.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonAccept.Name = "buttonAccept";
-            this.buttonAccept.Size = new System.Drawing.Size(75, 30);
+            this.buttonAccept.Size = new System.Drawing.Size(112, 46);
             this.buttonAccept.TabIndex = 3;
             this.buttonAccept.Text = "Accept";
             this.buttonAccept.UseVisualStyleBackColor = true;
@@ -102,24 +106,26 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(258, 250);
+            this.buttonCancel.Location = new System.Drawing.Point(387, 385);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 30);
+            this.buttonCancel.Size = new System.Drawing.Size(112, 46);
             this.buttonCancel.TabIndex = 4;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // ParamsObjectDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 292);
+            this.ClientSize = new System.Drawing.Size(518, 449);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonAccept);
             this.Controls.Add(this.buttonRemove);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.listViewParams);
-            this.Name = "Form1";
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "ParamsObjectDialog";
             this.Text = "Set params object";
             this.ResumeLayout(false);
 
