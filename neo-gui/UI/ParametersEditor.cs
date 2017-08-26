@@ -54,24 +54,37 @@ namespace Neo.UI
                 return array.ToHexString();
         }
 
+        private bool paramSelected = false;
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedIndices.Count > 0)
+            paramSelected = (listView1.SelectedIndices.Count > 0);
+
+            if (paramSelected) {
                 textBox1.Text = listView1.SelectedItems[0].SubItems["value"].Text;
-            else
+            } else {
                 textBox1.Clear();
+            }
+
             textBox2.Clear();
+            // disable parameter value entry until a parameter is selected
+            textBox2.Enabled = paramSelected;
+        }
+
+        private void paramList_MouseDoubleClick(object sender, MouseEventArgs e) {
+            ActiveControl = textBox2;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            button1.Enabled = listView1.SelectedIndices.Count > 0 && textBox2.TextLength > 0;
-            button2.Enabled = listView1.SelectedIndices.Count > 0 && textBox2.TextLength > 0;
+            bool paramEntered = textBox2.TextLength > 0;
+
+            // disable buttons until a parameter value has been entered
+            button1.Enabled = button2.Enabled = paramSelected && paramEntered;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedIndices.Count == 0) return;
+            if (!paramSelected) return;
             ContractParameter parameter = (ContractParameter)listView1.SelectedItems[0].Tag;
             switch (parameter.Type)
             {
@@ -148,7 +161,7 @@ namespace Neo.UI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedIndices.Count == 0) return;
+            if (!paramSelected) return;
             ContractParameter parameter = (ContractParameter)listView1.SelectedItems[0].Tag;
             switch (parameter.Type)
             {
