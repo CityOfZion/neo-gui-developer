@@ -38,7 +38,6 @@ namespace Neo.UI
                     case "Array":
                         MessageBox.Show("not yet implemented array");
                         return null;
-                        break;
                     case "Signature":
                     case "ByteArray":
                         try
