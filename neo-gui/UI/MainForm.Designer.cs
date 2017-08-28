@@ -124,6 +124,7 @@
             this.CopySHtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyMessagetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smartContractWatchlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eventLogMessageType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -729,6 +730,7 @@
             this.columnHeader13,
             this.columnHeader14,
             this.columnHeader15,
+            this.eventLogMessageType,
             this.columnHeader16});
             this.listView4.ContextMenuStrip = this.contextMenuStrip4;
             resources.ApplyResources(this.listView4, "listView4");
@@ -782,10 +784,12 @@
             this.CopyMessagetoolStripMenuItem.Click += new System.EventHandler(this.CopyMessagetoolStripMenuItem_Click);
             // 
             // smartContractWatchlistToolStripMenuItem
+            // eventLogMessageType
             // 
             resources.ApplyResources(this.smartContractWatchlistToolStripMenuItem, "smartContractWatchlistToolStripMenuItem");
             this.smartContractWatchlistToolStripMenuItem.Name = "smartContractWatchlistToolStripMenuItem";
             this.smartContractWatchlistToolStripMenuItem.Click += new System.EventHandler(this.smartContractWatchlistToolStripMenuItem_Click);
+            resources.ApplyResources(this.eventLogMessageType, "eventLogMessageType");
             // 
             // MainForm
             // 
@@ -912,6 +916,7 @@
         private System.Windows.Forms.ToolStripMenuItem CopySHtoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CopyMessagetoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem smartContractWatchlistToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader eventLogMessageType;
     }
 }
 
