@@ -74,13 +74,16 @@ namespace Neo.UI
                 ContractState contract = Blockchain.Default.GetContract(script_hash);
                 if (contract != null)
                 {
-                    Item.SubItems[2].Text = contract.Name;
-                    Item.SubItems[2].Font = SystemFonts.DefaultFont;
-                    Item.SubItems[4].Text = "Found! ツ";
-                    Item.SubItems[4].ForeColor = Color.Green;
+                    if(Item.SubItems[2].Text != contract.Name) {
+                        // don't attempt to redraw unless something has changed (in this case name goes from pending -> contract name)
+                        Item.SubItems[2].Text = contract.Name;
+                        Item.SubItems[2].Font = SystemFonts.DefaultFont;
+                        Item.SubItems[4].Text = "Found! ツ";
+                        Item.SubItems[4].ForeColor = Color.Green;
+                    }
                 }
             }
-        }
+            }
 
         private void CopySHtoolStripMenuItem_Click(object sender, EventArgs e)
         {
