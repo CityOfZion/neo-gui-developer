@@ -120,7 +120,6 @@
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CopySHtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyMessagetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,6 +140,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.钱包WToolStripMenuItem,
             this.交易TToolStripMenuItem,
@@ -416,6 +416,7 @@
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.创建新地址NToolStripMenuItem,
             this.导入私钥IToolStripMenuItem,
@@ -482,6 +483,17 @@
             this.多方签名MToolStripMenuItem.Name = "多方签名MToolStripMenuItem";
             resources.ApplyResources(this.多方签名MToolStripMenuItem, "多方签名MToolStripMenuItem");
             this.多方签名MToolStripMenuItem.Click += new System.EventHandler(this.多方签名MToolStripMenuItem_Click);
+            // 
+            // lockToolStripMenuItem
+            // 
+            this.lockToolStripMenuItem.Name = "lockToolStripMenuItem";
+            resources.ApplyResources(this.lockToolStripMenuItem, "lockToolStripMenuItem");
+            this.lockToolStripMenuItem.Click += new System.EventHandler(this.lockToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            resources.ApplyResources(this.toolStripSeparator12, "toolStripSeparator12");
             // 
             // 自定义CToolStripMenuItem
             // 
@@ -767,6 +779,10 @@
             // 
             resources.ApplyResources(this.columnHeader15, "columnHeader15");
             // 
+            // eventLogMessageType
+            // 
+            resources.ApplyResources(this.eventLogMessageType, "eventLogMessageType");
+            // 
             // columnHeader16
             // 
             resources.ApplyResources(this.columnHeader16, "columnHeader16");
@@ -822,7 +838,6 @@
             this.tabPage3.ResumeLayout(false);
             this.contextMenuStrip3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.contextMenuStrip4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -926,6 +941,14 @@
         private System.Windows.Forms.ColumnHeader eventLogMessageType;
         private System.Windows.Forms.ToolStripMenuItem lockToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.ListView listView4;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader14;
+        private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.ColumnHeader eventLogMessageType;
+        private System.Windows.Forms.ColumnHeader columnHeader16;
         private System.Windows.Forms.ToolStripMenuItem listContractsToolStripMenuItem;
     }
 }
