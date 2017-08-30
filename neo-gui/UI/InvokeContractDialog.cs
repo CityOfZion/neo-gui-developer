@@ -107,8 +107,9 @@ namespace Neo.UI
             textBox4.Text = contract.Author;
             textBox5.Text = string.Join(", ", contract.Code.ParameterList);
             button2.Enabled = parameters.Length > 0;
-            MainForm parent = (MainForm)this.Owner;
-            parent.scListAdd("Deployed ScriptHash", contract.Name, script_hash.ToString(), true);
+            
+            // save the contract hash to the contract list
+            MainForm.Instance.scList.scListAdd(textBox1.Text, true);
             UpdateScript();
         }
 
