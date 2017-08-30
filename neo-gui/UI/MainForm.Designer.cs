@@ -80,6 +80,8 @@
             this.创建智能合约SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.多方签名MToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.自定义CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.查看私钥VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewContractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,8 +125,8 @@
             this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CopySHtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyMessagetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.smartContractWatchlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eventLogMessageType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -257,8 +259,7 @@
             this.toolStripSeparator11,
             this.选举EToolStripMenuItem,
             this.toolStripSeparator9,
-            this.optionsToolStripMenuItem,
-            this.smartContractWatchlistToolStripMenuItem});
+            this.optionsToolStripMenuItem});
             this.高级AToolStripMenuItem.Name = "高级AToolStripMenuItem";
             resources.ApplyResources(this.高级AToolStripMenuItem, "高级AToolStripMenuItem");
             // 
@@ -474,6 +475,8 @@
             // 
             this.创建智能合约SToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.多方签名MToolStripMenuItem,
+            this.lockToolStripMenuItem,
+            this.toolStripSeparator12,
             this.自定义CToolStripMenuItem});
             resources.ApplyResources(this.创建智能合约SToolStripMenuItem, "创建智能合约SToolStripMenuItem");
             this.创建智能合约SToolStripMenuItem.Name = "创建智能合约SToolStripMenuItem";
@@ -807,12 +810,8 @@
             resources.ApplyResources(this.CopyMessagetoolStripMenuItem, "CopyMessagetoolStripMenuItem");
             this.CopyMessagetoolStripMenuItem.Click += new System.EventHandler(this.CopyMessagetoolStripMenuItem_Click);
             // 
-            // smartContractWatchlistToolStripMenuItem
             // eventLogMessageType
             // 
-            resources.ApplyResources(this.smartContractWatchlistToolStripMenuItem, "smartContractWatchlistToolStripMenuItem");
-            this.smartContractWatchlistToolStripMenuItem.Name = "smartContractWatchlistToolStripMenuItem";
-            this.smartContractWatchlistToolStripMenuItem.Click += new System.EventHandler(this.smartContractWatchlistToolStripMenuItem_Click);
             resources.ApplyResources(this.eventLogMessageType, "eventLogMessageType");
             // 
             // MainForm
@@ -937,18 +936,9 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
         private System.Windows.Forms.ToolStripMenuItem CopySHtoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CopyMessagetoolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem smartContractWatchlistToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader eventLogMessageType;
         private System.Windows.Forms.ToolStripMenuItem lockToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.ListView listView4;
-        private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.ColumnHeader columnHeader13;
-        private System.Windows.Forms.ColumnHeader columnHeader14;
-        private System.Windows.Forms.ColumnHeader columnHeader15;
-        private System.Windows.Forms.ColumnHeader eventLogMessageType;
-        private System.Windows.Forms.ColumnHeader columnHeader16;
         private System.Windows.Forms.ToolStripMenuItem listContractsToolStripMenuItem;
     }
 }

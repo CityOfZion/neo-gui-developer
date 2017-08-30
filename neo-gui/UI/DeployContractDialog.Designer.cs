@@ -174,8 +174,8 @@
             // 
             // textBox9
             // 
-            resources.ApplyResources(this.textBox9, "textBox9");
             this.textBox9.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.textBox9, "textBox9");
             this.textBox9.Name = "textBox9";
             this.textBox9.ReadOnly = true;
             // 
@@ -200,8 +200,8 @@
             // 
             // button2
             // 
-            resources.ApplyResources(this.button2, "button2");
             this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);

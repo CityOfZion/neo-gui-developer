@@ -74,8 +74,7 @@ namespace Neo.UI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MainForm parent = (MainForm)this.Owner;
-            parent.scListAdd("Deployed ScriptHash", textBox1.Text, textBox8.Text.HexToBytes().ToScriptHash().ToString(), true);
+            //parent.scListAdd("Deployed ScriptHash", textBox1.Text, textBox8.Text.HexToBytes().ToScriptHash().ToString(), true);
         }
 
         private void textBox5_KeyDown(object sender, KeyEventArgs e) {
