@@ -27,6 +27,9 @@ namespace Neo.UI
 {
     internal partial class MainForm : Form
     {
+        public SmartContractList scList = new SmartContractList();
+        public static MainForm Instance = null;                                                                 // save a copy of mainform instance to be used by subforms
+
         private static readonly UInt160 RecycleScriptHash = new[] { (byte)OpCode.PUSHT }.ToScriptHash();
         private bool balance_changed = false;
         private DateTime persistence_time = DateTime.MinValue;
@@ -34,9 +37,7 @@ namespace Neo.UI
         public MainForm(XDocument xdoc = null)
         {
             InitializeComponent();
-            StateReader.Log += StateReader_Log;
-            StateReader.Notify += StateReader_Notify;
-
+            Instance = this;
             if (xdoc != null)
             {
                 Version version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -150,6 +151,7 @@ namespace Neo.UI
             资产分发IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             deployContractToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             invokeContractToolStripMenuItem.Enabled = Program.CurrentWallet != null;
+            listContractsToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             选举EToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             创建新地址NToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             导入私钥IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
@@ -439,87 +441,12 @@ namespace Neo.UI
                     }
                 }
             }
-            scList.updateStatus();
-        }
 
-        /**
-         * received a Runtime.Notify event from the smart contract, process and display in the "Event Log" tab 
-         */
-        private void StateReader_Notify(object sender, NotifyEventArgs e) 
-        {
-            StackItem[] stack = e.State.GetArray();
-            string[] message = new string[stack.Length];
-
-            for (int i = 0; i < stack.Length; i++) {
-                switch(stack[i].GetType().ToString()) {
-                    case "Neo.VM.Types.ByteArray":
-                        byte[] stackByteData = stack[i].GetByteArray();
-                        if(i == 0) {
-                            // assume that the first part of notify is going to be a description of the following data
-                            message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
-                        } else {
-                            message[i] = stackByteData.ToHexString();
-                        }
-                        break;
-                    case "Neo.VM.Types.Integer":
-                        message[i] = stack[i].GetBigInteger().ToString();
-                        break;
-                    case "Neo.VM.Types.Boolean":
-                        message[i] = stack[i].GetBoolean().ToString();
-                        break;
-                }
+            // update the smart contract list if it is being displayed
+            if (scList.Visible)
+            {
+                scList.updateStatus();
             }
-            AddEventLog_Row(e.ScriptHash, "Notify", String.Join(" / ", message));
-        }
-
-        /**
-         * received a Runtime.Log event from the smart contract, process and display in the "Event Log" tab 
-         */
-        private void StateReader_Log(object sender, LogEventArgs e)
-        {
-            AddEventLog_Row(e.ScriptHash, "Log", e.Message);
-        }
-
-        /**
-         * add a new list item to the event log tab
-         */
-        private void AddEventLog_Row(UInt160 scriptHash, string eventType, string eventMessage) {
-            ContractState contract = Blockchain.Default.GetContract(scriptHash);
-            if (contract == null) return;
-
-            DateTime localDateTime = DateTime.Now;
-            listView4.Items.Add(new ListViewItem(new[] {
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Time",
-                        Text = localDateTime.ToString()
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Block",
-                        Text = Blockchain.Default.Height.ToString()
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Script Hash",
-                        Text = scriptHash.ToString()
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Name",
-                        Text = contract.Name.ToString()
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Type",
-                        Text = eventType
-                    },
-                    new ListViewItem.ListViewSubItem
-                    {
-                        Name = "Message",
-                        Text = eventMessage
-                    }
-                }, -1));
         }
 
         private void 创建钱包数据库NToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1020,27 +947,10 @@ namespace Neo.UI
             }
         }
 
-        private SmartContractList scList = new SmartContractList();
-        public void scListAdd(string scType, string scName, string scMessage, bool newContract)
-        {
-            scList.AddSmartContract(scType, scName, scMessage, newContract);
-        }
-
-        private void scListLoad()
-        {
-            if (File.Exists(Application.StartupPath + "\\smartcontracts.txt"))
-            {
-                UInt160 ignore;
-                String[] smartContracts = File.ReadAllLines(Application.StartupPath + "\\smartcontracts.txt");
-                foreach (var smartContract in smartContracts)
-                {
-                    string[] parameters = smartContract.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (UInt160.TryParse(parameters[2], out ignore)) scListAdd(parameters[0], parameters[1], parameters[2], false);
-                }
-            }
-        }
-
-        private void smartContractWatchlistToolStripMenuItem_Click(object sender, EventArgs e)
+        /**
+         * menu item for List Contracts was clicked
+         */
+        private void listContractsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             scList.Show();
         }
