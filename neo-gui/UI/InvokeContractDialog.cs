@@ -80,6 +80,12 @@ namespace Neo.UI
                         case ContractParameterType.PublicKey:
                             sb.EmitPush(((ECPoint)parameter.Value).EncodePoint(true));
                             break;
+                        case ContractParameterType.Array:
+                            foreach(var item in ((object[])parameter.Value).Reverse())
+                                sb.EmitPush(((string)item).HexToBytes());
+                            sb.EmitPush(((object[])parameter.Value).Length);
+                            sb.Emit(OpCode.PACK);
+                            break;
                     }
                 }
                 sb.EmitAppCall(script_hash.ToArray(), true);
@@ -189,6 +195,9 @@ namespace Neo.UI
             textBox4.Text = contract.Author;
             textBox5.Text = string.Join(", ", contract.Code.ParameterList);
             button2.Enabled = parameters.Length > 0;
+            
+            // save the contract hash to the contract list
+            MainForm.Instance.scList.scListAdd(textBox1.Text, true);
             UpdateScript();
         }
         */
@@ -313,8 +322,18 @@ namespace Neo.UI
             DataCache<StorageKey, StorageItem> storages = blockchain.GetTable<StorageKey, StorageItem>();
             CachedScriptTable script_table = new CachedScriptTable(contracts);
             StateMachine service = new StateMachine(accounts, validators, assets, contracts, storages);
-            ApplicationEngine engine = new ApplicationEngine(TriggerType.Application, tx, script_table, service, Fixed8.Zero, true);
-            engine.LoadScript(tx.Script, false);
+
+            ////////////////////////////////////////////////////////////
+            ////////////////////////EXPERIMENTAL////////////////////////
+            testTx = tx;
+            testTx.Gas = Fixed8.Satoshi;
+            testTx = GetTransaction();
+            ////////////////////////EXPERIMENTAL////////////////////////            
+            ////////////////////////////////////////////////////////////
+
+            ApplicationEngine engine = new ApplicationEngine(TriggerType.Application, testTx, script_table, service, Fixed8.Zero, true);
+            engine.LoadScript(testTx.Script, false);
+            
             if (engine.Execute())
             {
                 tx.Gas = engine.GasConsumed - Fixed8.FromDecimal(10);
@@ -606,6 +625,16 @@ namespace Neo.UI
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             txtCustomScript.Text = File.ReadAllBytes(openFileDialog1.FileName).ToHexString();
+        }
+
+        private void buttonParams_Click(object sender, EventArgs e)
+        {
+            using (ParamsObjectDialog dialog = new ParamsObjectDialog())
+            {
+                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.getParams() != null) textBox6.Text = dialog.getParams() + textBox6.Text;
+                else textBox6.Text = "00" + textBox6.Text;
+            }
         }
     }
 }

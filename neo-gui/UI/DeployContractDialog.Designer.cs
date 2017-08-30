@@ -76,11 +76,12 @@
             // 
             // textBox5
             // 
-            resources.ApplyResources(this.textBox5, "textBox5");
             this.textBox5.AcceptsReturn = true;
             this.textBox5.AcceptsTab = true;
+            resources.ApplyResources(this.textBox5, "textBox5");
             this.textBox5.Name = "textBox5";
             this.textBox5.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.textBox5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox5_KeyDown);
             // 
             // label5
             // 
@@ -133,11 +134,11 @@
             // 
             // groupBox2
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.textBox7);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.textBox6);
             this.groupBox2.Controls.Add(this.label6);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
@@ -203,6 +204,7 @@
             this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -213,13 +215,13 @@
             // 
             // openFileDialog1
             // 
-            resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             this.openFileDialog1.DefaultExt = "avm";
+            resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             // 
             // DeployContractDialog
             // 
-            resources.ApplyResources(this, "$this");
             this.AcceptButton = this.button2;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button3;
             this.Controls.Add(this.groupBox1);

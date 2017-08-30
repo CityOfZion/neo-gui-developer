@@ -4,8 +4,10 @@ using Neo.Implementations.Blockchains.LevelDB;
 using Neo.Implementations.Wallets.EntityFramework;
 using Neo.IO;
 using Neo.Properties;
+using Neo.SmartContract;
 using Neo.VM;
 using Neo.Wallets;
+using Neo.SmartContract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,11 +22,16 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using System.Numerics;
 
 namespace Neo.UI
 {
     internal partial class MainForm : Form
     {
+        delegate void AddEventLogCallback(ListViewItem listItem);                                               // helper method to prevent crash when adding Runtime.Notify/Runtime.Log from non ui thread
+        public SmartContractList scList = new SmartContractList();
+        public static MainForm Instance = null;                                                                 // save a copy of mainform instance to be used by subforms
+
         private static readonly UInt160 RecycleScriptHash = new[] { (byte)OpCode.PUSHT }.ToScriptHash();
         private bool balance_changed = false;
         private DateTime persistence_time = DateTime.MinValue;
@@ -32,6 +39,11 @@ namespace Neo.UI
         public MainForm(XDocument xdoc = null)
         {
             InitializeComponent();
+            Instance = this;
+
+            StateReader.Log += StateReader_Log;
+            StateReader.Notify += StateReader_Notify;
+
             if (xdoc != null)
             {
                 Version version = Assembly.GetExecutingAssembly().GetName().Version;
@@ -145,10 +157,12 @@ namespace Neo.UI
             资产分发IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             deployContractToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             invokeContractToolStripMenuItem.Enabled = Program.CurrentWallet != null;
+            listContractsToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             选举EToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             创建新地址NToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             导入私钥IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             创建智能合约SToolStripMenuItem.Enabled = Program.CurrentWallet != null;
+            smartContractWatchlistToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             listView1.Items.Clear();
             if (Program.CurrentWallet != null)
             {
@@ -274,6 +288,7 @@ namespace Neo.UI
                 Blockchain.PersistCompleted += Blockchain_PersistCompleted;
                 Program.LocalNode.Start(Settings.Default.NodePort, Settings.Default.WsPort);
             });
+            scListLoad();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -432,6 +447,12 @@ namespace Neo.UI
                     }
                 }
             }
+
+            // update the smart contract list if it is being displayed
+            if (scList.Visible)
+            {
+                scList.updateStatus();
+            }
         }
 
         private void 创建钱包数据库NToolStripMenuItem_Click(object sender, EventArgs e)
@@ -583,7 +604,7 @@ namespace Neo.UI
             InvocationTransaction tx;
             using (DeployContractDialog dialog = new DeployContractDialog())
             {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
             }
             using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
@@ -598,7 +619,7 @@ namespace Neo.UI
         {
             using (InvokeContractDialog dialog = new InvokeContractDialog())
             {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 Helper.SignAndShowInformation(dialog.GetTransaction());
             }
         }
@@ -891,6 +912,18 @@ namespace Neo.UI
             Clipboard.SetDataObject(listView3.SelectedItems[0].SubItems[1].Text);
         }
 
+        private void CopySHtoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView4.SelectedItems.Count == 0) return;
+            Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[2].Text);
+        }
+
+        private void CopyMessagetoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView4.SelectedItems.Count == 0) return;
+            Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[5].Text);
+        }
+
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             if (listView1.SelectedIndices.Count == 0) return;
@@ -918,6 +951,118 @@ namespace Neo.UI
             {
                 dialog.ShowDialog();
             }
+        }
+
+        /**
+         * received a Runtime.Notify event from the smart contract, process and display in the "Event Log" tab 
+         */
+        private void StateReader_Notify(object sender, NotifyEventArgs e)
+        {
+            StackItem[] stack = e.State.GetArray();
+            string[] message = new string[stack.Length];
+
+            for (int i = 0; i < stack.Length; i++)
+            {
+                switch (stack[i].GetType().ToString())
+                {
+                    case "Neo.VM.Types.ByteArray":
+                        byte[] stackByteData = stack[i].GetByteArray();
+                        if (i == 0)
+                        {
+                            // assume that the first part of notify is going to be a description of the following data
+                            message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
+                        }
+                        else
+                        {
+                            message[i] = stackByteData.ToHexString();
+                        }
+                        break;
+                    case "Neo.VM.Types.Integer":
+                        message[i] = stack[i].GetBigInteger().ToString();
+                        break;
+                    case "Neo.VM.Types.Boolean":
+                        message[i] = stack[i].GetBoolean().ToString();
+                        break;
+                }
+            }
+            AddEventLog_Row(e.ScriptHash, "Notify", String.Join(" / ", message));
+        }
+
+        /**
+         * received a Runtime.Log event from the smart contract, process and display in the "Event Log" tab 
+         */
+        private void StateReader_Log(object sender, LogEventArgs e)
+        {
+            AddEventLog_Row(e.ScriptHash, "Log", e.Message);
+        }
+
+        /**
+         * helper method to add a new row to list item / prevents cross thread exception
+         */
+        private void AddEventLog_RowItem(ListViewItem listItem)
+        {
+            listView4.Items.Add(listItem);
+        }
+
+        /**
+         * add a new list item to the event log tab
+         */
+        private void AddEventLog_Row(UInt160 scriptHash, string eventType, string eventMessage)
+        {
+            ContractState contract = Blockchain.Default.GetContract(scriptHash);
+            if (contract == null) return;
+
+            DateTime localDateTime = DateTime.Now;
+            ListViewItem newLogRow = new ListViewItem(new[] {
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Time",
+                        Text = localDateTime.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Block",
+                        Text = Blockchain.Default.Height.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Script Hash",
+                        Text = scriptHash.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Name",
+                        Text = contract.Name.ToString()
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Type",
+                        Text = eventType
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "Message",
+                        Text = eventMessage
+                    }
+                }, -1);
+
+            if (listView4.InvokeRequired)
+            {
+                // call is coming from a non ui thread
+                AddEventLogCallback logCallback = new AddEventLogCallback(AddEventLog_RowItem);
+                Invoke(logCallback, new object[] { newLogRow });
+            }
+            else
+            {
+                AddEventLog_RowItem(newLogRow);
+            }
+
+        /*
+         * menu item for List Contracts was clicked
+         */
+        private void listContractsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            scList.Show();
         }
     }
 }

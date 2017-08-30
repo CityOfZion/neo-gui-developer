@@ -26,6 +26,9 @@ namespace Neo.UI
             string author = textBox3.Text;
             string email = textBox4.Text;
             string description = textBox5.Text;
+
+            InformationBox.Show(script.ToScriptHash().ToString(), "This is the Script Hash for your Smart Contract:", "Script Hash");
+
             using (ScriptBuilder sb = new ScriptBuilder())
             {
                 sb.EmitPush(Encoding.UTF8.GetBytes(description));
@@ -67,6 +70,20 @@ namespace Neo.UI
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             textBox8.Text = File.ReadAllBytes(openFileDialog1.FileName).ToHexString();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MainForm parent = (MainForm)this.Owner;
+            parent.scListAdd("Deployed ScriptHash", textBox1.Text, textBox8.Text.HexToBytes().ToScriptHash().ToString(), true);
+        }
+
+        private void textBox5_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyValue == 9) {
+                // tab in description should just jump to the next control
+                e.SuppressKeyPress = true;
+                SelectNextControl((Control)sender, true, true, true, true);
+            }
         }
     }
 }
