@@ -54,6 +54,7 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.deployContractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.invokeContractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listContractsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.选举EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
@@ -78,8 +79,6 @@
             this.importWatchOnlyAddressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.创建智能合约SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.多方签名MToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.自定义CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.查看私钥VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -121,8 +120,11 @@
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CopySHtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CopyMessagetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smartContractWatchlistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eventLogMessageType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -133,6 +135,7 @@
             this.tabPage3.SuspendLayout();
             this.contextMenuStrip3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.contextMenuStrip4.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -250,10 +253,12 @@
             this.toolStripSeparator8,
             this.deployContractToolStripMenuItem,
             this.invokeContractToolStripMenuItem,
+            this.listContractsToolStripMenuItem,
             this.toolStripSeparator11,
             this.选举EToolStripMenuItem,
             this.toolStripSeparator9,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.smartContractWatchlistToolStripMenuItem});
             this.高级AToolStripMenuItem.Name = "高级AToolStripMenuItem";
             resources.ApplyResources(this.高级AToolStripMenuItem, "高级AToolStripMenuItem");
             // 
@@ -302,6 +307,12 @@
             resources.ApplyResources(this.invokeContractToolStripMenuItem, "invokeContractToolStripMenuItem");
             this.invokeContractToolStripMenuItem.Name = "invokeContractToolStripMenuItem";
             this.invokeContractToolStripMenuItem.Click += new System.EventHandler(this.invokeContractToolStripMenuItem_Click);
+            // 
+            // listContractsToolStripMenuItem
+            // 
+            resources.ApplyResources(this.listContractsToolStripMenuItem, "listContractsToolStripMenuItem");
+            this.listContractsToolStripMenuItem.Name = "listContractsToolStripMenuItem";
+            this.listContractsToolStripMenuItem.Click += new System.EventHandler(this.listContractsToolStripMenuItem_Click);
             // 
             // toolStripSeparator11
             // 
@@ -463,8 +474,6 @@
             // 
             this.创建智能合约SToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.多方签名MToolStripMenuItem,
-            this.lockToolStripMenuItem,
-            this.toolStripSeparator12,
             this.自定义CToolStripMenuItem});
             resources.ApplyResources(this.创建智能合约SToolStripMenuItem, "创建智能合约SToolStripMenuItem");
             this.创建智能合约SToolStripMenuItem.Name = "创建智能合约SToolStripMenuItem";
@@ -529,7 +538,6 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lbl_height,
@@ -654,7 +662,6 @@
             // 
             // contextMenuStrip2
             // 
-            this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewCertificateToolStripMenuItem,
             this.删除DToolStripMenuItem1});
@@ -718,7 +725,6 @@
             // 
             // contextMenuStrip3
             // 
-            this.contextMenuStrip3.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.contextMenuStrip3.Name = "contextMenuStrip3";
@@ -746,6 +752,7 @@
             this.columnHeader15,
             this.eventLogMessageType,
             this.columnHeader16});
+            this.listView4.ContextMenuStrip = this.contextMenuStrip4;
             resources.ApplyResources(this.listView4, "listView4");
             this.listView4.FullRowSelect = true;
             this.listView4.GridLines = true;
@@ -780,6 +787,34 @@
             // 
             resources.ApplyResources(this.columnHeader16, "columnHeader16");
             // 
+            // contextMenuStrip4
+            // 
+            this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CopySHtoolStripMenuItem,
+            this.CopyMessagetoolStripMenuItem});
+            this.contextMenuStrip4.Name = "contextMenuStrip4";
+            resources.ApplyResources(this.contextMenuStrip4, "contextMenuStrip4");
+            // 
+            // CopySHtoolStripMenuItem
+            // 
+            this.CopySHtoolStripMenuItem.Name = "CopySHtoolStripMenuItem";
+            resources.ApplyResources(this.CopySHtoolStripMenuItem, "CopySHtoolStripMenuItem");
+            this.CopySHtoolStripMenuItem.Click += new System.EventHandler(this.CopySHtoolStripMenuItem_Click);
+            // 
+            // CopyMessagetoolStripMenuItem
+            // 
+            this.CopyMessagetoolStripMenuItem.Name = "CopyMessagetoolStripMenuItem";
+            resources.ApplyResources(this.CopyMessagetoolStripMenuItem, "CopyMessagetoolStripMenuItem");
+            this.CopyMessagetoolStripMenuItem.Click += new System.EventHandler(this.CopyMessagetoolStripMenuItem_Click);
+            // 
+            // smartContractWatchlistToolStripMenuItem
+            // eventLogMessageType
+            // 
+            resources.ApplyResources(this.smartContractWatchlistToolStripMenuItem, "smartContractWatchlistToolStripMenuItem");
+            this.smartContractWatchlistToolStripMenuItem.Name = "smartContractWatchlistToolStripMenuItem";
+            this.smartContractWatchlistToolStripMenuItem.Click += new System.EventHandler(this.smartContractWatchlistToolStripMenuItem_Click);
+            resources.ApplyResources(this.eventLogMessageType, "eventLogMessageType");
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -805,7 +840,6 @@
             this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -893,6 +927,18 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem deployContractToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem invokeContractToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.ListView listView4;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader14;
+        private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.ColumnHeader columnHeader16;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
+        private System.Windows.Forms.ToolStripMenuItem CopySHtoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CopyMessagetoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smartContractWatchlistToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader eventLogMessageType;
         private System.Windows.Forms.ToolStripMenuItem lockToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.TabPage tabPage4;
@@ -903,6 +949,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader15;
         private System.Windows.Forms.ColumnHeader eventLogMessageType;
         private System.Windows.Forms.ColumnHeader columnHeader16;
+        private System.Windows.Forms.ToolStripMenuItem listContractsToolStripMenuItem;
     }
 }
 

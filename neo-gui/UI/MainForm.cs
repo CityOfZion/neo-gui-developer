@@ -7,6 +7,7 @@ using Neo.Properties;
 using Neo.SmartContract;
 using Neo.VM;
 using Neo.Wallets;
+using Neo.SmartContract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,12 +22,16 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using System.Numerics;
 
 namespace Neo.UI
 {
     internal partial class MainForm : Form
     {
         delegate void AddEventLogCallback(ListViewItem listItem);                                               // helper method to prevent crash when adding Runtime.Notify/Runtime.Log from non ui thread
+        public SmartContractList scList = new SmartContractList();
+        public static MainForm Instance = null;                                                                 // save a copy of mainform instance to be used by subforms
+
         private static readonly UInt160 RecycleScriptHash = new[] { (byte)OpCode.PUSHT }.ToScriptHash();
         private bool balance_changed = false;
         private DateTime persistence_time = DateTime.MinValue;
@@ -34,6 +39,7 @@ namespace Neo.UI
         public MainForm(XDocument xdoc = null)
         {
             InitializeComponent();
+            Instance = this;
 
             StateReader.Log += StateReader_Log;
             StateReader.Notify += StateReader_Notify;
@@ -151,10 +157,12 @@ namespace Neo.UI
             资产分发IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             deployContractToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             invokeContractToolStripMenuItem.Enabled = Program.CurrentWallet != null;
+            listContractsToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             选举EToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             创建新地址NToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             导入私钥IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             创建智能合约SToolStripMenuItem.Enabled = Program.CurrentWallet != null;
+            smartContractWatchlistToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             listView1.Items.Clear();
             if (Program.CurrentWallet != null)
             {
@@ -280,6 +288,7 @@ namespace Neo.UI
                 Blockchain.PersistCompleted += Blockchain_PersistCompleted;
                 Program.LocalNode.Start(Settings.Default.NodePort, Settings.Default.WsPort);
             });
+            scListLoad();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -438,6 +447,12 @@ namespace Neo.UI
                     }
                 }
             }
+
+            // update the smart contract list if it is being displayed
+            if (scList.Visible)
+            {
+                scList.updateStatus();
+            }
         }
 
         private void 创建钱包数据库NToolStripMenuItem_Click(object sender, EventArgs e)
@@ -589,7 +604,7 @@ namespace Neo.UI
             InvocationTransaction tx;
             using (DeployContractDialog dialog = new DeployContractDialog())
             {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
             }
             using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
@@ -604,7 +619,7 @@ namespace Neo.UI
         {
             using (InvokeContractDialog dialog = new InvokeContractDialog())
             {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
+                if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 Helper.SignAndShowInformation(dialog.GetTransaction());
             }
         }
@@ -897,6 +912,18 @@ namespace Neo.UI
             Clipboard.SetDataObject(listView3.SelectedItems[0].SubItems[1].Text);
         }
 
+        private void CopySHtoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView4.SelectedItems.Count == 0) return;
+            Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[2].Text);
+        }
+
+        private void CopyMessagetoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView4.SelectedItems.Count == 0) return;
+            Clipboard.SetDataObject(listView4.SelectedItems[0].SubItems[5].Text);
+        }
+
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             if (listView1.SelectedIndices.Count == 0) return;
@@ -1029,6 +1056,13 @@ namespace Neo.UI
             {
                 AddEventLog_RowItem(newLogRow);
             }
+
+        /*
+         * menu item for List Contracts was clicked
+         */
+        private void listContractsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            scList.Show();
         }
     }
 }
