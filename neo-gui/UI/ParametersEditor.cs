@@ -40,8 +40,16 @@ namespace Neo.UI
         {
             if (value == null) return "(null)";
             byte[] array = value as byte[];
-            if (array == null)
+            string[] array2 = value as string[];
+            if (array == null && array2 == null)
                 return value.ToString();
+            else if (array2 != null)
+            {
+                string arrayString = "";
+                foreach (string stringItem in array2)
+                    arrayString += stringItem + ", ";
+                return arrayString.Remove(arrayString.Length - 2);
+            }
             else
                 return array.ToHexString();
         }
@@ -58,6 +66,7 @@ namespace Neo.UI
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             button1.Enabled = listView1.SelectedIndices.Count > 0 && textBox2.TextLength > 0;
+            button2.Enabled = listView1.SelectedIndices.Count > 0 && textBox2.TextLength > 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -118,10 +127,37 @@ namespace Neo.UI
                         return;
                     }
                     break;
+                case ContractParameterType.Array:
+                    try
+                    {
+                        string[] testString = textBox2.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (string stringItem in testString)
+                            stringItem.HexToBytes();
+                        parameter.Value = testString;
+                    }
+                    catch (FormatException)
+                    {
+                        return;
+                    }
+                    break;
             }
             listView1.SelectedItems[0].SubItems["value"].Text = GetValueString(parameter.Value);
             textBox1.Text = listView1.SelectedItems[0].SubItems["value"].Text;
             textBox2.Clear();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedIndices.Count == 0) return;
+            ContractParameter parameter = (ContractParameter)listView1.SelectedItems[0].Tag;
+            switch (parameter.Type)
+            {
+                case ContractParameterType.ByteArray:
+                    string inputString = System.Text.Encoding.UTF8.GetBytes(textBox2.Text).ToHexString();
+                    textBox2.Text = inputString;
+                    button2.Enabled = false;
+                    break;
+            }
         }
     }
 }

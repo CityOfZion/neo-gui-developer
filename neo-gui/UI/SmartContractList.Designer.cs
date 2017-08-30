@@ -156,4 +156,3 @@ namespace Neo.UI
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ToolStripMenuItem showDescriptionToolStripMenuItem;
     }
-}

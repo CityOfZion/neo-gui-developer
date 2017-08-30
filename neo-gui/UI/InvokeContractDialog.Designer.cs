@@ -53,6 +53,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.buttonParams = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -215,15 +216,23 @@
             // 
             // openFileDialog1
             // 
-            resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             this.openFileDialog1.DefaultExt = "avm";
+            resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
+            // 
+            // buttonParams
+            // 
+            resources.ApplyResources(this.buttonParams, "buttonParams");
+            this.buttonParams.Name = "buttonParams";
+            this.buttonParams.UseVisualStyleBackColor = true;
+            this.buttonParams.Click += new System.EventHandler(this.buttonParams_Click);
             // 
             // InvokeContractDialog
             // 
-            resources.ApplyResources(this, "$this");
             this.AcceptButton = this.button3;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button4;
+            this.Controls.Add(this.buttonParams);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -272,5 +281,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button buttonParams;
     }
 }
