@@ -24,28 +24,16 @@ namespace Neo
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Exception ex = (Exception)e.ExceptionObject;
             using (FileStream fs = new FileStream("error.log", FileMode.Create, FileAccess.Write, FileShare.None))
             using (StreamWriter w = new StreamWriter(fs))
             {
-                w.WriteLine(ex.GetType());
-                w.WriteLine(ex.Message);
-                w.WriteLine(ex.StackTrace);
-                AggregateException ex2 = ex as AggregateException;
-                if (ex2 != null)
-                {
-                    foreach (Exception inner in ex2.InnerExceptions)
-                    {
-                        w.WriteLine();
-                        w.WriteLine(inner.Message);
-                        w.WriteLine(inner.StackTrace);
-                    }
-                }
+                PrintErrorLogs(w, (Exception)e.ExceptionObject);
             }
         }
 
         private static bool InstallCertificate()
         {
+            if (!Settings.Default.InstallCertificate) return true;
             using (X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine))
             using (X509Certificate2 cert = new X509Certificate2(Resources.OnchainCertificate))
             {
@@ -62,7 +50,12 @@ namespace Neo
                     return true;
                 }
                 catch (CryptographicException) { }
-                if (MessageBox.Show(Strings.InstallCertificateText, Strings.InstallCertificateCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes) return true;
+                if (MessageBox.Show(Strings.InstallCertificateText, Strings.InstallCertificateCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+                {
+                    Settings.Default.InstallCertificate = false;
+                    Settings.Default.Save();
+                    return true;
+                }
                 try
                 {
                     Process.Start(new ProcessStartInfo
@@ -106,11 +99,41 @@ namespace Neo
                 }
             }
             if (!InstallCertificate()) return;
+            const string PeerStatePath = "peers.dat";
+            if (File.Exists(PeerStatePath))
+                using (FileStream fs = new FileStream(PeerStatePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    LocalNode.LoadState(fs);
+                }
             using (Blockchain.RegisterBlockchain(new LevelDBBlockchain(Settings.Default.DataDirectoryPath)))
             using (LocalNode = new LocalNode())
             {
                 LocalNode.UpnpEnabled = true;
                 Application.Run(MainForm = new MainForm(xdoc));
+            }
+            using (FileStream fs = new FileStream(PeerStatePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                LocalNode.SaveState(fs);
+            }
+        }
+
+        private static void PrintErrorLogs(StreamWriter writer, Exception ex)
+        {
+            writer.WriteLine(ex.GetType());
+            writer.WriteLine(ex.Message);
+            writer.WriteLine(ex.StackTrace);
+            if (ex is AggregateException ex2)
+            {
+                foreach (Exception inner in ex2.InnerExceptions)
+                {
+                    writer.WriteLine();
+                    PrintErrorLogs(writer, inner);
+                }
+            }
+            else if (ex.InnerException != null)
+            {
+                writer.WriteLine();
+                PrintErrorLogs(writer, ex.InnerException);
             }
         }
     }
