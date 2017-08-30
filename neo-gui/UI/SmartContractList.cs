@@ -174,7 +174,7 @@ namespace Neo.UI
 
             if (!File.Exists(smartContractJSON))
             {
-                File.Create(smartContractJSON);
+                File.Create(smartContractJSON).Close();
                 return;
             }
 

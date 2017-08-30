@@ -7,7 +7,6 @@ using Neo.Properties;
 using Neo.SmartContract;
 using Neo.VM;
 using Neo.Wallets;
-using Neo.SmartContract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -162,7 +161,6 @@ namespace Neo.UI
             创建新地址NToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             导入私钥IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             创建智能合约SToolStripMenuItem.Enabled = Program.CurrentWallet != null;
-            smartContractWatchlistToolStripMenuItem.Enabled = Program.CurrentWallet != null;
             listView1.Items.Clear();
             if (Program.CurrentWallet != null)
             {
@@ -288,7 +286,6 @@ namespace Neo.UI
                 Blockchain.PersistCompleted += Blockchain_PersistCompleted;
                 Program.LocalNode.Start(Settings.Default.NodePort, Settings.Default.WsPort);
             });
-            scListLoad();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1057,6 +1054,7 @@ namespace Neo.UI
                 AddEventLog_RowItem(newLogRow);
             }
 
+        }
         /*
          * menu item for List Contracts was clicked
          */
