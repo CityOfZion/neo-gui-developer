@@ -135,13 +135,22 @@ namespace Neo.UI
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (tx == null) tx = new InvocationTransaction();
-            tx.Version = 1;
-            tx.Script = textBox6.Text.HexToBytes();
-            if (tx.Attributes == null) tx.Attributes = new TransactionAttribute[0];
-            if (tx.Inputs == null) tx.Inputs = new CoinReference[0];
-            if (tx.Outputs == null) tx.Outputs = new TransactionOutput[0];
-            if (tx.Scripts == null) tx.Scripts = new Witness[0];
+            try
+            {
+                if (tx == null) tx = new InvocationTransaction();
+                tx.Version = 1;
+                tx.Script = textBox6.Text.HexToBytes();
+                if (tx.Attributes == null) tx.Attributes = new TransactionAttribute[0];
+                if (tx.Inputs == null) tx.Inputs = new CoinReference[0];
+                if (tx.Outputs == null) tx.Outputs = new TransactionOutput[0];
+                if (tx.Scripts == null) tx.Scripts = new Witness[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
             LevelDBBlockchain blockchain = (LevelDBBlockchain)Blockchain.Default;
             DataCache<UInt160, AccountState> accounts = blockchain.GetTable<UInt160, AccountState>();
             DataCache<ECPoint, ValidatorState> validators = blockchain.GetTable<ECPoint, ValidatorState>();

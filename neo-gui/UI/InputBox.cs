@@ -32,20 +32,21 @@ namespace Neo.UI
                 if (dialog.ShowDialog() != DialogResult.OK) return null;
                 switch (dialog.comboBox1.GetItemText(dialog.comboBox1.SelectedItem))
                 {
-                    case "byte[]":
+                    case ParamsObjectDialog.BYTE_ARRAY_TYPE:
                         try
                         {
                             byte[] byteResult = dialog.textBox1.Text.HexToBytes();
                         }
-                        catch (FormatException)
+                        catch (FormatException ex)
                         {
+                            MessageBox.Show(ex.Message);
                             return null;
                         }
                         break;
-                    case "BigInteger":
+                    case ParamsObjectDialog.BIG_INTEGER_TYPE:
                         if(!BigInteger.TryParse(dialog.textBox1.Text, out BigInteger intResult)) return null;
                         break;
-                    case "string":
+                    case ParamsObjectDialog.STRING_TYPE:
                         break;
                     default:
                         return null;

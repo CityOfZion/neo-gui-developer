@@ -8,6 +8,12 @@ namespace Neo.UI
 {
     public partial class ParamsObjectDialog : Form
     {
+        public const string BYTE_ARRAY_TYPE = "byte[]";
+        public const string BIG_INTEGER_TYPE = "BigInteger";
+        public const string STRING_TYPE = "string";
+        const string TYPE_LABEL = "Type";
+        const string DATA_LABEL = "Data";
+
         public ParamsObjectDialog()
         {
             InitializeComponent();
@@ -24,7 +30,7 @@ namespace Neo.UI
             if (input==null) return;
             switch (input[0])
             {
-                case ("byte[]"):
+                case (BYTE_ARRAY_TYPE):
                     try
                     {
                         byte[] arg = input[1].HexToBytes();
@@ -37,43 +43,43 @@ namespace Neo.UI
                     {
                     new ListViewItem.ListViewSubItem
                     {
-                        Name = "Type",
-                        Text = "byte[]"
+                        Name = TYPE_LABEL,
+                        Text = BYTE_ARRAY_TYPE
                     },
                     new ListViewItem.ListViewSubItem
                     {
-                        Name = "Data",
+                        Name = DATA_LABEL,
                         Text = input[1]
                     }
                     }, -1));
                     break;
-                case ("BigInteger"):
+                case (BIG_INTEGER_TYPE):
                     BigInteger.TryParse(input[1], out BigInteger intResult);
                     listViewParams.Items.Add(new ListViewItem(new[]
                     {
                     new ListViewItem.ListViewSubItem
                     {
-                        Name = "Type",
-                        Text = "BigInteger"
+                        Name = TYPE_LABEL,
+                        Text = BIG_INTEGER_TYPE
                     },
                     new ListViewItem.ListViewSubItem
                     {
-                        Name = "Data",
+                        Name = DATA_LABEL,
                         Text = intResult.ToString()
                     }
                     }, -1));
                     break;
-                case ("string"):
+                case (STRING_TYPE):
                     listViewParams.Items.Add(new ListViewItem(new[]
 {
                     new ListViewItem.ListViewSubItem
                     {
-                        Name = "Type",
-                        Text = "string"
+                        Name = TYPE_LABEL,
+                        Text = STRING_TYPE
                     },
                     new ListViewItem.ListViewSubItem
                     {
-                        Name = "Data",
+                        Name = DATA_LABEL,
                         Text = input[1]
                     }
                     }, -1));
@@ -97,16 +103,16 @@ namespace Neo.UI
                 while (listIndex >= 0)
                 {
                     ListViewItem item = listViewParams.Items[listIndex];
-                    switch (item.SubItems["Type"].Text)
+                    switch (item.SubItems[TYPE_LABEL].Text)
                     {
-                        case "byte[]":
-                            sb.EmitPush(item.SubItems["Data"].Text.HexToBytes());
+                        case BYTE_ARRAY_TYPE:
+                            sb.EmitPush(item.SubItems[DATA_LABEL].Text.HexToBytes());
                             break;
-                        case "BigInteger":
-                            sb.EmitPush(BigInteger.Parse(item.SubItems["Data"].Text));
+                        case BIG_INTEGER_TYPE:
+                            sb.EmitPush(BigInteger.Parse(item.SubItems[DATA_LABEL].Text));
                             break;
-                        case "string":
-                            sb.EmitPush(Encoding.UTF8.GetBytes(item.SubItems["Data"].Text));
+                        case STRING_TYPE:
+                            sb.EmitPush(Encoding.UTF8.GetBytes(item.SubItems[DATA_LABEL].Text));
                             break;
                     }
                     listIndex--;
