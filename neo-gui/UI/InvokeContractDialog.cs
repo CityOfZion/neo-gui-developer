@@ -266,8 +266,7 @@ namespace Neo.UI
             // show any required parameters for this contract
             initParmTreeView();
 
-            // todo: restore scList call 
-            //MainForm.Instance.scList.scListAdd(scriptHash.ToString(), true);
+            MainForm.Instance.scList.scListAdd(scriptHash.ToString(), true);
 
             btnClearScript.Enabled = true;
             UpdateScript();
@@ -279,9 +278,6 @@ namespace Neo.UI
          */
         private void btnScriptHashSearch_Click(object sender, EventArgs e)
         {
-            InformationBox.Show("https://github.com/neo-project/neo-gui/pull/51", "Smart Contract Address Book Required");
-            // todo: restore scList call
-            /*
             if (MainForm.Instance.scList.Visible)
             {
                 MainForm.Instance.scList.Visible = false;
@@ -290,7 +286,6 @@ namespace Neo.UI
 
             ClearScriptDetails();
             txtScriptHash.Text = MainForm.Instance.scList.selectedScriptHash;
-            */
         }
 
         /**
@@ -325,15 +320,17 @@ namespace Neo.UI
 
             ////////////////////////////////////////////////////////////
             ////////////////////////EXPERIMENTAL////////////////////////
-            testTx = tx;
-            testTx.Gas = Fixed8.Satoshi;
-            testTx = GetTransaction();
+            //testTx = tx;
+            //testTx.Gas = Fixed8.Satoshi;
+            //testTx = GetTransaction();
+            //ApplicationEngine engine = new ApplicationEngine(TriggerType.Application, testTx, script_table, service, Fixed8.Zero, true);
+            //engine.LoadScript(testTx.Script, false);
             ////////////////////////EXPERIMENTAL////////////////////////            
             ////////////////////////////////////////////////////////////
 
-            ApplicationEngine engine = new ApplicationEngine(TriggerType.Application, testTx, script_table, service, Fixed8.Zero, true);
-            engine.LoadScript(testTx.Script, false);
-            
+            ApplicationEngine engine = new ApplicationEngine(TriggerType.Application, tx, script_table, service, Fixed8.Zero, true);
+            engine.LoadScript(tx.Script, false);
+
             if (engine.Execute())
             {
                 tx.Gas = engine.GasConsumed - Fixed8.FromDecimal(10);
@@ -625,16 +622,6 @@ namespace Neo.UI
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             txtCustomScript.Text = File.ReadAllBytes(openFileDialog1.FileName).ToHexString();
-        }
-
-        private void buttonParams_Click(object sender, EventArgs e)
-        {
-            using (ParamsObjectDialog dialog = new ParamsObjectDialog())
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                if (dialog.getParams() != null) textBox6.Text = dialog.getParams() + textBox6.Text;
-                else textBox6.Text = "00" + textBox6.Text;
-            }
         }
     }
 }
