@@ -256,6 +256,18 @@ Note: updated files cannot be openned by clients in older versions!</value>
   <data name="UnknownIssuer" xml:space="preserve">
     <value>unknown issuer</value>
   </data>
+  <data name="InvokeContractNullParamValue" xml:space="preserve">
+    <value>(null)</value>
+  </data>
+  <data name="InvokeContractAddParam" xml:space="preserve">
+    <value>[add param]</value>
+  </data>
+  <data name="InvokeContractParamArray" xml:space="preserve">
+    <value>Params Array</value>
+  </data>
+  <data name="InvokeContractParamList" xml:space="preserve">
+    <value>Parameter List</value>
+  </data>
   <data name="UnsynchronizedBlock" xml:space="preserve">
     <value>Blockchain unsynchronized, transaction cannot be sent.</value>
   </data>
