@@ -2,7 +2,7 @@
 
 namespace Neo.SmartContract
 {
-    internal class ContractParameter
+    public class ContractParameter
     {
         public ContractParameterType Type;
         public object Value;
