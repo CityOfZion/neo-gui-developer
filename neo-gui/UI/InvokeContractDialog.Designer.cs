@@ -281,13 +281,13 @@
             // 
             this.menuItemEdit.Name = "menuItemEdit";
             resources.ApplyResources(this.menuItemEdit, "menuItemEdit");
-            this.menuItemEdit.Click += new System.EventHandler(this.menuItemEdit_Click);
+            this.menuItemEdit.Click += new System.EventHandler(this.MenuItemEdit_Click);
             // 
             // menuItemRemove
             // 
             this.menuItemRemove.Name = "menuItemRemove";
             resources.ApplyResources(this.menuItemRemove, "menuItemRemove");
-            this.menuItemRemove.Click += new System.EventHandler(this.menuItemRemove_Click);
+            this.menuItemRemove.Click += new System.EventHandler(this.MenuItemRemove_Click);
             // 
             // InvokeContractDialog
             // 
