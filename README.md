@@ -20,7 +20,7 @@ This custom development Neo GUI is built on top of the official Neo GUI. It incl
 
 ### Features:
 __6. Updated Invoke Contract dialog__
-  - Invoke contract dialog now has a tree view to enable a better user experience when adding/editing parameters - for a quick tour: https://www.youtube.com/watch?v=ALi6lqHld4s
+  - Invoke contract dialog now has a tree view to enable a better user experience when adding/editing parameters - for a quick tour: https://youtu.be/osmMdzaxuGQ
   - Nested arrays are fully supported, you can add an Array to the optional parameter array
   - Simple validation of some fields Hash160, Hash256, PublicKey
   - Smart contract monitor (address book) integration into script hash search field
