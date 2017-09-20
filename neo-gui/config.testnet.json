@@ -8,9 +8,9 @@
     "SslCert": "",
     "SslCertPassword": "",
     "Urls": {
-      "AddressUrl": "http://testnet.antchain.xyz/address/{0}",
-      "AssetUrl": "http://testnet.antchain.xyz/asset/hash/{0}",
-      "TransactionUrl": "http://testnet.antchain.xyz/tx/hash/{0}"
+      "AddressUrl": "http://testnet.antcha.in/address/info/{0}",
+      "AssetUrl": "http://testnet.antcha.in/tokens/hash/{0}",
+      "TransactionUrl": "http://testnet.antcha.in/tx/hash/{0}"
     }
   }
 }
