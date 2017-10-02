@@ -76,6 +76,13 @@ namespace Neo
         [STAThread]
         public static void Main()
         {
+            // Create eventlog.txt for writing event logs to
+            using (StreamWriter sw = File.CreateText("eventlog.txt")) 
+            {
+                sw.WriteLine("Event log started at {0}", DateTime.Now.ToString());
+                sw.WriteLine();
+            }
+
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
