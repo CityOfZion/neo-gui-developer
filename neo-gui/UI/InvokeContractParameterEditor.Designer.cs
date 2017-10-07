@@ -60,7 +60,8 @@
             "Hash160",
             "Hash256",
             "PublicKey",
-            "Signature"});
+            "Signature",
+            "String"});
             this.comboTypeSelect.Location = new System.Drawing.Point(84, 11);
             this.comboTypeSelect.Margin = new System.Windows.Forms.Padding(4);
             this.comboTypeSelect.Name = "comboTypeSelect";

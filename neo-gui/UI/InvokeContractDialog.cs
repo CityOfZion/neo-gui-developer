@@ -265,7 +265,8 @@ namespace Neo.UI
             sb.AppendLine($"VM State: {engine.State}");
             sb.AppendLine($"Gas Consumed: {engine.GasConsumed}");
             sb.AppendLine($"Evaluation Stack: {new JArray(engine.EvaluationStack.Select(p => p.ToParameter().ToJson()))}");
-            MessageBox.Show(sb.ToString());
+            txtInvokeOutput.Text = sb.ToString();
+
             if (!engine.State.HasFlag(VMState.FAULT))
             {
                 tx.Gas = engine.GasConsumed - Fixed8.FromDecimal(10);
@@ -351,6 +352,7 @@ namespace Neo.UI
             {
                 case ContractParameterType.Signature:
                 case ContractParameterType.ByteArray:
+                case ContractParameterType.String:
                     return System.Text.Encoding.UTF8.GetString((byte[])paramValue);
                 case ContractParameterType.Boolean:
                 case ContractParameterType.Integer:

@@ -63,6 +63,7 @@
             this.menuParamListViewItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtInvokeOutput = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabInvoke.SuspendLayout();
             this.tabCustom.SuspendLayout();
@@ -289,12 +290,18 @@
             resources.ApplyResources(this.menuItemRemove, "menuItemRemove");
             this.menuItemRemove.Click += new System.EventHandler(this.MenuItemRemove_Click);
             // 
+            // txtInvokeOutput
+            // 
+            resources.ApplyResources(this.txtInvokeOutput, "txtInvokeOutput");
+            this.txtInvokeOutput.Name = "txtInvokeOutput";
+            // 
             // InvokeContractDialog
             // 
             this.AcceptButton = this.btnInvoke;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button4;
+            this.Controls.Add(this.txtInvokeOutput);
             this.Controls.Add(this.paramListViewGroup);
             this.Controls.Add(this.txtCustomScriptCopy);
             this.Controls.Add(this.tabControl1);
@@ -355,5 +362,6 @@
         private System.Windows.Forms.TextBox txtCustomScriptHash;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TreeView treeParamList;
+        private System.Windows.Forms.TextBox txtInvokeOutput;
     }
 }

@@ -75,7 +75,7 @@ namespace Neo.UI
             }
             else
             {
-                chkEncodeHex.Checked = (selectedItem.Equals("ByteArray") || selectedItem.Equals("Signature"));
+                chkEncodeHex.Checked = (selectedItem.Equals("ByteArray") || selectedItem.Equals("Signature") || selectedItem.Equals("String"));
                 txtParamValue.Enabled = !selectedItem.Equals("Array");
                 tabControl1.SelectedTab = tabPage1;
                 validateUserInput();
@@ -149,6 +149,7 @@ namespace Neo.UI
                     return new List<ContractParameter>();
                 case ContractParameterType.Signature:
                 case ContractParameterType.ByteArray:
+                case ContractParameterType.String:
                     return paramValue.HexToBytes();
                 case ContractParameterType.Boolean:
                     return Boolean.Parse(paramValue);
@@ -186,6 +187,7 @@ namespace Neo.UI
                     return ContractParameterType.PublicKey;
                 case "Signature":
                 case "ByteArray":
+                case "String":
                 default:
                     return ContractParameterType.ByteArray;
             }
@@ -202,6 +204,7 @@ namespace Neo.UI
                     break;
                 case ContractParameterType.Signature:
                 case ContractParameterType.ByteArray:
+                case ContractParameterType.String:
                     if(userParamValue.Trim().Length <= 0)
                     {
                         return false;

@@ -723,6 +723,9 @@
     <EmbeddedResource Include="UI\InvokeContractDialog.zh-Hans.resx">
       <DependentUpon>InvokeContractDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\InvokeContractParameterEditor.resx">
+      <DependentUpon>InvokeContractParameterEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\IssueDialog.es-ES.resx">
       <DependentUpon>IssueDialog.cs</DependentUpon>
     </EmbeddedResource>
