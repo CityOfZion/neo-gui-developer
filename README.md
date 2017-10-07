@@ -12,27 +12,21 @@
 </p>
 
 
-
 !!! EXPERIMENTAL DEVELOPMENT GUI
 
 !!! ONLY USE ON TESTNET. __neo-gui-developer runs on testnet in default__
 
 This custom development Neo GUI is built on top of the official Neo GUI. It includes some additional features to make it easier to deploy Neo Smart contracts and get return/runtime events from invoking a smart contract
 
-## __18/08/2017 Update__
-- Added libleveldb.dll, which is automatically copied to the appropriate directory during build
-
 ### Features:
-__4. Add params function__
-  - Implemented experimental Add params function to allow adding an optional params object[] during Invoke contract to pass an object[] parameter/argument. Add params button opens a new dialog with a listview to allow users to "build" an object[] array stack 
-  - The listview index corresponds to the required array index (i.e. first item in list is arg[0] in object[] array). This function currently supports three types: *byte[]*, *int*, and *string*. Type is selected when adding an item in Add params with a dropdown list.
-  - A Smart contract requires the correct number of arguments to be passed, otherwise it will fail. For example, a __FunctionCode Main(byte[] operation, object[])__ must have exactly 2 arguments, byte[] and object[], passed during Invoke. [Supported parameter types](https://github.com/CityOfZion/docs/blob/master/en-us/sc/tutorial/Parameter.md) can be set during Deploy and added with the usual Parameter Editor, while object[] can be not declared during Deploy but added with Add params functions __after__ declared parameters are set. In the above-mentioned example, Parameter List is set as "05" during Deploy Smart contract. Thereafter during Invoke, the byte[] value is first declared using the Parameter Editor and the object[] array is then declared using the Add params function. __An empty array has to be passed even if you do not require the object[] to be declated__, this can be done by clicking Add params -> Accept without adding anything to the stack.
-
-__5. Crude support for Array type__
-  - Support for Array type in Parameter Editor
-  - Currently only supports byte[] type in the array i.e. byte\[][]
-  - This option to pass an object[] type is to set "10" in Parameter List during Deploy Smart contract. That will add the parameter as an Array type in the Parameter Editor during Invoke, which can then be declared in the Parameter Editor as with other types
-  - The stack can be built by writing each byte[] in a new line in the textbox, the second byte[] is written after a linebreak in a new line etc.
+__6. Updated Invoke Contract dialog__
+  - Invoke contract dialog now has a tree view to enable a better user experience when adding/editing parameters - for a quick tour: https://youtu.be/osmMdzaxuGQ
+  - Nested arrays are fully supported, you can add an Array to the optional parameter array
+  - Simple validation of some fields Hash160, Hash256, PublicKey
+  - Smart contract monitor (address book) integration into script hash search field
+  - Runtime.Notify now supported in Event Log tab
+  - Sample contracts are available here: https://github.com/CityOfZion/smart-contract-examples-csharp
+  
   
 ## Previous Features:
 __1. Event log__
@@ -55,3 +49,20 @@ __3. Smart contract monitor__
   - The watchlist automatically refreshes with the timer1 to check if the Neo Smart contract script hash can be found on the blockchain. Green "Found!" indicates the Neo Smart contract has been deployed successfully, red "Unavailable" indicates that it has not been deployed successfully
   - Neo Smart contract Script hash is automatically added to the watchlist when it is deployed on DeployDialog or looked up on InvokeDialog
   - The script hash on the watchlist are saved/loaded on a smartcontract.txt in the Neo main folder. Script hash can be removed/added on this txt file
+  
+  
+  __4. Add params function__
+  - Implemented experimental Add params function to allow adding an optional params object[] during Invoke contract to pass an object[] parameter/argument. Add params button opens a new dialog with a listview to allow users to "build" an object[] array stack 
+  - The listview index corresponds to the required array index (i.e. first item in list is arg[0] in object[] array). This function currently supports three types: *byte[]*, *int*, and *string*. Type is selected when adding an item in Add params with a dropdown list.
+  - A Smart contract requires the correct number of arguments to be passed, otherwise it will fail. For example, a __FunctionCode Main(byte[] operation, object[])__ must have exactly 2 arguments, byte[] and object[], passed during Invoke. [Supported parameter types](https://github.com/CityOfZion/docs/blob/master/en-us/sc/tutorial/Parameter.md) can be set during Deploy and added with the usual Parameter Editor, while object[] can be not declared during Deploy but added with Add params functions __after__ declared parameters are set. In the above-mentioned example, Parameter List is set as "05" during Deploy Smart contract. Thereafter during Invoke, the byte[] value is first declared using the Parameter Editor and the object[] array is then declared using the Add params function. __An empty array has to be passed even if you do not require the object[] to be declated__, this can be done by clicking Add params -> Accept without adding anything to the stack.
+
+
+__5. Crude support for Array type__
+  - Support for Array type in Parameter Editor
+  - Currently only supports byte[] type in the array i.e. byte\[][]
+  - This option to pass an object[] type is to set "10" in Parameter List during Deploy Smart contract. That will add the parameter as an Array type in the Parameter Editor during Invoke, which can then be declared in the Parameter Editor as with other types
+  - The stack can be built by writing each byte[] in a new line in the textbox, the second byte[] is written after a linebreak in a new line etc.
+
+
+__6. Added libleveldb.dll to project__
+

@@ -18,11 +18,12 @@ namespace Neo.UI
     internal partial class InvokeContractDialog : Form
     {
         private List<ContractParameter> requiredParameters = new List<ContractParameter>();         // required params defined by the smartcontract
-        private List<ContractParameter> optionalParameters = new List<ContractParameter>();         // optional params for the contract
         private TreeNode targetTreeNode;                                                            // target tree node to add new params 
 
         private InvocationTransaction tx;
         private UInt160 scriptHash;
+        private int numRequiredParameters = 0;                                                      // the number of required parameters for loaded contract
+        private enum RequiredParameters { Required, Optional }
 
         public InvokeContractDialog(InvocationTransaction tx = null, string deployedScriptHash = null)
         {
@@ -51,49 +52,6 @@ namespace Neo.UI
             });
         }
 
-        /*
-        private void UpdateScript()
-        {
-            if (parameters.Any(p => p.Value == null)) return;
-            using (ScriptBuilder sb = new ScriptBuilder())
-            {
-                foreach (ContractParameter parameter in parameters.Reverse())
-                {
-                    switch (parameter.Type)
-                    {
-                        case ContractParameterType.Signature:
-                        case ContractParameterType.ByteArray:
-                            sb.EmitPush((byte[])parameter.Value);
-                            break;
-                        case ContractParameterType.Boolean:
-                            sb.EmitPush((bool)parameter.Value);
-                            break;
-                        case ContractParameterType.Integer:
-                            sb.EmitPush((BigInteger)parameter.Value);
-                            break;
-                        case ContractParameterType.Hash160:
-                            sb.EmitPush(((UInt160)parameter.Value).ToArray());
-                            break;
-                        case ContractParameterType.Hash256:
-                            sb.EmitPush(((UInt256)parameter.Value).ToArray());
-                            break;
-                        case ContractParameterType.PublicKey:
-                            sb.EmitPush(((ECPoint)parameter.Value).EncodePoint(true));
-                            break;
-                        case ContractParameterType.Array:
-                            foreach(var item in ((object[])parameter.Value).Reverse())
-                                sb.EmitPush(((string)item).HexToBytes());
-                            sb.EmitPush(((object[])parameter.Value).Length);
-                            sb.Emit(OpCode.PACK);
-                            break;
-                    }
-                }
-                sb.EmitAppCall(script_hash.ToArray(), true);
-                textBox6.Text = sb.ToArray().ToHexString();
-            }
-        }
-        */
-
         private enum ScriptPackMethods
         {
             EmitAppCall,
@@ -105,102 +63,97 @@ namespace Neo.UI
          */
         private void UpdateScript()
         {
-            string scriptByteCode = parametersToByteCode(requiredParameters, ScriptPackMethods.EmitAppCall);
-            txtCustomScript.Text = scriptByteCode;
+            BuildRequiredParameterCollection();
 
-            string optionalParamsBytecode = parametersToByteCode(optionalParameters, ScriptPackMethods.EmitOpCodePack);
-            if (optionalParamsBytecode != null)
-            {
-                txtCustomScript.Text = optionalParamsBytecode + txtCustomScript.Text;
-            }
-            else
-            {
-                txtCustomScript.Text = "00" + txtCustomScript.Text;
+            // highlight any required fields that aren't valid
+            testRequiredParameterValidity();
 
+            using (ScriptBuilder sb = new ScriptBuilder())
+            {
+                PushParameters(sb, requiredParameters);
+                sb.EmitAppCall(scriptHash.ToArray(), false);
+                txtCustomScript.Text = sb.ToArray().ToHexString();
+                //txtCustomScript.Text = txtCustomScript.Text;
             }
             txtCustomScriptCopy.Text = txtCustomScript.Text;
         }
 
+        private void BuildRequiredParameterCollection()
+        {
+            requiredParameters = BuildRequiredParameterCollectionArray(treeParamList.Nodes[0]);
+        }
+
+        private List<ContractParameter> BuildRequiredParameterCollectionArray(TreeNode nodeArray)
+        {
+            List<ContractParameter> paramArray = new List<ContractParameter>();
+            for (int i = 0; i < nodeArray.Nodes.Count; i++)
+            {
+                TreeNode node = nodeArray.Nodes[i];
+                if(node.Name.Equals(Strings.InvokeContractAddParam))
+                {
+                    // don't try and add 'add param' nodes
+                    continue;
+                }
+
+                if (node.Name.Equals(Strings.InvokeContractParamArray))
+                {
+                    // node is an array
+                    paramArray.Add(new ContractParameter {
+                        Type = ContractParameterType.Array,
+                        Value = BuildRequiredParameterCollectionArray(node)
+                    });
+                }
+                else
+                {
+                    object[] nodeTag = ((object[])node.Tag);
+                    if (nodeTag != null)
+                    {
+                        ContractParameter param = (ContractParameter)nodeTag[1];
+                        paramArray.Add(param);
+                    }
+                }
+            }
+            return paramArray;
+        }
 
         /**
          * convert ContractParameter list to byte code
+         * updated to reflect code added by @erik in neo-project/neo-gui/nep-5 branch
          */
-        private string parametersToByteCode(List<ContractParameter> parameterList, ScriptPackMethods scriptPackMethod)
+        private void PushParameters(ScriptBuilder sb, List<ContractParameter> parameterList)
         {
-            using (ScriptBuilder sb = new ScriptBuilder())
+            for (int i = parameterList.Count - 1; i >= 0; i--)
             {
-                int parametersAdded = 0;
-                for (int i = parameterList.Count - 1; i >= 0; i--)
+                ContractParameter param = parameterList[i];
+                if (param == null || param.Value == null)
                 {
-                    ContractParameter param = parameterList[i];
-                    if (param == null || param.Value == null)
-                    {
-                        continue;
-                    }
-
-                    parametersAdded++;
-
-                    switch (param.Type)
-                    {
-                        case ContractParameterType.Signature:
-                        case ContractParameterType.ByteArray:
-                        case ContractParameterType.Hash160:
-                        case ContractParameterType.Hash256:
-                        case ContractParameterType.PublicKey:
-                            sb.EmitPush((byte[])param.Value);
-                            break;
-                        case ContractParameterType.Boolean:
-                            sb.EmitPush((bool)param.Value);
-                            break;
-                        case ContractParameterType.Integer:
-                            sb.EmitPush((BigInteger)param.Value);
-                            break;
-                        case ContractParameterType.Array:
-                            List<ContractParameter> arrayList = ((List<ContractParameter>)param.Value);
-                            sb.EmitPush(parametersToByteCode(arrayList, ScriptPackMethods.EmitOpCodePack).HexToBytes());
-                            break;
-                    }
+                    continue;
                 }
 
-                if (parametersAdded <= 0)
+                switch (param.Type)
                 {
-                    return null;
-                }
-
-                switch (scriptPackMethod)
-                {
-                    case ScriptPackMethods.EmitAppCall:
-                        sb.EmitAppCall(scriptHash.ToArray());
+                    case ContractParameterType.Signature:
+                    case ContractParameterType.ByteArray:
+                    case ContractParameterType.Hash160:
+                    case ContractParameterType.Hash256:
+                    case ContractParameterType.PublicKey:
+                        sb.EmitPush((byte[])param.Value);
                         break;
-                    case ScriptPackMethods.EmitOpCodePack:
-                        sb.EmitPush(parametersAdded);
+                    case ContractParameterType.Boolean:
+                        sb.EmitPush((bool)param.Value);
+                        break;
+                    case ContractParameterType.Integer:
+                        sb.EmitPush((BigInteger)param.Value);
+                        break;
+                    case ContractParameterType.Array:
+                        List<ContractParameter> arrayList = ((List<ContractParameter>)param.Value);
+                        PushParameters(sb, arrayList);
+                        sb.EmitPush(arrayList.Count);
                         sb.Emit(OpCode.PACK);
                         break;
                 }
-
-                return sb.ToArray().ToHexString();
             }
-
         }
-
-        /*
-        private void button1_Click(object sender, EventArgs e)
-        {
-            script_hash = UInt160.Parse(textBox1.Text);
-            ContractState contract = Blockchain.Default.GetContract(script_hash);
-            if (contract == null) return;
-            parameters = contract.Code.ParameterList.Select(p => new ContractParameter { Type = p }).ToArray();
-            textBox2.Text = contract.Name;
-            textBox3.Text = contract.CodeVersion;
-            textBox4.Text = contract.Author;
-            textBox5.Text = string.Join(", ", contract.Code.ParameterList);
-            button2.Enabled = parameters.Length > 0;
-            
-            // save the contract hash to the contract list
-            MainForm.Instance.scList.scListAdd(textBox1.Text, true);
-            UpdateScript();
-        }
-        */
 
         /**
          * reset (empty) the form fields
@@ -209,8 +162,8 @@ namespace Neo.UI
         {
             txtName.Text = txtVersion.Text = txtAuthor.Text = txtDescription.Text = txtParamList.Text = txtCustomScript.Text = txtCustomScriptCopy.Text = "";
             txtScriptHash.ForeColor = Color.Empty;
-            optionalParameters = new List<ContractParameter>();
             requiredParameters = new List<ContractParameter>();
+            numRequiredParameters = 0;
             treeParamList.Nodes.Clear();
         }
 
@@ -220,6 +173,7 @@ namespace Neo.UI
         private void txtScriptHash_TextChanged(object sender, EventArgs e)
         {
             ClearScriptDetails();
+
             if (txtScriptHash.Text.Trim().Equals(""))
             {
                 // no scripthash has been provided - clenup just in case previous script values are still showing
@@ -241,15 +195,8 @@ namespace Neo.UI
 
             // valid script hash was found on blockchain
             requiredParameters.AddRange(contract.Code.ParameterList.Select(p => new ContractParameter { Type = p }));
-            if (optionalParameters.Count == 0)
-            {
-                // list doesn't have enough items in it initialise list
-                for (int i = 0; i < requiredParameters.Count; i++)
-                {
-                    optionalParameters.Insert(i, null);
-                }
-            }
-
+            requiredParameters.Add(new ContractParameter { Type = ContractParameterType.Array, Value = new List<ContractParameter>() });
+            numRequiredParameters = requiredParameters.Count - 1;
 
             // populate contract details to form
             txtName.Text = contract.Name;
@@ -264,7 +211,7 @@ namespace Neo.UI
             txtParamList.Text = string.Join(", ", contract.Code.ParameterList);
 
             // show any required parameters for this contract
-            initParmTreeView();
+            InitParmTreeView();
 
             MainForm.Instance.scList.scListAdd(scriptHash.ToString(), true);
 
@@ -296,7 +243,7 @@ namespace Neo.UI
             btnInvoke.Enabled = false;
             btnTestScript.Enabled = txtCustomScript.TextLength > 0;
         }
-        
+
         /**
          * run script through ApplicationEngine to determine gas price and bytecode validity
          */
@@ -367,50 +314,22 @@ namespace Neo.UI
         }
 
         /**
-         * initialise parameter treeview, populate the list of defined parameters
-         */
-        private void initParmTreeView()
-        {
-            treeParamList.Nodes.Add(new TreeNode(Strings.InvokeContractParamList));
-            targetTreeNode = treeParamList.Nodes[0];
-            targetTreeNode.Nodes.AddRange(requiredParameters.Select((p, i) => new TreeNode($"{p.Type.ToString()}={GetValueString(p.Value)}")
-            {
-                Tag = new int[] { i, 1 },
-                Name = p.Type.ToString()
-            }).ToArray());
-
-            targetTreeNode.Nodes.Add(new TreeNode(Strings.InvokeContractParamArray, new TreeNode[] { addParamNodeToTreeView() }) { Name = "ParamsArray" });
-            //targetTreeNode.Nodes.Add(addParamNodeToTreeView());
-            treeParamList.ExpandAll();
-
-            testRequiredParameterValidity();
-        }
-
-        /**
-         * add the "add param" node to the end of the tree
-         */
-        private TreeNode addParamNodeToTreeView()
-        {
-            return new TreeNode(Strings.InvokeContractAddParam);
-
-        }
-
-        /**
          * test if a required list item parameter is valid - highlight in red if it is not
          */
         private void testRequiredParameterValidity()
         {
             for (int i = 0; i < treeParamList.Nodes[0].Nodes.Count; i++)
             {
-                if (i >= requiredParameters.Count)
+                if (i >= numRequiredParameters)
                 {
                     break;
                 }
                 bool parameterValid = requiredParameters[i].Value != null;
+                btnTestScript.Enabled = parameterValid;
+                btnInvoke.Enabled = parameterValid;
                 treeParamList.Nodes[0].Nodes[i].ForeColor = parameterValid ? Color.Empty : Color.Red;
             }
         }
-
 
         /**
          * parse parameter value for something nice to display
@@ -445,10 +364,13 @@ namespace Neo.UI
          */
         public string GetParameterValueDisplayValue(ContractParameterType paramType, object paramValue)
         {
+            if (paramValue == null)
+            {
+                return null;
+            }
+
             switch (paramType)
             {
-                case ContractParameterType.Array:
-                    return "Array";
                 case ContractParameterType.Signature:
                 case ContractParameterType.ByteArray:
                     return System.Text.Encoding.UTF8.GetString((byte[])paramValue);
@@ -465,44 +387,69 @@ namespace Neo.UI
                     return null;
             }
         }
-
         /**
-         * user has chosen to edit a specific parameter on the treeview
+         * initialise parameter treeview, populate the list of defined parameters
          */
-        private void menuItemEdit_Click(object sender, EventArgs e)
+        private void InitParmTreeView()
         {
-            invokeParameterEditor();
+            treeParamList.Nodes.Add(new TreeNode(Strings.InvokeContractParamList));
+
+            targetTreeNode = treeParamList.Nodes[0];
+            targetTreeNode.Nodes.AddRange(requiredParameters.Select((p, i) => CreateTreeNode(p, RequiredParameters.Required)).ToArray());
+            treeParamList.ExpandAll();
+
+            testRequiredParameterValidity();
         }
 
-        /**
-         * user has chosen to remove a parameter from the treeview
-         */
-        private void menuItemRemove_Click(object sender, EventArgs e)
+        private TreeNode CreateTreeNode(ContractParameter param, RequiredParameters requiredField)
         {
-            optionalParameters[treeParamList.SelectedNode.Index] = null;
-            treeParamList.SelectedNode.Remove();
+            if (param.Type.Equals(ContractParameterType.Array))
+            {
+                return new TreeNode(Strings.InvokeContractParamArray, new TreeNode[] { AddParamNodeToTreeView() })
+                {
+                    Name = Strings.InvokeContractParamArray,
+                    Tag = new object[] { requiredField, param }
+                };
+            }
 
-            UpdateScript();
+            return new TreeNode($"{param.Type.ToString()}={GetValueString(GetParameterValueDisplayValue(param.Type, param.Value))}")
+            {
+                Tag = new object[] { requiredField, param },
+                Name = param.Type.ToString()
+            };
+        }
+        /**
+         * add the "add param" node to the end of the tree
+         */
+        private TreeNode AddParamNodeToTreeView()
+        {
+            return new TreeNode(Strings.InvokeContractAddParam) { Name = Strings.InvokeContractAddParam, Tag = new object[2] };
         }
 
         /**
          * show the parameter editor dialog
          */
-        private void invokeParameterEditor()
+        private void InvokeParameterEditor()
         {
             TreeNode node = treeParamList.SelectedNode;
 
             string paramType = null;
             string paramValue = null;
             bool paramIsRequiredField = false;
-            bool listItemExists = node.Tag != null;
+            bool listItemExists = node.Tag != null && node.Name != Strings.InvokeContractAddParam;
+
+            if (node.Name.Equals(Strings.InvokeContractParamArray))
+            {
+                // ignore double clicks on param array node
+                return;
+            }
 
             // on a double click event, load the contract parameter editor form
             if (listItemExists)
             {
                 // user has clicked into a value that already exists - setup to perform update
                 listItemExists = true;
-                paramIsRequiredField = ((int[])node.Tag)[1] == 1;
+                paramIsRequiredField = ParamNodeIsRequiredField(node);
                 paramType = node.Name.ToString();
                 paramValue = node.Text.Replace($"{paramType}=", "");
                 if (paramValue.Equals(Strings.InvokeContractNullParamValue))
@@ -518,60 +465,35 @@ namespace Neo.UI
                 return;
             }
 
-            string displayValue = GetParameterValueDisplayValue(newParamData.Type, newParamData.Value);
+            TreeNode newTreeNode;
+
+            if (newParamData.Type.Equals(ContractParameterType.Array))
+            {
+                // add array as a new parent node
+                newTreeNode = new TreeNode("Array", new TreeNode[] { AddParamNodeToTreeView() })
+                {
+                    Name = Strings.InvokeContractParamArray,
+                    Tag = new object[] {
+                        RequiredParameters.Optional,
+                        new List<ContractParameter>()
+                    }
+                };
+                newTreeNode.Expand();
+            }
+            else
+            {
+                newTreeNode = CreateTreeNode(newParamData, RequiredParameters.Optional);
+            }
+
+            TreeNodeCollection parentNode = node.Parent.Nodes;
+            int selectedNodeIndex = parentNode.IndexOf(node);
+
             if (listItemExists)
             {
-                node.Name = newParamData.Type.ToString();
-                // update existing item
-                node.Text = $"{node.Name}=" + displayValue;
+                // replace existing tree item with new one (incase user changes type)
+                parentNode.RemoveAt(selectedNodeIndex);
             }
-            else
-            {
-                // add a new item to the treeview
-                targetTreeNode.Nodes[targetTreeNode.Nodes.Count - 1].Remove();
-                TreeNode newTreeNode = new TreeNode($"{newParamData.Type.ToString()}={displayValue}")
-                {
-                    Tag = new int[] { targetTreeNode.Nodes.Count, 0 },
-                    Name = newParamData.Type.ToString()
-                };
-
-                if (newParamData.Type.ToString().Equals("Array"))
-                {
-                    // add array as a new parent node
-                    newTreeNode = new TreeNode("Array", new TreeNode[] { addParamNodeToTreeView() }) { Name = "Array" };
-                    newTreeNode.Expand();
-                }
-                targetTreeNode.Nodes.Add(newTreeNode);
-                targetTreeNode.Nodes.Add(addParamNodeToTreeView());
-
-                ActiveControl = btnTestScript;
-            }
-
-            if (paramIsRequiredField)
-            {
-                requiredParameters[node.Index].Value = newParamData.Value;
-            }
-            else
-            {
-                // default target list to optionalParameters
-                List<ContractParameter> targetList = optionalParameters;
-
-                if (targetTreeNode.Name.Equals("Array"))
-                {
-                    // user has added a parameter to an array item - add ContractParameter to list instead
-                    targetList = (List<ContractParameter>)optionalParameters[targetTreeNode.Index].Value;
-                }
-
-                if (targetList.Count > node.Index && targetList[node.Index] != null)
-                {
-                    // incase this is an update, remove existing ContractParameter before adding again
-                    targetList.RemoveAt(node.Index);
-                }
-                targetList.Insert(node.Index, newParamData);
-            }
-
-            // highlight any required fields that aren't valid
-            testRequiredParameterValidity();
+            parentNode.Insert(selectedNodeIndex, newTreeNode);
 
             // update the scripts bytecode to reflect parameter changes
             UpdateScript();
@@ -581,9 +503,9 @@ namespace Neo.UI
         /**
          * determine if the parameter treeview node is a required field
          */
-        private bool paramNodeIsRequiredField(TreeNode node)
+        private bool ParamNodeIsRequiredField(TreeNode node)
         {
-            return node.Tag != null && ((int[])node.Tag)[1] == 1;
+            return node.Tag != null && ((RequiredParameters)((object[])node.Tag)[0]) == RequiredParameters.Required;
         }
 
         /**
@@ -592,30 +514,51 @@ namespace Neo.UI
         private void treeParamList_MouseDown(object sender, MouseEventArgs e)
         {
             treeParamList.SelectedNode = treeParamList.GetNodeAt(e.X, e.Y);
-            if (treeParamList.SelectedNode == null)
+            TreeNode selectedNode = treeParamList.SelectedNode;
+
+            if (selectedNode == null || selectedNode.Tag == null)
             {
                 return;
             }
 
             if (e.Button == MouseButtons.Left && e.Clicks == 2)
             {
-                targetTreeNode = treeParamList.SelectedNode.Parent;
-                invokeParameterEditor();
+                targetTreeNode = selectedNode.Parent;
+                InvokeParameterEditor();
             }
             else if (e.Button == MouseButtons.Right && e.Clicks == 1)
             {
-                if (treeParamList.SelectedNode.Text.Contains(Strings.InvokeContractAddParam)            // add param
-                    || treeParamList.SelectedNode.Text.Contains(Strings.InvokeContractParamArray)       // param array
-                    || treeParamList.SelectedNode == treeParamList.Nodes[0])                            // params list
+                if (selectedNode.Text.Contains(Strings.InvokeContractAddParam)            // add param
+                    || selectedNode.Text.Contains(Strings.InvokeContractParamArray)       // param array
+                    || selectedNode == treeParamList.Nodes[0])                            // params list
                 {
-                    // don't allow removal of special tree nodes
+                    // don't show a context menu for special tree nodes
                     return;
                 }
 
-                menuItemRemove.Enabled = true;
+
                 menuParamListViewItem.Show(Cursor.Position);
-                menuItemRemove.Enabled = !paramNodeIsRequiredField(treeParamList.SelectedNode);
+                menuItemRemove.Enabled = !ParamNodeIsRequiredField(selectedNode);                   // don't allow removal of required fields
+                menuItemEdit.Enabled = !selectedNode.Name.Equals(Strings.InvokeContractParamArray); // don't allow editing of array items
             }
+        }
+
+        /**
+         * user has chosen to edit a specific parameter on the treeview
+         */
+        private void MenuItemEdit_Click(object sender, EventArgs e)
+        {
+            InvokeParameterEditor();
+        }
+
+        /**
+         * user has chosen to remove a parameter from the treeview
+         */
+        private void MenuItemRemove_Click(object sender, EventArgs e)
+        {
+            treeParamList.SelectedNode.Remove();
+
+            UpdateScript();
         }
 
         private void btnLoadAVM_Click(object sender, EventArgs e)
