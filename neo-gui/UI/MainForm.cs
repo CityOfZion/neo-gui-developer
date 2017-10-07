@@ -1130,6 +1130,16 @@ namespace Neo.UI
                     }
                 }, -1);
 
+            // Append the entry to the event log
+            using (StreamWriter sw = File.AppendText("eventlog.txt")) 
+            {
+                sw.WriteLine(localDateTime.ToString());
+                sw.WriteLine(contract.Name.ToString());
+                sw.WriteLine(eventType);
+                sw.WriteLine(eventMessage);
+                sw.WriteLine();
+            }
+
             if (listView4.InvokeRequired)
             {
                 // call is coming from a non ui thread
