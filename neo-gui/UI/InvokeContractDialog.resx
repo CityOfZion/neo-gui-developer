@@ -286,7 +286,7 @@
     <value>5, 4, 5, 4</value>
   </data>
   <data name="txtScriptHash.MaxLength" type="System.Int32, mscorlib">
-    <value>40</value>
+    <value>42</value>
   </data>
   <data name="txtScriptHash.Size" type="System.Drawing.Size, System.Drawing">
     <value>574, 31</value>
