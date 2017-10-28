@@ -118,56 +118,47 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="radioButton1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 21</value>
+  <data name="lblParamList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 174</value>
   </data>
-  <data name="radioButton1.Text" xml:space="preserve">
-    <value>Invocar función</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 125</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblParamList.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 17</value>
   </data>
-  <data name="label5.Text" xml:space="preserve">
+  <data name="lblParamList.Text" xml:space="preserve">
     <value>Parámetros:</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>40, 96</value>
+  <data name="lblAuthor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>42, 135</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblAuthor.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 17</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
+  <data name="lblAuthor.Text" xml:space="preserve">
     <value>Autor:</value>
   </data>
-  <data name="label3.Text" xml:space="preserve">
+  <data name="lblVersion.Text" xml:space="preserve">
     <value>Versión:</value>
   </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 38</value>
+  <data name="lblName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 58</value>
   </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblName.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 17</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
+  <data name="lblName.Text" xml:space="preserve">
     <value>Nombre:</value>
   </data>
-  <data name="radioButton2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 21</value>
-  </data>
-  <data name="radioButton2.Text" xml:space="preserve">
-    <value>Personalizada</value>
-  </data>
-  <data name="button6.Text" xml:space="preserve">
+  <data name="btnLoadAVM.Text" xml:space="preserve">
     <value>Cargar</value>
   </data>
-  <data name="button3.Text" xml:space="preserve">
+  <data name="btnInvoke.Text" xml:space="preserve">
     <value>Invocar</value>
   </data>
   <data name="button4.Text" xml:space="preserve">
     <value>Cancelar</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 565</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>38, 17</value>
@@ -175,14 +166,44 @@
   <data name="label6.Text" xml:space="preserve">
     <value>Tasa:</value>
   </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>43, 565</value>
+  </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>79, 17</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>no evaluada</value>
   </data>
-  <data name="button5.Text" xml:space="preserve">
-    <value>Prueba</value>
+  <data name="btnTestScript.Text" xml:space="preserve">
+    <value>Probar</value>
+  </data>
+  <data name="tabInvoke.Text" xml:space="preserve">
+    <value>Invocar</value>
+  </data>
+  <data name="btnClearScript.Text" xml:space="preserve">
+    <value>Limpiar</value>
+  </data>
+  <data name="lblDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 210</value>
+  </data>
+  <data name="lblDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 17</value>
+  </data>
+  <data name="lblDescription.Text" xml:space="preserve">
+    <value>Descripción:</value>
+  </data>
+  <data name="tabCustom.Text" xml:space="preserve">
+    <value>Personalizada</value>
+  </data>
+  <data name="paramListViewGroup.Text" xml:space="preserve">
+    <value>Parametros del contrato</value>
+  </data>
+  <data name="menuItemEdit.Text" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="menuItemRemove.Text" xml:space="preserve">
+    <value>Eliminar</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Invocar contrato</value>
