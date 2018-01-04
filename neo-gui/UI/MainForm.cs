@@ -42,8 +42,8 @@ namespace Neo.UI
             InitializeComponent();
             Instance = this;
 
-            StateReader.Log += StateReader_Log;
-            StateReader.Notify += StateReader_Notify;
+            StateReader.Default.Log += StateReader_Log;
+            StateReader.Default.Notify += StateReader_Notify;
 
             if (xdoc != null)
             {
@@ -1060,10 +1060,10 @@ namespace Neo.UI
          */
         private void StateReader_Notify(object sender, NotifyEventArgs e)
         {
-            StackItem[] stack = e.State.GetArray();
-            string[] message = new string[stack.Length];
+            var stack = e.State.GetArray();
+            string[] message = new string[stack.Count];
 
-            for (int i = 0; i < stack.Length; i++)
+            for (int i = 0; i < stack.Count; i++)
             {
                 switch (stack[i].GetType().ToString())
                 {
