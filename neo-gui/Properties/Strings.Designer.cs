@@ -323,7 +323,7 @@ namespace Neo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wallet files relocated. Old files have been auto-saved at: .
+        ///   Looks up a localized string similar to Wallet file relocated. New wallet file has been saved at: .
         /// </summary>
         internal static string MigrateWalletSucceedMessage {
             get {
