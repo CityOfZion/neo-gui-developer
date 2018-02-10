@@ -55,6 +55,8 @@ namespace Neo.UI
                     toolStripStatusLabel3.Visible = true;
                 }
             }
+
+            this.Text += " - " + (String.IsNullOrEmpty(Settings.Default.DataDirectoryPath) ? "---" : Settings.Default.DataDirectoryPath);
         }
 
         private void AddAddressToListView(UInt160 scriptHash, bool selected = false)
