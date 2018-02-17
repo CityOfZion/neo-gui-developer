@@ -1057,26 +1057,123 @@ namespace Neo.UI
 
             for (int i = 0; i < stack.Length; i++)
             {
-                switch (stack[i].GetType().ToString())
+                bool useSmartMessages = true; // TODO: turn this into an Application setting or Menu Item
+                if (useSmartMessages)
                 {
-                    case "Neo.VM.Types.ByteArray":
-                        byte[] stackByteData = stack[i].GetByteArray();
-                        if (i == 0)
-                        {
-                            // assume that the first part of notify is going to be a description of the following data
-                            message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
-                        }
-                        else
-                        {
-                            message[i] = stackByteData.ToHexString();
-                        }
-                        break;
-                    case "Neo.VM.Types.Integer":
-                        message[i] = stack[i].GetBigInteger().ToString();
-                        break;
-                    case "Neo.VM.Types.Boolean":
-                        message[i] = stack[i].GetBoolean().ToString();
-                        break;
+                    string t = stack[i].GetType().ToString();
+                    switch (t)
+                    {
+                        case "Neo.VM.Types.ByteArray":
+                            {
+                                byte[] stackByteData = stack[i].GetByteArray();
+                                if (i == 0)
+                                {
+                                    // assume that the first arg of Notify() is going to be a description of the following data
+                                    message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
+                                }
+                                else
+                                {
+                                    int dataLen = stackByteData.Length;
+                                    string dataHexString = stackByteData.ToHexString();
+                                    message[i] = "";
+                                    string msg = "";
+                                    switch(dataLen)
+                                    {
+                                        case 20: // AddressScriptHash (raw binary?)
+                                            {
+                                                msg = "(ADHASH" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                break;
+                                            }
+                                        case 32: // PrevHash | Asset ID (raw bytes?)
+                                            {
+                                                msg = "(ASID32|PHASH" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                break;
+                                            }
+                                        case 64: // Private Key (binary string?)
+                                            {
+                                                dataHexString = dataHexString.Substring(0, 16) + "...";
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                msg = "(PRIVK" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                break;
+                                            }
+                                        case 66: // Public Key (binary string?)
+                                            {
+                                                dataHexString = dataHexString.Substring(0, 16) + "...";
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                msg = "(PUBK" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                break;
+                                            }
+                                        case 34: // Address (string string?)
+                                            {
+                                                dataHexString = dataHexString.Substring(0, 16) + "...";
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                msg = "(ADDR" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                break;
+                                            }
+                                        case 52: // WIF (Wallet Import Format) (binary string?)
+                                            {
+                                                dataHexString = dataHexString.Substring(0, 16) + "...";
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                msg = "(WIF" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                break;
+                                            }
+                                        default: 
+                                            {
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                string printableChars = decodedString.Replace("?", "").Replace("\0", "");
+                                                if ((decodedString.Length - printableChars.Length) <= 5 && printableChars.Length > 0) // <= than 5 unprintabled chars
+                                                {
+                                                    msg = "(SOTHER" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                }
+                                                else
+                                                {
+                                                    msg = "(BOTHER" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                }
+                                                break;
+                                            }
+                                    }
+                                    message[i] += msg;
+                                }
+                                break;
+                            }
+                        case "Neo.VM.Types.Integer":
+                            {
+                                string msg = stack[i].GetBigInteger().ToString();
+                                message[i] = "(BINT" + msg.Length.ToString() + ") " + msg;
+                                break;
+                            }
+                        case "Neo.VM.Types.Boolean":
+                            {
+                                string msg = stack[i].GetBoolean().ToString();
+                                message[i] = "(BOOL" + msg.Length.ToString() + ") " + msg;
+                                break;
+                            }
+                    }
+
+                }
+                else // original Notify() display code
+                {
+                    switch (stack[i].GetType().ToString())
+                    {
+                        case "Neo.VM.Types.ByteArray":
+                            byte[] stackByteData = stack[i].GetByteArray();
+                            if (i == 0)
+                            {
+                                // assume that the first part of notify is going to be a description of the following data
+                                message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
+                            }
+                            else
+                            {
+                                message[i] = stackByteData.ToHexString();
+                            }
+                            break;
+                        case "Neo.VM.Types.Integer":
+                            message[i] = stack[i].GetBigInteger().ToString();
+                            break;
+                        case "Neo.VM.Types.Boolean":
+                            message[i] = stack[i].GetBoolean().ToString();
+                            break;
+                    }
                 }
             }
             AddEventLog_Row(e.ScriptHash, "Notify", String.Join(" / ", message));

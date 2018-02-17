@@ -1,16 +1,24 @@
 ﻿{
   "ApplicationConfiguration": {
-    "DataDirectoryPath": "ChainTestNet",
+    "Paths": {
+      "Chain": "ChainDockerPrivateNet1",
+      "Notifications": "Notifications"
+    },
+    "P2P": {
+      "Port": 20333,
+      "WsPort": 10333
+    },
+    "RPC": {
+      "Port": 30333,
+      "SslCert": "",
+      "SslCertPassword": ""
+    },
+    "DataDirectoryPath": "ChainDockerPrivateNet2",
     "CertCachePath": "Certs",
     "NodePort": 20333,
     "WsPort": 20334,
-    "UriPrefix": [ "http://*:20332" ],
+    "UriPrefix": [ "https://localhost:20332" ],
     "SslCert": "",
-    "SslCertPassword": "",
-    "Urls": {
-      "AddressUrl": "http://testnet.antcha.in/address/info/{0}",
-      "AssetUrl": "http://testnet.antcha.in/tokens/hash/{0}",
-      "TransactionUrl": "http://testnet.antcha.in/tx/hash/{0}"
-    }
+    "SslCertPassword": ""
   }
 }
