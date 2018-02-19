@@ -1055,6 +1055,7 @@ namespace Neo.UI
             StackItem[] stack = e.State.GetArray();
             string[] message = new string[stack.Length];
 
+            string messageLabel = "";
             for (int i = 0; i < stack.Length; i++)
             {
                 bool useSmartMessages = true; // TODO: turn this into an Application setting or Menu Item
@@ -1070,6 +1071,7 @@ namespace Neo.UI
                                 {
                                     // assume that the first arg of Notify() is going to be a description of the following data
                                     message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
+                                    messageLabel = message[i]; // zero
                                 }
                                 else
                                 {
@@ -1093,41 +1095,73 @@ namespace Neo.UI
                                             {
                                                 dataHexString = dataHexString.Substring(0, 16) + "...";
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
-                                                msg = "(PRIVK" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                msg = "(PRIVK" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
                                                 break;
                                             }
                                         case 66: // Public Key (binary string?)
                                             {
                                                 dataHexString = dataHexString.Substring(0, 16) + "...";
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
-                                                msg = "(PUBK" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                msg = "(PUBK" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
                                                 break;
                                             }
                                         case 34: // Address (string string?)
                                             {
                                                 dataHexString = dataHexString.Substring(0, 16) + "...";
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
-                                                msg = "(ADDR" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                msg = "(ADDR" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
                                                 break;
                                             }
                                         case 52: // WIF (Wallet Import Format) (binary string?)
                                             {
                                                 dataHexString = dataHexString.Substring(0, 16) + "...";
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
-                                                msg = "(WIF" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                msg = "(WIF" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
                                                 break;
                                             }
                                         default: 
                                             {
+                                                int loc = 0;
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
-                                                string printableChars = decodedString.Replace("?", "").Replace("\0", "");
-                                                if ((decodedString.Length - printableChars.Length) <= 5 && printableChars.Length > 0) // <= than 5 unprintabled chars
+                                                if ((loc = messageLabel.IndexOf("$")) < 0)
                                                 {
-                                                    msg = "(SOTHER" + dataLen.ToString() + ") " + dataHexString + " [" + decodedString + "]";
+                                                    string printableChars = decodedString.Replace("?", "").Replace("\0", "");
+                                                    if ((decodedString.Length - printableChars.Length) <= 5 && printableChars.Length > 0) // <= than 5 unprintabled chars
+                                                    {
+                                                        msg = "(SOTHER" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
+                                                    }
+                                                    else
+                                                    {
+                                                        msg = "(BOTHER" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    msg = "(BOTHER" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                    string valueString = stack[i].GetBigInteger().ToString();
+                                                    string formatTag = messageLabel.Substring(loc,4).ToUpper();
+                                                    switch (formatTag)
+                                                    {
+                                                        case "$NEO":
+                                                        case "$GAS":
+                                                            {
+                                                                BigInteger value = stack[i].GetBigInteger();
+                                                                BigInteger rem = new BigInteger();
+                                                                BigInteger result = BigInteger.DivRem(value, new BigInteger(100000000), out rem);
+                                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + result.ToString() + "."  + rem.ToString("D8") + "'";
+                                                                break;
+                                                            }
+                                                        case "$INT":
+                                                            {
+                                                                BigInteger value = stack[i].GetBigInteger();
+                                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                                                break;
+                                                            }
+                                                        default:
+                                                            {
+                                                                message[i] = "(" + formatTag + dataLen.ToString() + ") " + dataHexString + " [unknown format]";
+                                                                break;
+                                                            }
+                                                    }
                                                 }
                                                 break;
                                             }
@@ -1138,8 +1172,34 @@ namespace Neo.UI
                             }
                         case "Neo.VM.Types.Integer":
                             {
-                                string msg = stack[i].GetBigInteger().ToString();
-                                message[i] = "(BINT" + msg.Length.ToString() + ") " + msg;
+                                string valueString = stack[i].GetBigInteger().ToString();
+                                int loc = 0;
+                                if ((loc = messageLabel.IndexOf("$")) < 0)
+                                {
+                                    message[i] = "(BINT" + valueString.Length.ToString() + ") " + valueString;
+                                }
+                                else
+                                {
+                                    string decodedString = System.Text.Encoding.ASCII.GetString(stack[i].GetByteArray());
+                                    string formatTag = messageLabel.Substring(loc, 4).ToUpper();
+                                    switch (formatTag)
+                                    {
+                                        case "$NEO":
+                                        case "$GAS":
+                                            {
+                                                BigInteger bivalue = stack[i].GetBigInteger();
+                                                BigInteger rem = new BigInteger();
+                                                BigInteger result = BigInteger.DivRem(bivalue, new BigInteger(100000000), out rem);
+                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + result.ToString() + "." + rem.ToString("D8") + "'";
+                                                break;
+                                            }
+                                        default:
+                                            {
+                                                message[i] = "(" + formatTag + valueString.ToString() + ") " + valueString + " [unknown format]";
+                                                break;
+                                            }
+                                    }
+                                }
                                 break;
                             }
                         case "Neo.VM.Types.Boolean":
