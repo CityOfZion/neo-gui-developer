@@ -1093,28 +1093,28 @@ namespace Neo.UI
                                             }
                                         case 64: // Private Key (binary string?)
                                             {
-                                                dataHexString = dataHexString.Substring(0, 16) + "...";
+                                                dataHexString = dataHexString.Substring(0, Math.Min(16,dataHexString.Length)) + "...";
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
                                                 msg = "(PRIVK" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
                                                 break;
                                             }
                                         case 66: // Public Key (binary string?)
                                             {
-                                                dataHexString = dataHexString.Substring(0, 16) + "...";
+                                                dataHexString = dataHexString.Substring(0, Math.Min(16, dataHexString.Length)) + "...";
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
                                                 msg = "(PUBK" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
                                                 break;
                                             }
                                         case 34: // Address (string string?)
                                             {
-                                                dataHexString = dataHexString.Substring(0, 16) + "...";
+                                                dataHexString = dataHexString.Substring(0, Math.Min(16, dataHexString.Length)) + "...";
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
                                                 msg = "(ADDR" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
                                                 break;
                                             }
                                         case 52: // WIF (Wallet Import Format) (binary string?)
                                             {
-                                                dataHexString = dataHexString.Substring(0, 16) + "...";
+                                                dataHexString = dataHexString.Substring(0, Math.Min(16, dataHexString.Length)) + "...";
                                                 string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
                                                 msg = "(WIF" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
                                                 break;
