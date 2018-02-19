@@ -856,6 +856,7 @@
     <EmbeddedResource Include="UI\VotingDialog.zh-Hans.resx">
       <DependentUpon>VotingDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="config.neodocker.json" />
     <None Include="config.testnet.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -876,6 +877,7 @@
     <None Include="protocol.mainnet.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="protocol.neodocker.json" />
     <None Include="protocol.testnet.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
