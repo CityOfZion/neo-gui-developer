@@ -1141,8 +1141,8 @@ namespace Neo.UI
                                                     string formatTag = messageLabel.Substring(loc,4).ToUpper();
                                                     switch (formatTag)
                                                     {
-                                                        case "$NEO":
-                                                        case "$GAS":
+                                                        case "$NEO": // NEO currency
+                                                        case "$GAS": // Gas
                                                             {
                                                                 BigInteger value = stack[i].GetBigInteger();
                                                                 BigInteger rem = new BigInteger();
@@ -1150,15 +1150,29 @@ namespace Neo.UI
                                                                 message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + result.ToString() + "."  + rem.ToString("D8") + "'";
                                                                 break;
                                                             }
-                                                        case "$INT":
+                                                        case "$INT": // int
                                                             {
                                                                 BigInteger value = stack[i].GetBigInteger();
                                                                 message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
                                                                 break;
                                                             }
+                                                        case "$UIN": // uint
+                                                            {
+                                                                BigInteger value = stack[i].GetBigInteger();
+                                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                                                break;
+                                                            }
+                                                        case "$TIM": // UNIX time
+                                                            {
+                                                                BigInteger value = stack[i].GetBigInteger();
+                                                                double time = (double)value;
+                                                                DateTime dt = UnixTimeStampToDateTime(time);
+                                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + dt.ToString() + "'";
+                                                                break;
+                                                            }
                                                         default:
                                                             {
-                                                                message[i] = "(" + formatTag + dataLen.ToString() + ") " + dataHexString + " [unknown format]";
+                                                                message[i] = "(" + formatTag + dataLen.ToString() + ") " + dataHexString + " [unknown format1]";
                                                                 break;
                                                             }
                                                     }
@@ -1193,9 +1207,23 @@ namespace Neo.UI
                                                 message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + result.ToString() + "." + rem.ToString("D8") + "'";
                                                 break;
                                             }
+                                        case "$UIN": // uint
+                                            {
+                                                BigInteger value = stack[i].GetBigInteger();
+                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                                break;
+                                            }
+                                        case "$TIM": // UNIX time
+                                            {
+                                                BigInteger value = stack[i].GetBigInteger();
+                                                double time = (double)value;
+                                                DateTime dt = UnixTimeStampToDateTime(time);
+                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + dt.ToString() + "'";
+                                                break;
+                                            }
                                         default:
                                             {
-                                                message[i] = "(" + formatTag + valueString.ToString() + ") " + valueString + " [unknown format]";
+                                                message[i] = "(" + formatTag + valueString.ToString() + ") " + valueString + " [unknown format2]";
                                                 break;
                                             }
                                     }
@@ -1237,6 +1265,14 @@ namespace Neo.UI
                 }
             }
             AddEventLog_Row(e.ScriptHash, "Notify", String.Join(" / ", message));
+        }
+
+        private static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp); // .ToLocalTime();
+            return dtDateTime;
         }
 
         /**
