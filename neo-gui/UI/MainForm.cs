@@ -56,6 +56,7 @@ namespace Neo.UI
                     toolStripStatusLabel3.Visible = true;
                 }
             }
+            this.Text += " - " + (String.IsNullOrEmpty(Settings.Default.Paths.Chain) ? "---" : Settings.Default.Paths.Chain);
         }
 
         private void AddAccount(WalletAccount account, bool selected = false)
@@ -1065,29 +1066,221 @@ namespace Neo.UI
 
             for (int i = 0; i < stack.Count; i++)
             {
-                switch (stack[i].GetType().ToString())
+                bool useSmartMessages = true; // TODO: turn this into an Application setting or Menu Item
+                if (useSmartMessages)
                 {
-                    case "Neo.VM.Types.ByteArray":
-                        byte[] stackByteData = stack[i].GetByteArray();
-                        if (i == 0)
-                        {
-                            // assume that the first part of notify is going to be a description of the following data
-                            message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
-                        }
-                        else
-                        {
-                            message[i] = stackByteData.ToHexString();
-                        }
-                        break;
-                    case "Neo.VM.Types.Integer":
-                        message[i] = stack[i].GetBigInteger().ToString();
-                        break;
-                    case "Neo.VM.Types.Boolean":
-                        message[i] = stack[i].GetBoolean().ToString();
-                        break;
+                    string messageLabel = "";
+                    string t = stack[i].GetType().ToString();
+                    switch (t)
+                    {
+                        case "Neo.VM.Types.ByteArray":
+                            {
+                                byte[] stackByteData = stack[i].GetByteArray();
+                                if (i == 0)
+                                {
+                                    // assume that the first arg of Notify() is going to be a description of the following data
+                                    message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
+                                    messageLabel = message[i]; // zero
+                                }
+                                else
+                                {
+                                    int dataLen = stackByteData.Length;
+                                    string dataHexString = stackByteData.ToHexString();
+                                    message[i] = "";
+                                    string msg = "";
+                                    switch (dataLen)
+                                    {
+                                        case 20: // AddressScriptHash (raw binary?)
+                                            {
+                                                msg = "(ADHASH" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                break;
+                                            }
+                                        case 32: // PrevHash | Asset ID (raw bytes?)
+                                            {
+                                                msg = "(ASID32|PHASH" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                break;
+                                            }
+                                        case 64: // Private Key (binary string?)
+                                            {
+                                                dataHexString = dataHexString.Substring(0, Math.Min(16, dataHexString.Length)) + "...";
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                msg = "(PRIVK" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
+                                                break;
+                                            }
+                                        case 66: // Public Key (binary string?)
+                                            {
+                                                dataHexString = dataHexString.Substring(0, Math.Min(16, dataHexString.Length)) + "...";
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                msg = "(PUBK" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
+                                                break;
+                                            }
+                                        case 34: // Address (string string?)
+                                            {
+                                                dataHexString = dataHexString.Substring(0, Math.Min(16, dataHexString.Length)) + "...";
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                msg = "(ADDR" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
+                                                break;
+                                            }
+                                        case 52: // WIF (Wallet Import Format) (binary string?)
+                                            {
+                                                dataHexString = dataHexString.Substring(0, Math.Min(16, dataHexString.Length)) + "...";
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                msg = "(WIF" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
+                                                break;
+                                            }
+                                        default:
+                                            {
+                                                int loc = 0;
+                                                string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                                if ((loc = messageLabel.IndexOf("$")) < 0)
+                                                {
+                                                    string printableChars = decodedString.Replace("?", "").Replace("\0", "");
+                                                    if ((decodedString.Length - printableChars.Length) <= 5 && printableChars.Length > 0) // <= than 5 unprintabled chars
+                                                    {
+                                                        msg = "(SOTHER" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
+                                                    }
+                                                    else
+                                                    {
+                                                        msg = "(BOTHER" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    string valueString = stack[i].GetBigInteger().ToString();
+                                                    string formatTag = messageLabel.Substring(loc, 4).ToUpper();
+                                                    switch (formatTag)
+                                                    {
+                                                        case "$NEO": // NEO currency
+                                                        case "$GAS": // Gas
+                                                            {
+                                                                BigInteger value = stack[i].GetBigInteger();
+                                                                BigInteger rem = new BigInteger();
+                                                                BigInteger result = BigInteger.DivRem(value, new BigInteger(100000000), out rem);
+                                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + result.ToString() + "." + rem.ToString("D8") + "'";
+                                                                break;
+                                                            }
+                                                        case "$INT": // int
+                                                            {
+                                                                BigInteger value = stack[i].GetBigInteger();
+                                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                                                break;
+                                                            }
+                                                        case "$UIN": // uint
+                                                            {
+                                                                BigInteger value = stack[i].GetBigInteger();
+                                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                                                break;
+                                                            }
+                                                        case "$TIM": // UNIX time
+                                                            {
+                                                                BigInteger value = stack[i].GetBigInteger();
+                                                                double time = (double)value;
+                                                                DateTime dt = UnixTimeStampToDateTime(time);
+                                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + dt.ToString() + "'";
+                                                                break;
+                                                            }
+                                                        default:
+                                                            {
+                                                                message[i] = "(" + formatTag + dataLen.ToString() + ") " + dataHexString + " [unknown format1]";
+                                                                break;
+                                                            }
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                    }
+                                    message[i] += msg;
+                                }
+                                break;
+                            }
+                        case "Neo.VM.Types.Integer":
+                            {
+                                string valueString = stack[i].GetBigInteger().ToString();
+                                int loc = 0;
+                                if ((loc = messageLabel.IndexOf("$")) < 0)
+                                {
+                                    message[i] = "(BINT" + valueString.Length.ToString() + ") " + valueString;
+                                }
+                                else
+                                {
+                                    string decodedString = System.Text.Encoding.ASCII.GetString(stack[i].GetByteArray());
+                                    string formatTag = messageLabel.Substring(loc, 4).ToUpper();
+                                    switch (formatTag)
+                                    {
+                                        case "$NEO":
+                                        case "$GAS":
+                                            {
+                                                BigInteger bivalue = stack[i].GetBigInteger();
+                                                BigInteger rem = new BigInteger();
+                                                BigInteger result = BigInteger.DivRem(bivalue, new BigInteger(100000000), out rem);
+                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + result.ToString() + "." + rem.ToString("D8") + "'";
+                                                break;
+                                            }
+                                        case "$UIN": // uint
+                                            {
+                                                BigInteger value = stack[i].GetBigInteger();
+                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                                break;
+                                            }
+                                        case "$TIM": // UNIX time
+                                            {
+                                                BigInteger value = stack[i].GetBigInteger();
+                                                double time = (double)value;
+                                                DateTime dt = UnixTimeStampToDateTime(time);
+                                                message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + dt.ToString() + "'";
+                                                break;
+                                            }
+                                        default:
+                                            {
+                                                message[i] = "(" + formatTag + valueString.ToString() + ") " + valueString + " [unknown format2]";
+                                                break;
+                                            }
+                                    }
+                                }
+                                break;
+                            }
+                        case "Neo.VM.Types.Boolean":
+                            {
+                                string msg = stack[i].GetBoolean().ToString();
+                                message[i] = "(BOOL" + msg.Length.ToString() + ") " + msg;
+                                break;
+                            }
+                    }
+                }
+                else // original Notify() display code
+                {
+                    switch (stack[i].GetType().ToString())
+                    {
+                        case "Neo.VM.Types.ByteArray":
+                            byte[] stackByteData = stack[i].GetByteArray();
+                            if (i == 0)
+                            {
+                                // assume that the first part of notify is going to be a description of the following data
+                                message[i] = System.Text.Encoding.UTF8.GetString(stackByteData);
+                            }
+                            else
+                            {
+                                message[i] = stackByteData.ToHexString();
+                            }
+                            break;
+                        case "Neo.VM.Types.Integer":
+                            message[i] = stack[i].GetBigInteger().ToString();
+                            break;
+                        case "Neo.VM.Types.Boolean":
+                            message[i] = stack[i].GetBoolean().ToString();
+                            break;
+                    }
                 }
             }
             AddEventLog_Row(e.ScriptHash, "Notify", String.Join(" / ", message));
+        }
+
+        private static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp); // .ToLocalTime();
+            return dtDateTime;
         }
 
         /**
