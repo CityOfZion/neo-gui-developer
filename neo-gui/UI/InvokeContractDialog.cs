@@ -20,9 +20,10 @@ namespace Neo.UI
         private TreeNode targetTreeNode;                                                            // target tree node to add new params 
 
         private InvocationTransaction tx;
-        private UInt160 scriptHash;
-        private int numRequiredParameters = 0;                                                      // the number of required parameters for loaded contract
-        private enum RequiredParameters { Required, Optional }
+        private JObject abi;
+        private UInt160 script_hash;
+        private ContractParameter[] parameters;
+        private ContractParameter[] parameters_abi;
 
         private static readonly Fixed8 net_fee = Fixed8.FromDecimal(0.001m);
         public InvokeContractDialog(InvocationTransaction tx = null, string deployedScriptHash = null)
@@ -63,18 +64,26 @@ namespace Neo.UI
                 Attributes = tx.Attributes,
                 Inputs = tx.Inputs,
                 Outputs = tx.Outputs
-            }, change_address, fee);
+            }, change_address: change_address, fee: fee);
         }
 
-        private enum ScriptPackMethods
+        private void UpdateParameters()
         {
-            EmitAppCall,
-            EmitOpCodePack,
-            NoAction
+            parameters = new[]
+            {
+                new ContractParameter
+                {
+                    Type = ContractParameterType.String,
+                    Value = comboBox1.SelectedItem
+                },
+                new ContractParameter
+                {
+                    Type = ContractParameterType.Array,
+                    Value = parameters_abi
+                }
+            };
         }
-        /**
-         * script has changed, update the bytecode
-         */
+
         private void UpdateScript()
         {
             BuildRequiredParameterCollection();
@@ -269,7 +278,7 @@ namespace Neo.UI
             byte[] script;
             try
             {
-                script = txtCustomScriptCopy.Text.Trim().HexToBytes();
+                script = textBox6.Text.Trim().HexToBytes();
             }
             catch (FormatException ex)
             {
@@ -568,6 +577,41 @@ namespace Neo.UI
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             txtCustomScript.Text = File.ReadAllBytes(openFileDialog1.FileName).ToHexString();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog2.ShowDialog() != DialogResult.OK) return;
+            abi = JObject.Parse(File.ReadAllText(openFileDialog2.FileName));
+            script_hash = UInt160.Parse(abi["hash"].AsString());
+            textBox8.Text = script_hash.ToString();
+            comboBox1.Items.Clear();
+            comboBox1.Items.AddRange(((JArray)abi["functions"]).Select(p => p["name"].AsString()).ToArray());
+            textBox9.Clear();
+            button8.Enabled = false;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            using (ParametersEditor dialog = new ParametersEditor(parameters_abi))
+            {
+                dialog.ShowDialog();
+            }
+            UpdateParameters();
+            UpdateScript();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string method = (string)comboBox1.SelectedItem;
+            JArray functions = (JArray)abi["functions"];
+            JObject function = functions.First(p => p["name"].AsString() == method);
+            JArray _params = (JArray)function["parameters"];
+            parameters_abi = _params.Select(p => new ContractParameter(p["type"].AsEnum<ContractParameterType>())).ToArray();
+            textBox9.Text = string.Join(", ", _params.Select(p => p["name"].AsString()));
+            button8.Enabled = parameters_abi.Length > 0;
+            UpdateParameters();
+            UpdateScript();
         }
     }
 }

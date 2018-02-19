@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lblParamList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 174</value>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 125</value>
   </data>
-  <data name="lblParamList.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 17</value>
   </data>
   <data name="lblParamList.Text" xml:space="preserve">
@@ -148,7 +148,7 @@
   <data name="lblName.Text" xml:space="preserve">
     <value>Nombre:</value>
   </data>
-  <data name="btnLoadAVM.Text" xml:space="preserve">
+  <data name="button6.Text" xml:space="preserve">
     <value>Cargar</value>
   </data>
   <data name="btnInvoke.Text" xml:space="preserve">
@@ -178,32 +178,11 @@
   <data name="btnTestScript.Text" xml:space="preserve">
     <value>Probar</value>
   </data>
-  <data name="tabInvoke.Text" xml:space="preserve">
-    <value>Invocar</value>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 17</value>
   </data>
-  <data name="btnClearScript.Text" xml:space="preserve">
-    <value>Limpiar</value>
-  </data>
-  <data name="lblDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 210</value>
-  </data>
-  <data name="lblDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 17</value>
-  </data>
-  <data name="lblDescription.Text" xml:space="preserve">
-    <value>Descripción:</value>
-  </data>
-  <data name="tabCustom.Text" xml:space="preserve">
-    <value>Personalizada</value>
-  </data>
-  <data name="paramListViewGroup.Text" xml:space="preserve">
-    <value>Parametros del contrato</value>
-  </data>
-  <data name="menuItemEdit.Text" xml:space="preserve">
-    <value>Editar</value>
-  </data>
-  <data name="menuItemRemove.Text" xml:space="preserve">
-    <value>Eliminar</value>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Parámetros:</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Invocar contrato</value>

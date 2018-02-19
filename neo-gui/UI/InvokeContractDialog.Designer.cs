@@ -46,29 +46,25 @@
             this.btnTestScript = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabInvoke = new System.Windows.Forms.TabPage();
-            this.txtParamList = new System.Windows.Forms.TextBox();
-            this.btnClearScript = new System.Windows.Forms.Button();
-            this.lblDescription = new System.Windows.Forms.Label();
-            this.txtDescription = new System.Windows.Forms.TextBox();
-            this.txtAuthor = new System.Windows.Forms.TextBox();
-            this.txtVersion = new System.Windows.Forms.TextBox();
-            this.btnScriptHashSearch = new System.Windows.Forms.Button();
-            this.tabCustom = new System.Windows.Forms.TabPage();
-            this.txtCustomScriptHash = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtCustomScriptCopy = new System.Windows.Forms.TextBox();
-            this.paramListViewGroup = new System.Windows.Forms.GroupBox();
-            this.treeParamList = new System.Windows.Forms.TreeView();
-            this.menuParamListViewItem = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtInvokeOutput = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button8 = new System.Windows.Forms.Button();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
-            this.tabInvoke.SuspendLayout();
-            this.tabCustom.SuspendLayout();
-            this.paramListViewGroup.SuspendLayout();
-            this.menuParamListViewItem.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblParamList
@@ -162,10 +158,76 @@
             this.tabControl1.Controls.Add(this.tabInvoke);
             this.tabControl1.Controls.Add(this.tabCustom);
             resources.ApplyResources(this.tabControl1, "tabControl1");
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             // 
-            // tabInvoke
+            // tabPage3
+            // 
+            resources.ApplyResources(this.tabPage3, "tabPage3");
+            this.tabPage3.Controls.Add(this.button8);
+            this.tabPage3.Controls.Add(this.textBox9);
+            this.tabPage3.Controls.Add(this.label10);
+            this.tabPage3.Controls.Add(this.comboBox1);
+            this.tabPage3.Controls.Add(this.label9);
+            this.tabPage3.Controls.Add(this.button7);
+            this.tabPage3.Controls.Add(this.textBox8);
+            this.tabPage3.Controls.Add(this.label8);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            resources.ApplyResources(this.button8, "button8");
+            this.button8.Name = "button8";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // textBox9
+            // 
+            resources.ApplyResources(this.textBox9, "textBox9");
+            this.textBox9.Name = "textBox9";
+            this.textBox9.ReadOnly = true;
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // comboBox1
+            // 
+            resources.ApplyResources(this.comboBox1, "comboBox1");
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
+            // button7
+            // 
+            resources.ApplyResources(this.button7, "button7");
+            this.button7.Name = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // textBox8
+            // 
+            resources.ApplyResources(this.textBox8, "textBox8");
+            this.textBox8.Name = "textBox8";
+            this.textBox8.ReadOnly = true;
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // tabPage1
             // 
             this.tabInvoke.Controls.Add(this.txtParamList);
             this.tabInvoke.Controls.Add(this.btnClearScript);
@@ -203,97 +265,10 @@
             resources.ApplyResources(this.lblDescription, "lblDescription");
             this.lblDescription.Name = "lblDescription";
             // 
-            // txtDescription
+            // openFileDialog2
             // 
-            resources.ApplyResources(this.txtDescription, "txtDescription");
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.ReadOnly = true;
-            // 
-            // txtAuthor
-            // 
-            resources.ApplyResources(this.txtAuthor, "txtAuthor");
-            this.txtAuthor.Name = "txtAuthor";
-            this.txtAuthor.ReadOnly = true;
-            // 
-            // txtVersion
-            // 
-            resources.ApplyResources(this.txtVersion, "txtVersion");
-            this.txtVersion.Name = "txtVersion";
-            this.txtVersion.ReadOnly = true;
-            // 
-            // btnScriptHashSearch
-            // 
-            resources.ApplyResources(this.btnScriptHashSearch, "btnScriptHashSearch");
-            this.btnScriptHashSearch.Image = global::Neo.Properties.Resources.search;
-            this.btnScriptHashSearch.Name = "btnScriptHashSearch";
-            this.btnScriptHashSearch.UseVisualStyleBackColor = true;
-            this.btnScriptHashSearch.Click += new System.EventHandler(this.btnScriptHashSearch_Click);
-            // 
-            // tabCustom
-            // 
-            this.tabCustom.Controls.Add(this.txtCustomScriptHash);
-            this.tabCustom.Controls.Add(this.label1);
-            this.tabCustom.Controls.Add(this.btnLoadAVM);
-            this.tabCustom.Controls.Add(this.txtCustomScript);
-            resources.ApplyResources(this.tabCustom, "tabCustom");
-            this.tabCustom.Name = "tabCustom";
-            this.tabCustom.UseVisualStyleBackColor = true;
-            // 
-            // txtCustomScriptHash
-            // 
-            resources.ApplyResources(this.txtCustomScriptHash, "txtCustomScriptHash");
-            this.txtCustomScriptHash.Name = "txtCustomScriptHash";
-            this.txtCustomScriptHash.ReadOnly = true;
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // txtCustomScriptCopy
-            // 
-            resources.ApplyResources(this.txtCustomScriptCopy, "txtCustomScriptCopy");
-            this.txtCustomScriptCopy.Name = "txtCustomScriptCopy";
-            this.txtCustomScriptCopy.ReadOnly = true;
-            // 
-            // paramListViewGroup
-            // 
-            this.paramListViewGroup.Controls.Add(this.treeParamList);
-            resources.ApplyResources(this.paramListViewGroup, "paramListViewGroup");
-            this.paramListViewGroup.Name = "paramListViewGroup";
-            this.paramListViewGroup.TabStop = false;
-            // 
-            // treeParamList
-            // 
-            resources.ApplyResources(this.treeParamList, "treeParamList");
-            this.treeParamList.Name = "treeParamList";
-            this.treeParamList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeParamList_MouseDown);
-            // 
-            // menuParamListViewItem
-            // 
-            this.menuParamListViewItem.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.menuParamListViewItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemEdit,
-            this.menuItemRemove});
-            this.menuParamListViewItem.Name = "menuParamListViewItem";
-            resources.ApplyResources(this.menuParamListViewItem, "menuParamListViewItem");
-            // 
-            // menuItemEdit
-            // 
-            this.menuItemEdit.Name = "menuItemEdit";
-            resources.ApplyResources(this.menuItemEdit, "menuItemEdit");
-            this.menuItemEdit.Click += new System.EventHandler(this.MenuItemEdit_Click);
-            // 
-            // menuItemRemove
-            // 
-            this.menuItemRemove.Name = "menuItemRemove";
-            resources.ApplyResources(this.menuItemRemove, "menuItemRemove");
-            this.menuItemRemove.Click += new System.EventHandler(this.MenuItemRemove_Click);
-            // 
-            // txtInvokeOutput
-            // 
-            resources.ApplyResources(this.txtInvokeOutput, "txtInvokeOutput");
-            this.txtInvokeOutput.Name = "txtInvokeOutput";
+            resources.ApplyResources(this.openFileDialog2, "openFileDialog2");
+            this.openFileDialog2.DefaultExt = "abi.json";
             // 
             // InvokeContractDialog
             // 
@@ -317,12 +292,14 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.tabControl1.ResumeLayout(false);
-            this.tabInvoke.ResumeLayout(false);
-            this.tabInvoke.PerformLayout();
-            this.tabCustom.ResumeLayout(false);
-            this.tabCustom.PerformLayout();
-            this.paramListViewGroup.ResumeLayout(false);
-            this.menuParamListViewItem.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -346,22 +323,19 @@
         private System.Windows.Forms.Button btnLoadAVM;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabInvoke;
-        private System.Windows.Forms.TabPage tabCustom;
-        private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.Button btnClearScript;
-        private System.Windows.Forms.TextBox txtCustomScriptCopy;
-        private System.Windows.Forms.GroupBox paramListViewGroup;
-        private System.Windows.Forms.TextBox txtAuthor;
-        private System.Windows.Forms.TextBox txtVersion;
-        private System.Windows.Forms.TextBox txtParamList;
-        private System.Windows.Forms.ContextMenuStrip menuParamListViewItem;
-        private System.Windows.Forms.ToolStripMenuItem menuItemEdit;
-        private System.Windows.Forms.ToolStripMenuItem menuItemRemove;
-        private System.Windows.Forms.TextBox txtCustomScriptHash;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TreeView treeParamList;
-        private System.Windows.Forms.TextBox txtInvokeOutput;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.Label label10;
     }
 }
