@@ -1,4 +1,4 @@
-{
+﻿{
   "ApplicationConfiguration": {
     "Paths": {
       "Chain": "ChainDockerPrivateNet1",
@@ -13,12 +13,12 @@
       "SslCert": "",
       "SslCertPassword": ""
     },
-	"DataDirectoryPath": "ChainDockerPrivateNet2",
+    "DataDirectoryPath": "ChainDockerPrivateNet2",
     "CertCachePath": "Certs",
     "NodePort": 20333,
     "WsPort": 20334,
     "UriPrefix": [ "https://localhost:20332" ],
     "SslCert": "",
-    "SslCertPassword": "",
+    "SslCertPassword": ""
   }
 }
