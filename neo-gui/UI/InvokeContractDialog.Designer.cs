@@ -28,22 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvokeContractDialog));
-            this.lblParamList = new System.Windows.Forms.Label();
-            this.lblAuthor = new System.Windows.Forms.Label();
-            this.lblVersion = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.lblName = new System.Windows.Forms.Label();
-            this.txtScriptHash = new System.Windows.Forms.TextBox();
-            this.lblScriptHash = new System.Windows.Forms.Label();
-            this.btnLoadAVM = new System.Windows.Forms.Button();
-            this.txtCustomScript = new System.Windows.Forms.TextBox();
-            this.btnInvoke = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.btnTestScript = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -67,62 +71,95 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblParamList
+            // button2
             // 
-            resources.ApplyResources(this.lblParamList, "lblParamList");
-            this.lblParamList.Name = "lblParamList";
+            resources.ApplyResources(this.button2, "button2");
+            this.button2.Name = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // lblAuthor
+            // textBox5
             // 
-            resources.ApplyResources(this.lblAuthor, "lblAuthor");
-            this.lblAuthor.Name = "lblAuthor";
+            resources.ApplyResources(this.textBox5, "textBox5");
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
             // 
-            // lblVersion
+            // label5
             // 
-            resources.ApplyResources(this.lblVersion, "lblVersion");
-            this.lblVersion.Name = "lblVersion";
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
             // 
-            // txtName
+            // textBox4
             // 
-            resources.ApplyResources(this.txtName, "txtName");
-            this.txtName.Name = "txtName";
-            this.txtName.ReadOnly = true;
+            resources.ApplyResources(this.textBox4, "textBox4");
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
             // 
-            // lblName
+            // label4
             // 
-            resources.ApplyResources(this.lblName, "lblName");
-            this.lblName.Name = "lblName";
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
             // 
-            // txtScriptHash
+            // textBox3
             // 
-            resources.ApplyResources(this.txtScriptHash, "txtScriptHash");
-            this.txtScriptHash.Name = "txtScriptHash";
-            this.txtScriptHash.TextChanged += new System.EventHandler(this.txtScriptHash_TextChanged);
+            resources.ApplyResources(this.textBox3, "textBox3");
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
             // 
-            // lblScriptHash
+            // label3
             // 
-            resources.ApplyResources(this.lblScriptHash, "lblScriptHash");
-            this.lblScriptHash.Name = "lblScriptHash";
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
             // 
-            // btnLoadAVM
+            // textBox2
             // 
-            resources.ApplyResources(this.btnLoadAVM, "btnLoadAVM");
-            this.btnLoadAVM.Name = "btnLoadAVM";
-            this.btnLoadAVM.UseVisualStyleBackColor = true;
-            this.btnLoadAVM.Click += new System.EventHandler(this.btnLoadAVM_Click);
+            resources.ApplyResources(this.textBox2, "textBox2");
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
             // 
-            // txtCustomScript
+            // label2
             // 
-            resources.ApplyResources(this.txtCustomScript, "txtCustomScript");
-            this.txtCustomScript.Name = "txtCustomScript";
-            this.txtCustomScript.TextChanged += new System.EventHandler(this.txtCustomScript_TextChanged);
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
-            // btnInvoke
+            // button1
             // 
-            resources.ApplyResources(this.btnInvoke, "btnInvoke");
-            this.btnInvoke.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnInvoke.Name = "btnInvoke";
-            this.btnInvoke.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Image = global::Neo.Properties.Resources.search;
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox1
+            // 
+            resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.Name = "textBox1";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // button6
+            // 
+            resources.ApplyResources(this.button6, "button6");
+            this.button6.Name = "button6";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // textBox6
+            // 
+            resources.ApplyResources(this.textBox6, "textBox6");
+            this.textBox6.Name = "textBox6";
+            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
+            // 
+            // button3
+            // 
+            resources.ApplyResources(this.button3, "button3");
+            this.button3.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button3.Name = "button3";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
@@ -141,22 +178,20 @@
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
             // 
-            // btnTestScript
+            // button5
             // 
-            resources.ApplyResources(this.btnTestScript, "btnTestScript");
-            this.btnTestScript.Name = "btnTestScript";
-            this.btnTestScript.UseVisualStyleBackColor = true;
-            this.btnTestScript.Click += new System.EventHandler(this.btnTestScript_Click);
+            resources.ApplyResources(this.button5, "button5");
+            this.button5.Name = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.DefaultExt = "avm";
             resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
+            this.openFileDialog1.DefaultExt = "avm";
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabInvoke);
-            this.tabControl1.Controls.Add(this.tabCustom);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -229,41 +264,42 @@
             // 
             // tabPage1
             // 
-            this.tabInvoke.Controls.Add(this.txtParamList);
-            this.tabInvoke.Controls.Add(this.btnClearScript);
-            this.tabInvoke.Controls.Add(this.lblDescription);
-            this.tabInvoke.Controls.Add(this.txtDescription);
-            this.tabInvoke.Controls.Add(this.lblParamList);
-            this.tabInvoke.Controls.Add(this.txtAuthor);
-            this.tabInvoke.Controls.Add(this.txtVersion);
-            this.tabInvoke.Controls.Add(this.lblAuthor);
-            this.tabInvoke.Controls.Add(this.lblVersion);
-            this.tabInvoke.Controls.Add(this.lblName);
-            this.tabInvoke.Controls.Add(this.txtName);
-            this.tabInvoke.Controls.Add(this.btnScriptHashSearch);
-            this.tabInvoke.Controls.Add(this.txtScriptHash);
-            this.tabInvoke.Controls.Add(this.lblScriptHash);
-            resources.ApplyResources(this.tabInvoke, "tabInvoke");
-            this.tabInvoke.Name = "tabInvoke";
-            this.tabInvoke.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.tabPage1, "tabPage1");
+            this.tabPage1.Controls.Add(this.button2);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.textBox5);
+            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.button1);
+            this.tabPage1.Controls.Add(this.textBox4);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.textBox2);
+            this.tabPage1.Controls.Add(this.textBox3);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // txtParamList
+            // tabPage2
             // 
-            resources.ApplyResources(this.txtParamList, "txtParamList");
-            this.txtParamList.Name = "txtParamList";
-            this.txtParamList.ReadOnly = true;
+            resources.ApplyResources(this.tabPage2, "tabPage2");
+            this.tabPage2.Controls.Add(this.button6);
+            this.tabPage2.Controls.Add(this.textBox6);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btnClearScript
+            // groupBox1
             // 
-            resources.ApplyResources(this.btnClearScript, "btnClearScript");
-            this.btnClearScript.Name = "btnClearScript";
-            this.btnClearScript.UseVisualStyleBackColor = true;
-            this.btnClearScript.Click += new System.EventHandler(this.btnClearScript_Click);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.textBox7);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
             // 
-            // lblDescription
+            // textBox7
             // 
-            resources.ApplyResources(this.lblDescription, "lblDescription");
-            this.lblDescription.Name = "lblDescription";
+            resources.ApplyResources(this.textBox7, "textBox7");
+            this.textBox7.Name = "textBox7";
+            this.textBox7.ReadOnly = true;
             // 
             // openFileDialog2
             // 
@@ -272,25 +308,21 @@
             // 
             // InvokeContractDialog
             // 
-            this.AcceptButton = this.btnInvoke;
             resources.ApplyResources(this, "$this");
+            this.AcceptButton = this.button3;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button4;
-            this.Controls.Add(this.txtInvokeOutput);
-            this.Controls.Add(this.paramListViewGroup);
-            this.Controls.Add(this.txtCustomScriptCopy);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.btnTestScript);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.btnInvoke);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Controls.Add(this.button3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InvokeContractDialog";
             this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
@@ -306,21 +338,25 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label lblScriptHash;
-        private System.Windows.Forms.TextBox txtScriptHash;
-        private System.Windows.Forms.Button btnScriptHashSearch;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblVersion;
-        private System.Windows.Forms.Label lblAuthor;
-        private System.Windows.Forms.Label lblParamList;
-        private System.Windows.Forms.TextBox txtCustomScript;
-        private System.Windows.Forms.Button btnInvoke;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btnTestScript;
-        private System.Windows.Forms.Button btnLoadAVM;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
