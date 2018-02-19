@@ -222,8 +222,11 @@
   <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;textBox8.Name" xml:space="preserve">
-    <value>textBox8</value>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="checkBox2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="checkBox2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -237,14 +240,11 @@
   <data name="&gt;&gt;textBox6.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Deploy Contract</value>
+  <data name="textBox9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 144</value>
   </data>
-  <data name="textBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="button1.Text" xml:space="preserve">
-    <value>Load</value>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -261,8 +261,8 @@
   <data name="&gt;&gt;openFileDialog1.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="button3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>457, 468</value>
   </data>
   <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
     <value>groupBox3</value>
@@ -270,8 +270,14 @@
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="button3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>457, 468</value>
+  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="textBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 23</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
   <data name="label7.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -297,8 +303,8 @@
   <data name="&gt;&gt;textBox3.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="textBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>425, 75</value>
   </data>
   <data name="textBox8.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -315,26 +321,20 @@
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="textBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>425, 75</value>
+  <data name="textBox8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Version:</value>
   </data>
   <data name="textBox5.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="textBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>425, 23</value>
-  </data>
-  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="textBox8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="&gt;&gt;textBox9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -342,11 +342,11 @@
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;textBox3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
   </data>
-  <data name="&gt;&gt;textBox9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="textBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>89, 71</value>
   </data>
   <data name="textBox9.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -354,8 +354,8 @@
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 20</value>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 15</value>
   </data>
   <data name="textBox3.Location" type="System.Drawing.Point, System.Drawing">
     <value>89, 71</value>
@@ -390,20 +390,20 @@
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>33, 22</value>
   </data>
-  <data name="&gt;&gt;checkBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>41, 99</value>
   </data>
-  <data name="checkBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 19</value>
+  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>89, 19</value>
   </data>
-  <data name="&gt;&gt;textBox9.Parent" xml:space="preserve">
-    <value>groupBox3</value>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>33, 22</value>
   </data>
   <data name="&gt;&gt;textBox5.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>DeployContractDialog</value>
+  <data name="checkBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 19</value>
   </data>
   <data name="&gt;&gt;button1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -432,8 +432,8 @@
   <data name="button3.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;checkBox1.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
     <value>8</value>
@@ -465,6 +465,21 @@
   <data name="&gt;&gt;checkBox2.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="checkBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>140, 141</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 15</value>
+  </data>
+  <data name="textBox7.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;checkBox2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="checkBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
@@ -477,20 +492,23 @@
   <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;textBox5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="textBox5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="textBox9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>312, 16</value>
   </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 11</value>
   </data>
   <data name="button3.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
   </data>
-  <data name="textBox9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>312, 16</value>
+  <data name="button3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;textBox8.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 11</value>
@@ -504,23 +522,17 @@
   <data name="&gt;&gt;textBox8.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="button3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
-  <data name="&gt;&gt;openFileDialog1.Name" xml:space="preserve">
-    <value>openFileDialog1</value>
+  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="checkBox2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="textBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="textBox9.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Right</value>
   </data>
   <data name="openFileDialog1.Filter" xml:space="preserve">
     <value>AVM File|*.avm</value>
@@ -537,11 +549,14 @@
   <data name="&gt;&gt;textBox9.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="button1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+  <data name="checkBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>Return Type:</value>
+  <data name="&gt;&gt;textBox9.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;textBox6.Parent" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;textBox4.Name" xml:space="preserve">
     <value>textBox4</value>
@@ -552,11 +567,11 @@
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>70, 15</value>
   </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 15</value>
+  </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>33, 73</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -621,17 +636,17 @@
   <data name="&gt;&gt;textBox2.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
+  <data name="textBox9.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
   <data name="&gt;&gt;button2.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="&gt;&gt;button1.Name" xml:space="preserve">
-    <value>button1</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
     <value>19, 48</value>
   </data>
-  <data name="textBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 48</value>
   </data>
   <data name="checkBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 19</value>
@@ -639,8 +654,8 @@
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="button1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 15</value>
@@ -648,14 +663,23 @@
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 217</value>
   </data>
-  <data name="&gt;&gt;textBox5.Name" xml:space="preserve">
-    <value>textBox5</value>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 15</value>
   </data>
   <data name="checkBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
   <data name="textBox8.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="textBox8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 19</value>
+  </data>
+  <data name="&gt;&gt;button1.Name" xml:space="preserve">
+    <value>button1</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
   </data>
   <data name="textBox8.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 19</value>
@@ -678,23 +702,14 @@
   <data name="textBox8.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
     <value>Vertical</value>
   </data>
-  <data name="checkBox1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;button2.Name" xml:space="preserve">
-    <value>button2</value>
-  </data>
-  <data name="&gt;&gt;button3.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 15</value>
   </data>
   <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 296</value>
   </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;button3.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;checkBox2.Parent" xml:space="preserve">
     <value>groupBox3</value>
@@ -702,8 +717,20 @@
   <data name="textBox5.Location" type="System.Drawing.Point, System.Drawing">
     <value>89, 122</value>
   </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
+  <data name="&gt;&gt;checkBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBox2.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="textBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>89, 45</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>28, 48</value>
   </data>
   <data name="button3.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
