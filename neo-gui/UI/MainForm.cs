@@ -44,8 +44,6 @@ namespace Neo.UI
             for(int i = 0; i < e.Notifications.Length; i++) {
                 StateReader_Notify(sender, e.Notifications[i]);
             }
-            //MessageBox.Show("got event");
-
         }
 
         public MainForm(XDocument xdoc = null)
@@ -641,7 +639,7 @@ namespace Neo.UI
             }
             if (tx is InvocationTransaction itx)
             {
-                using (InvokeContractDialog dialog = new InvokeContractDialog(itx))
+                using (DevInvokeContractDialog dialog = new DevInvokeContractDialog(itx))
                 {
                     if (dialog.ShowDialog() != DialogResult.OK) return;
                     tx = dialog.GetTransaction(change_address, fee);
@@ -687,7 +685,7 @@ namespace Neo.UI
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
             }
-            using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
+            using (DevInvokeContractDialog dialog = new DevInvokeContractDialog(tx))
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
@@ -712,7 +710,7 @@ namespace Neo.UI
                 if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
             }
-            using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
+            using (DevInvokeContractDialog dialog = new DevInvokeContractDialog(tx))
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
@@ -722,7 +720,7 @@ namespace Neo.UI
 
         private void invokeContractToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (InvokeContractDialog dialog = new InvokeContractDialog())
+            using (DevInvokeContractDialog dialog = new DevInvokeContractDialog())
             {
                 if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 Helper.SignAndShowInformation(dialog.GetTransaction());
@@ -1064,10 +1062,10 @@ namespace Neo.UI
             string stackType = e.State.GetType().ToString();
 
             // need to add different handlers below for Neo.VM.Types.Array|Neo.VM.Types.Integer
-            if (true) {
-                // don't crash (event log still won't work)
+            if(stackType != "Neo.VM.Types.Array") {
                 return;
             }
+
             var stack = e.State.GetArray();
 
             string[] message = new string[stack.Count];

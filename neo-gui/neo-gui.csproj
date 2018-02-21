@@ -308,6 +308,12 @@
     <Compile Include="UI\DeployContractDialog.Designer.cs">
       <DependentUpon>DeployContractDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\DevInvokeContractDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DevInvokeContractDialog.designer.cs">
+      <DependentUpon>DevInvokeContractDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ElectionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -617,6 +623,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DeveloperToolsForm.zh-Hans.resx">
       <DependentUpon>DeveloperToolsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DevInvokeContractDialog.es-ES.resx">
+      <DependentUpon>DevInvokeContractDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DevInvokeContractDialog.resx">
+      <DependentUpon>DevInvokeContractDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DevInvokeContractDialog.zh-Hans.resx">
+      <DependentUpon>DevInvokeContractDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ElectionDialog.es-ES.resx">
       <DependentUpon>ElectionDialog.cs</DependentUpon>
