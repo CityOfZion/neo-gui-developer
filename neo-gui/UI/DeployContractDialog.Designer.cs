@@ -41,6 +41,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.comboBoxParameterCodes = new System.Windows.Forms.ComboBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
@@ -54,6 +56,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -135,6 +138,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.comboBoxParameterCodes);
             this.groupBox2.Controls.Add(this.textBox7);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.textBox6);
@@ -142,6 +148,19 @@
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            // 
+            // button4
+            // 
+            resources.ApplyResources(this.button4, "button4");
+            this.button4.Name = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // comboBoxParameterCodes
+            // 
+            this.comboBoxParameterCodes.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBoxParameterCodes, "comboBoxParameterCodes");
+            this.comboBoxParameterCodes.Name = "comboBoxParameterCodes";
             // 
             // textBox7
             // 
@@ -225,6 +244,13 @@
             this.openFileDialog1.DefaultExt = "avm";
             resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBox1, "comboBox1");
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // DeployContractDialog
             // 
             this.AcceptButton = this.button2;
@@ -242,6 +268,7 @@
             this.MinimizeBox = false;
             this.Name = "DeployContractDialog";
             this.ShowInTaskbar = false;
+            this.Load += new System.EventHandler(this.DeployContractDialog_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -280,5 +307,8 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ComboBox comboBoxParameterCodes;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

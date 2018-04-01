@@ -77,5 +77,42 @@ namespace Neo.UI
                 SelectNextControl((Control)sender, true, true, true, true);
             }
         }
+
+        private void DeployContractDialog_Load(object sender, EventArgs e)
+        {
+            comboBoxParameterCodes.DisplayMember = "Text";
+            comboBoxParameterCodes.ValueMember = "Value";
+
+            comboBox1.DisplayMember = "Text";
+            comboBox1.ValueMember = "Value";
+
+            var items = new[]
+            {
+                new { Text = "Signature", Value = "00" },
+                new { Text = "Boolean", Value = "01" },
+                new { Text = "Integer", Value = "02" },
+                new { Text = "Hash160", Value = "03" },
+                new { Text = "Hash256", Value = "04" },
+                new { Text = "ByteArray", Value = "05" },
+                new { Text = "PublicKey", Value = "06" },
+                new { Text = "String", Value = "07" },
+                new { Text = "Array", Value = "10" },
+                new { Text = "InteropInterface", Value = "f0" },
+                new { Text = "Void", Value = "ff" }
+            };
+            
+            comboBoxParameterCodes.DataSource = items;
+            comboBox1.DataSource = items;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            textBox6.Text += comboBoxParameterCodes.SelectedValue;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            textBox7.Text = (string)comboBox1.SelectedValue;
+        }
     }
 }
