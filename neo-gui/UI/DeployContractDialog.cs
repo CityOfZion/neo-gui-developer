@@ -102,7 +102,7 @@ namespace Neo.UI
             };
             
             comboBoxParameterCodes.DataSource = items;
-            comboBox1.DataSource = items;
+            comboBox1.DataSource = items.Clone();
         }
 
         private void button4_Click(object sender, EventArgs e)
