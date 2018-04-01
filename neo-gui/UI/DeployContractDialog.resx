@@ -139,7 +139,7 @@
     <value>485, 94</value>
   </data>
   <data name="textBox5.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;textBox5.Name" xml:space="preserve">
     <value>textBox5</value>
@@ -193,7 +193,7 @@
     <value>114, 25</value>
   </data>
   <data name="textBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;textBox4.Name" xml:space="preserve">
     <value>textBox4</value>
@@ -250,7 +250,7 @@
     <value>485, 25</value>
   </data>
   <data name="textBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;textBox3.Name" xml:space="preserve">
     <value>textBox3</value>
@@ -307,7 +307,7 @@
     <value>485, 25</value>
   </data>
   <data name="textBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;textBox2.Name" xml:space="preserve">
     <value>textBox2</value>
@@ -448,7 +448,7 @@
     <value>466, 25</value>
   </data>
   <data name="textBox7.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;textBox7.Name" xml:space="preserve">
     <value>textBox7</value>
@@ -502,7 +502,7 @@
     <value>466, 25</value>
   </data>
   <data name="textBox6.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;textBox6.Name" xml:space="preserve">
     <value>textBox6</value>
@@ -655,7 +655,7 @@
     <value>125, 24</value>
   </data>
   <data name="checkBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>8</value>
   </data>
   <data name="checkBox1.Text" xml:space="preserve">
     <value>Need Storage</value>
