@@ -88,6 +88,7 @@ namespace Neo.UI
 
             var items = new[]
             {
+                new { Text = "NEP5", Value = "0710" },
                 new { Text = "Signature", Value = "00" },
                 new { Text = "Boolean", Value = "01" },
                 new { Text = "Integer", Value = "02" },
@@ -102,7 +103,10 @@ namespace Neo.UI
             };
             
             comboBoxParameterCodes.DataSource = items;
+            comboBoxParameterCodes.SelectedValue = "0710";
+
             comboBox1.DataSource = items.Clone();
+            comboBox1.SelectedValue = "05";
         }
 
         private void button4_Click(object sender, EventArgs e)
