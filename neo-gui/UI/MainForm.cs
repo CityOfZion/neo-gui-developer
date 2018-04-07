@@ -44,8 +44,6 @@ namespace Neo.UI
             for(int i = 0; i < e.Notifications.Length; i++) {
                 StateReader_Notify(sender, e.Notifications[i]);
             }
-            //MessageBox.Show("got event");
-
         }
 
         public MainForm(XDocument xdoc = null)
@@ -641,7 +639,7 @@ namespace Neo.UI
             }
             if (tx is InvocationTransaction itx)
             {
-                using (InvokeContractDialog dialog = new InvokeContractDialog(itx))
+                using (DevInvokeContractDialog dialog = new DevInvokeContractDialog(itx))
                 {
                     if (dialog.ShowDialog() != DialogResult.OK) return;
                     tx = dialog.GetTransaction(change_address, fee);
@@ -687,7 +685,7 @@ namespace Neo.UI
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
             }
-            using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
+            using (DevInvokeContractDialog dialog = new DevInvokeContractDialog(tx))
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
@@ -712,7 +710,7 @@ namespace Neo.UI
                 if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
             }
-            using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
+            using (DevInvokeContractDialog dialog = new DevInvokeContractDialog(tx))
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 tx = dialog.GetTransaction();
@@ -722,7 +720,7 @@ namespace Neo.UI
 
         private void invokeContractToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (InvokeContractDialog dialog = new InvokeContractDialog())
+            using (DevInvokeContractDialog dialog = new DevInvokeContractDialog())
             {
                 if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 Helper.SignAndShowInformation(dialog.GetTransaction());
@@ -1064,10 +1062,10 @@ namespace Neo.UI
             string stackType = e.State.GetType().ToString();
 
             // need to add different handlers below for Neo.VM.Types.Array|Neo.VM.Types.Integer
-            if (true) {
-                // don't crash (event log still won't work)
+            if(stackType != "Neo.VM.Types.Array") {
                 return;
             }
+
             var stack = e.State.GetArray();
 
             string[] message = new string[stack.Count];
@@ -1137,52 +1135,57 @@ namespace Neo.UI
                                     default:
                                         {
                                             int loc = 0;
-                                            string decodedString = System.Text.Encoding.ASCII.GetString(stackByteData);
+                                            string asciiString = System.Text.Encoding.ASCII.GetString(stackByteData);
                                             if ((loc = messageLabel.IndexOf("$")) < 0)
                                             {
-                                                string printableChars = decodedString.Replace("?", "").Replace("\0", "");
-                                                if ((decodedString.Length - printableChars.Length) <= 5 && printableChars.Length > 0) // <= than 5 unprintabled chars
+                                                string printableChars = asciiString.Replace("?", "").Replace("\0", "");
+                                                if ((asciiString.Length - printableChars.Length) <= 5 && printableChars.Length > 0) // <= than 5 unprintabled chars
                                                 {
-                                                    msg = "(SOTHER" + dataLen.ToString() + ") " + dataHexString + " '" + decodedString + "'";
+                                                    msg = "(STR" + dataLen.ToString() + ") " + dataHexString + " '" + asciiString + "'";
                                                 }
                                                 else
                                                 {
-                                                    msg = "(BOTHER" + dataLen.ToString() + ") " + dataHexString + " [binary]";
+                                                    msg = "(BIN" + dataLen.ToString() + ") " + dataHexString + " [binary]";
                                                 }
                                             }
                                             else
                                             {
-                                                string valueString = stack[i].GetBigInteger().ToString();
-                                                string formatTag = messageLabel.Substring(loc, 4).ToUpper();
+                                                string biString = stack[i].GetBigInteger().ToString();
+                                                string formatTag = messageLabel.Substring(loc, 4).ToUpper(); // BUG: this will exception if past EO
                                                 switch (formatTag)
                                                 {
                                                     case "$NEO": // NEO currency
                                                     case "$GAS": // Gas
                                                         {
-                                                            BigInteger value = stack[i].GetBigInteger();
+                                                            BigInteger bi = stack[i].GetBigInteger();
                                                             BigInteger rem = new BigInteger();
-                                                            BigInteger result = BigInteger.DivRem(value, new BigInteger(100000000), out rem);
-                                                            message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + result.ToString() + "." + rem.ToString("D8") + "'";
+                                                            BigInteger result = BigInteger.DivRem(bi, new BigInteger(100000000), out rem);
+                                                            message[i] = "(" + formatTag + biString.Length.ToString() + ") " + biString.ToString() + " '" + result.ToString() + "." + rem.ToString("D8") + "'";
                                                             break;
                                                         }
                                                     case "$INT": // int
                                                         {
-                                                            BigInteger value = stack[i].GetBigInteger();
-                                                            message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                                            BigInteger bi = stack[i].GetBigInteger();
+                                                            message[i] = "(" + formatTag + biString.Length.ToString() + ") " + biString.ToString();
                                                             break;
                                                         }
                                                     case "$UIN": // uint
                                                         {
-                                                            BigInteger value = stack[i].GetBigInteger();
-                                                            message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                                            BigInteger bi = stack[i].GetBigInteger();
+                                                            message[i] = "(" + formatTag + biString.Length.ToString() + ") " + biString.ToString();
+                                                            break;
+                                                        }
+                                                    case "$BSK": // NeoStorageKey (binary)
+                                                        {
+                                                            message[i] = "(" + formatTag + asciiString.Length.ToString() + ") " + asciiString.ToString();
                                                             break;
                                                         }
                                                     case "$TIM": // UNIX time
                                                         {
-                                                            BigInteger value = stack[i].GetBigInteger();
-                                                            double time = (double)value;
+                                                            BigInteger bi = stack[i].GetBigInteger();
+                                                            double time = (double)bi;
                                                             DateTime dt = UnixTimeStampToDateTime(time);
-                                                            message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + dt.ToString() + "'";
+                                                            message[i] = "(" + formatTag + biString.Length.ToString() + ") " + biString.ToString() + " '" + dt.ToString() + "'";
                                                             break;
                                                         }
                                                     default:
@@ -1201,44 +1204,49 @@ namespace Neo.UI
                         }
                     case "Neo.VM.Types.Integer":
                         {
-                            string valueString = stack[i].GetBigInteger().ToString();
+                            string biString = stack[i].GetBigInteger().ToString();
                             int loc = 0;
                             if ((loc = messageLabel.IndexOf("$")) < 0)
                             {
-                                message[i] = "(BINT" + valueString.Length.ToString() + ") " + valueString;
+                                message[i] = "(BINT" + biString.Length.ToString() + ") " + biString;
                             }
                             else
                             {
-                                string decodedString = System.Text.Encoding.ASCII.GetString(stack[i].GetByteArray());
-                                string formatTag = messageLabel.Substring(loc, 4).ToUpper();
+                                string asciiString = System.Text.Encoding.ASCII.GetString(stack[i].GetByteArray());
+                                string formatTag = messageLabel.Substring(loc, 4).ToUpper(); // BUG: this will exception if past EOS
                                 switch (formatTag)
                                 {
                                     case "$NEO":
                                     case "$GAS":
                                         {
-                                            BigInteger bivalue = stack[i].GetBigInteger();
+                                            BigInteger bi = stack[i].GetBigInteger();
                                             BigInteger rem = new BigInteger();
-                                            BigInteger result = BigInteger.DivRem(bivalue, new BigInteger(100000000), out rem);
-                                            message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + result.ToString() + "." + rem.ToString("D8") + "'";
+                                            BigInteger result = BigInteger.DivRem(bi, new BigInteger(100000000), out rem);
+                                            message[i] = "(" + formatTag + biString.Length.ToString() + ") " + biString.ToString() + " '" + result.ToString() + "." + rem.ToString("D8") + "'";
                                             break;
                                         }
                                     case "$UIN": // uint
                                         {
-                                            BigInteger value = stack[i].GetBigInteger();
-                                            message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString();
+                                            BigInteger bi = stack[i].GetBigInteger();
+                                            message[i] = "(" + formatTag + biString.Length.ToString() + ") " + biString.ToString();
+                                            break;
+                                        }
+                                    case "$BSK": // NeoStorageKey (binary)
+                                        {
+                                            message[i] = "(" + formatTag + asciiString.Length.ToString() + ") " + asciiString.ToString();
                                             break;
                                         }
                                     case "$TIM": // UNIX time
                                         {
-                                            BigInteger value = stack[i].GetBigInteger();
-                                            double time = (double)value;
+                                            BigInteger bi = stack[i].GetBigInteger();
+                                            double time = (double)bi;
                                             DateTime dt = UnixTimeStampToDateTime(time);
-                                            message[i] = "(" + formatTag + valueString.Length.ToString() + ") " + valueString.ToString() + " '" + dt.ToString() + "'";
+                                            message[i] = "(" + formatTag + biString.Length.ToString() + ") " + biString.ToString() + " '" + dt.ToString() + "'";
                                             break;
                                         }
                                     default:
                                         {
-                                            message[i] = "(" + formatTag + valueString.ToString() + ") " + valueString + " [unknown format2]";
+                                            message[i] = "(" + formatTag + biString.ToString() + ") " + biString + " [unknown format2]";
                                             break;
                                         }
                                 }
